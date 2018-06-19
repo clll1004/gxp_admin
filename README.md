@@ -1,10 +1,10 @@
-angular6-webpack4-quickstart
+GXP_ADMIN
 =============================
-Angular 6 with Webpack 4 builder quickstart
+gxp-admin app
 
 
 ## Getting Started
 
  1. Clone repo
- 2. npm install
- 3. npm serve
+ 2. yarn install
+ 3. yarn serve
