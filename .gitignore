@@ -1,0 +1,18 @@
+# Logs
+logs
+*.log
+
+# Dependency directory
+node_modules
+
+# IDEA
+.idea
+
+# MAC
+.DS_Store
+
+dist/
+
+*.lock
+yarn.lock
+package-lock.json
