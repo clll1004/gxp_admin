@@ -20,7 +20,7 @@ module.exports = function(env, argv) {
     },
 
     target: "web",
-    
+
     devtool: env.production ? false : "inline-source-map",
 
     output: {
@@ -43,19 +43,15 @@ module.exports = function(env, argv) {
         },
         // Typescript
         {
-          test: /\.ts$/,
+          test: /(?:\.ngfactory\.js|\.ngstyle\.js|\.ts)$/,
           exclude: /node_modules/,
-          use: "@ngtools/webpack"
+          use: ["@ngtools/webpack"]
         },
         // Templates
         {
           test: /\.html$/,
           exclude: getRoot("src", "index.html"),
-          use: [
-            {
-              loader: "raw-loader"
-            }
-          ]
+          use: ["raw-loader"]
         },
 
         {
@@ -72,6 +68,7 @@ module.exports = function(env, argv) {
       ]
     },
     plugins: [
+      //new webpack.HotModuleReplacementPlugin(),
       new ngcWebpack.NgcWebpackPlugin({
         tsConfigPath: "./tsconfig.json",
         mainPath: "./src/main.ts"
@@ -85,13 +82,17 @@ module.exports = function(env, argv) {
         {
           from: getRoot("src", "index.html"), to: getRoot("dist", "index.html")
         },
-        { 
-          from: getRoot("src", "assets"), to: getRoot("dist", "assets") 
+        {
+          from: getRoot("src", "assets"), to: getRoot("dist", "assets")
         }
-       
-      ]),
 
-      
-    ]
+      ])
+    ],
+    devServer: {
+      //hot: true,
+      noInfo: true,
+      open: true,
+      inline: true
+    },
   };
 };
