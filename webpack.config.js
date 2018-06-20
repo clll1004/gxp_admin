@@ -2,6 +2,7 @@ const webpack = require("webpack");
 const ngcWebpack = require("ngc-webpack");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const WebpackDashboard = require('webpack-dashboard/plugin');
 const path = require("path");
 const _root = path.resolve(__dirname, ".");
 
@@ -73,6 +74,7 @@ module.exports = function(env, argv) {
       ]
     },
     plugins: [
+      new WebpackDashboard(),
       //new webpack.HotModuleReplacementPlugin(),
       new ngcWebpack.NgcWebpackPlugin({
         tsConfigPath: "./tsconfig.json",
