@@ -1,0 +1,15 @@
+.login-container {
+
+  width: 450px;
+  margin: 230px auto 0;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  text-align: center;
+
+  .info-container {
+    input {
+      width: 90%;
+      height: 40px;
+    }
+  }
+}

@@ -96,6 +96,7 @@ module.exports = function(env, argv) {
       ])
     ],
     devServer: {
+      host: 'localhost',
       //hot: true,
       noInfo: true,
       open: true,

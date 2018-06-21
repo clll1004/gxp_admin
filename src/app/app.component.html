@@ -1,11 +1,14 @@
-<p-accordion>
-  <p-accordionTab header="Header 1">
-    Content 1
-  </p-accordionTab>
-  <p-accordionTab header="Header 2">
-    Content 2
-  </p-accordionTab>
-  <p-accordionTab header="Header 3">
-    Content 3
-  </p-accordionTab>
-</p-accordion>
+<div id="skipnavi">
+  <a href="#content">skip to navigation</a>
+</div>
+
+<div class="ui-g ui-g-nopad" id="content">
+  <!--헤더-->
+  <header class="ui-g-12 ui-g-nopad" *ngIf="isShow"></header>
+  <!--콘텐츠-->
+  <div class="ui-g-12 ui-g-nopad">
+    <router-outlet></router-outlet>
+  </div>
+  <!--푸터-->
+  <footer class="ui-g-12 ui-g-nopad" *ngIf="isShow"></footer>
+</div>

@@ -1,0 +1,17 @@
+.footer-container {
+  height: 50px;
+  background: #222;
+  color: #aaa;
+  line-height: 50px;
+
+  address {
+    padding: 0 20px;
+    overflow: hidden;
+    font-style: normal;
+    font-size: 14px;
+
+    span {
+      float: right;
+    }
+  }
+}
