@@ -97,6 +97,7 @@ module.exports = function(env, argv) {
     ],
     devServer: {
       host: 'localhost',
+      historyApiFallback: true,
       //hot: true,
       noInfo: true,
       open: true,
