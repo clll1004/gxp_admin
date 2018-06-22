@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from "@angular/forms";
+import { HttpModule } from "@angular/http";
 
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -11,9 +12,15 @@ import { MatToolbarModule, MatButtonModule, MatSidenavModule, MatIconModule, Mat
 import { HeaderComponent } from "./header/header.component";
 import { FooterComponent } from "./footer/footer.component";
 import { LoginComponent } from "./login/login.component";
-import { CustomerContainerComponent } from "./customer-container/customer-container.component";
+import { ManagerComponent } from "./manager/manager.component";
+import { ListContainerComponent } from "./manager/list-container/list-container.component";
 
 import { AppRoutingModule } from "./app-routing.module";
+
+/*for primeNG*/
+import { InputTextModule } from 'primeng/inputtext';
+import { ButtonModule } from 'primeng/button';
+import { TableModule } from 'primeng/table';
 
 @NgModule({
   declarations: [
@@ -22,7 +29,8 @@ import { AppRoutingModule } from "./app-routing.module";
     HeaderComponent,
     FooterComponent,
     LoginComponent,
-    CustomerContainerComponent
+    ManagerComponent,
+    ListContainerComponent
   ],
   imports: [
     BrowserModule,
@@ -34,6 +42,11 @@ import { AppRoutingModule } from "./app-routing.module";
     MatIconModule,
     MatListModule,
     FormsModule,
+    HttpModule,
+
+    InputTextModule,
+    ButtonModule,
+    TableModule,
 
     AppRoutingModule
   ],

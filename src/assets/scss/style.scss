@@ -342,6 +342,10 @@ select, input[type="text"], input[type="password"], input[type="checkbox"], text
 .margin-bottom-50 {
   margin-bottom: 50px !important; }
 
+.content-sec {
+  padding: 20px; min-height: 850px; border-left: 1px solid #ddd; background: #fff;
+}
+
 /*버튼*/
 .btn {
   border: none;
@@ -351,6 +355,9 @@ select, input[type="text"], input[type="password"], input[type="checkbox"], text
   &.white-btn {
     background: rgba(255,255,255,1);
     color: #777;
+    border: 1px solid #ddd;
+    &:hover {background: #fafafa;}
+    &:active {background: #f5f5f5;}
   }
 
   &.orange-btn {
@@ -363,4 +370,32 @@ select, input[type="text"], input[type="password"], input[type="checkbox"], text
     height: 45px;
     border-radius: 10px;
   }
+}
+
+/*lnb*/
+.lnb-sec {
+  min-height: 850px; background: #fafafa;
+  ul {
+    li {
+      height: 55px; border-bottom: 1px solid #ddd;
+      &:first-child {border-top: 1px solid #ddd;}
+
+      a {
+        display: block; line-height: 55px; padding: 0 20px; background: #f3f3f3; font-size: 14px; font-weight: bold;
+        &:hover {background: #eaeaea;}
+
+        &.lnb-depth2 {
+          background: #fafafa;
+          font-weight: normal;
+          &:hover {background: #f5f5f5;}
+        }
+      }
+    }
+  }
+}
+
+/*페이지 타이틀*/
+.page-title-sec {
+  box-sizing: border-box; font-size: 13px; color: #888;
+  .path {color: #00a8ff;}
 }

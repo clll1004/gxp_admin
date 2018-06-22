@@ -14,7 +14,7 @@ export class LoginService {
     if(id && password) {
       const cookieData = id + "/" + password ;
       this.setCookie("userInfo", cookieData, 7, true);
-      this.router.navigate(['/', 'customer-container']);
+      this.router.navigate(['/', 'manager','customer']);
     }
   }
 

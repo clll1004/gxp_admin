@@ -1,0 +1,13 @@
+<div class="ui-g-2 ui-g-nopad">
+  <nav class="ui-g-12 ui-g-nopad lnb-sec">
+    <ul>
+      <li><a class="on" routerLink="/manager/customer">고객 관리</a></li>
+      <li><a class="lnb-depth2" routerLink="">신규 고객 추가</a></li>
+      <li><a routerLink="/manager/group">그룹 관리</a></li>
+      <li><a routerLink="/manager/account">CMS 계정 관리</a></li>
+    </ul>
+  </nav>
+</div>
+<div class="ui-g-10 ui-g-nopad content-sec">
+  <list-container [params]="params" [pathName]="pathName"></list-container>
+</div>

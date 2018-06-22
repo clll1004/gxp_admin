@@ -1,0 +1,88 @@
+<div class="ui-g-12 ui-g-nopad">
+  <div class="ui-g-12 ui-g-nopad page-title-sec margin-bottom-40">
+    CUSTOMER / <span class="path">{{ pathName }}</span>
+  </div>
+
+  <div class="ui-g-12 ui-g-nopad search-sec margin-bottom-30">
+    <label for="search-key" class="margin-right-10">고객명(한글)</label>
+    <input type="text" id="search-key" class="margin-right-10" pInputText placeholder="고객명(한글) 입력">
+    <button pButton type="button" label="검색"></button>
+  </div>
+
+  <div class="ui-g-12 ui-g-nopad btn-sec margin-bottom-30">
+    <button class="btn white-btn" (click)="filteringAll()">전체</button>
+    <button class="btn white-btn" (click)="filteringUse()">사용</button>
+    <button class="btn white-btn" (click)="filteringDisuse()">미사용</button>
+    <button class="btn white-btn" *ngIf="params['id'] === 'group'">그룹 추가</button>
+    <button class="btn white-btn" *ngIf="params['id'] === 'account'">계정 추가</button>
+  </div>
+
+  <div class="ui-g-12 ui-g-nopad row-info-sec margin-bottom-20">
+    ㆍTotal <span class="total-row">1</span>건 (<span class="now-page">1</span>Page / <span class="total-page">1</span>Page)
+  </div>
+
+  <p-table class="ui-g-12 ui-g-nopad" [value]="customerLists" *ngIf="params['id'] === 'customer'" [paginator]="true" [rows]="10">
+    <ng-template pTemplate="header">
+      <tr>
+        <th *ngFor="let col of customerCols">
+          {{ col.header }}
+        </th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-customerList>
+      <tr>
+        <td *ngFor="let col of customerCols">
+          {{ customerList[col.field] }}
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+
+  <p-table class="ui-g-12 ui-g-nopad" [value]="customerLists" *ngIf="params['id'] === 'group'" [paginator]="true" [rows]="10">
+    <ng-template pTemplate="header">
+      <tr>
+        <th>a</th>
+        <th>b</th>
+        <th>c</th>
+        <th>d</th>
+        <th>a</th>
+        <th>b</th>
+        <th>c</th>
+        <th>d</th>
+        <th>a</th>
+        <th>b</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-customerList>
+      <tr>
+        <td *ngFor="let col of customerCols">
+          {{ customerList[col.field] }}
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+
+  <p-table class="ui-g-12 ui-g-nopad" [value]="customerLists" *ngIf="params['id'] === 'account'" [paginator]="true" [rows]="10">
+    <ng-template pTemplate="header">
+      <tr>
+        <th>ee</th>
+        <th>ff</th>
+        <th>gg</th>
+        <th>hh</th>
+        <th>ee</th>
+        <th>ff</th>
+        <th>gg</th>
+        <th>hh</th>
+        <th>ee</th>
+        <th>ff</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-customerList>
+      <tr>
+        <td *ngFor="let col of customerCols">
+          {{ customerList[col.field] }}
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>

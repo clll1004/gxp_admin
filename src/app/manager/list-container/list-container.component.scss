@@ -1,0 +1,25 @@
+.search-sec {
+  label {
+    font-size: 14px;
+  }
+  input {
+    width: 400px;
+    height: 35px;
+  }
+}
+
+.btn-sec {
+  .btn {
+    padding: 5px 10px;
+    margin-right: 5px;
+  }
+}
+
+.row-info-sec {
+  font-size: 14px;
+  color: #888;
+  .total-row {
+    font-weight: bold;
+    color: #ff6400;
+  }
+}
