@@ -14,6 +14,7 @@ import { FooterComponent } from "./footer/footer.component";
 import { LoginComponent } from "./login/login.component";
 import { ManagerComponent } from "./manager/manager.component";
 import { ListContainerComponent } from "./manager/list-container/list-container.component";
+import { FormContainerComponent } from "./manager/form-container/form-container.component";
 
 import { AppRoutingModule } from "./app-routing.module";
 
@@ -21,6 +22,9 @@ import { AppRoutingModule } from "./app-routing.module";
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
 import { TableModule } from 'primeng/table';
+import { AccordionModule } from 'primeng/accordion';
+import { PasswordModule } from 'primeng/password';
+import { InputTextareaModule } from 'primeng/inputtextarea';
 
 @NgModule({
   declarations: [
@@ -30,7 +34,8 @@ import { TableModule } from 'primeng/table';
     FooterComponent,
     LoginComponent,
     ManagerComponent,
-    ListContainerComponent
+    ListContainerComponent,
+    FormContainerComponent
   ],
   imports: [
     BrowserModule,
@@ -47,6 +52,9 @@ import { TableModule } from 'primeng/table';
     InputTextModule,
     ButtonModule,
     TableModule,
+    AccordionModule,
+    PasswordModule,
+    InputTextareaModule,
 
     AppRoutingModule
   ],

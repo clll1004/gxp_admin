@@ -1,0 +1,459 @@
+<div class="ui-g-12 ui-g-nopad">
+  <div class="ui-g-12 ui-g-nopad margin-bottom-40 page-title-sec ">
+    CUSTOMER / <span class="path">{{ pathName }}</span>
+  </div>
+
+  <div class="ui-g-12 ui-g-nopad margin-bottom-40 form-info-container" *ngIf="params['listId'] !== 'account'">
+    ㆍ <span class="color-red">*</span> 는 필수입력 항목입니다. ini파일 자동생성을 위해 정확하게 입력해주시기 바랍니다.<br />
+    ㆍ <span class="color-red">* ini파일은 업로드서버(FTP)의 FTP 서버 구성이 먼저 완료되어야 정상 생성이 됩니다.</span><br />
+    ㆍ 그룹명은 트랜스코딩서버 구조상 한번 등록되면 수정이 불가능하므로 신중하게 입력바랍니다.
+  </div>
+  <div class="ui-g-12 ui-g-nopad margin-bottom-40 form-info-container" *ngIf="params['listId'] === 'account'">
+    ㆍ <span class="color-red">*</span> 는 필수입력 항목입니다. <span *ngIf="params['subId'] === 'add'">ini파일 자동생성을 위해 정확하게 입력해주시기 바랍니다.</span>
+    <div *ngIf="params['subId'] === 'modify'">
+      ㆍ 아이디는 수정하실 수 없으며 수정을 원하실 경우 최고관리자(개발팀)에게 문의하시기 바랍니다.<br />
+      ㆍ 패스워드는 변경을 원하실 경우에만 입력바랍니다.
+    </div>
+  </div>
+
+
+  <form class="ui-g-12 ui-g-nopad margin-bottom-50">
+    <fieldset>
+      <legend>{{ pathName }}</legend>
+
+      <!--고객 기본 정보-->
+      <div class="ui-g-12 ui-g-nopad margin-bottom-40 form-container" *ngIf="params['listId'] === 'customer'">
+        <h3 class="form-title" *ngIf="params['subId'] === 'add'">고객기본정보</h3>
+        <table class="form-list">
+          <caption>고객 기본 정보 테이블</caption>
+          <colgroup>
+            <col style="width: 260px;" />
+            <col style="width: auto;" />
+          </colgroup>
+          <tr *ngIf="params['subId'] === 'add'">
+            <th><label for="cus-nm-en">고객명(영문)</label> <span class="color-red">*</span></th>
+            <td>
+              <input pInputText type="text" id="cus-nm-en" name="cus_nm_en" title="고객명(영문) 입력" required="required" value="" />
+              <p class="color-red info-txt margin-top-10">* 특수문자 사용 불가</p>
+            </td>
+          </tr>
+          <tr *ngIf="params['subId'] === 'modify'">
+            <th>고객명(영문) <span class="color-red">*</span></th>
+            <td><span class="name_eng">Hankyung</span></td>
+          </tr>
+          <tr>
+            <th><label for="cus-nm-ko">고객명(한글)</label> <span class="color-red">*</span></th>
+            <td><input pInputText type="text" id="cus-nm-ko" name="cus_nm_ko" title="고객명(한글) 입력" required="required" value="" /></td>
+          </tr>
+          <tr>
+            <th><label for="cus-inchg-nm">고객담당자</label></th>
+            <td><input pInputText type="text" id="cus-inchg-nm" name="cus_inchg_nm" title="고객담당자 입력" value="" /></td>
+          </tr>
+          <tr>
+            <th><label for="cus-inchg-email">고객담당자 E-Mail</label></th>
+            <td>
+              <input pInputText type="text" id="cus-inchg-email" name="cus_inchg_email" title="고객담당자 E-Mail 입력" value="" />
+              <p class="color-red info-txt margin-top-10">* 통계 및 정보 수신</p>
+            </td>
+          </tr>
+          <tr>
+            <th><label for="cus-inchg-tel">고객담당자 연락처</label></th>
+            <td>
+              <input pInputText type="text" id="cus-inchg-tel" maxlength="4" title="고객담당자 연락처 앞자리" /> -
+              <input pInputText type="text" maxlength="4" title="고객담당자 연락처 중간자리" /> -
+              <input pInputText type="text" maxlength="4" title="고객담당자 연락처 끝자리" />
+              <p class="color-red info-txt margin-top-10">* SNS 수신 가능</p>
+            </td>
+          </tr>
+          <tr>
+            <th>전용 서버 사용 여부(싱글모드)</th>
+            <td>
+              <input type="radio" name="server" id="cus-sngl-cvt-y" /> <label for="cus-sngl-cvt-y">사용</label>
+              <input type="radio" name="server" id="cus-sngl-cvt-n" /> <label for="cus-sngl-cvt-n">사용 안 함</label>
+              <p class="color-red info-txt margin-top-10">* 트랜스코딩서버 IP 입력</p>
+            </td>
+          </tr>
+          <tr>
+            <th>사용여부</th>
+            <td>
+              <input type="radio" name="user" id="cus-use-y" checked="checked" /> <label for="cus-use-y">사용</label>
+              <input type="radio" name="user" id="cus-use-n" /> <label for="cus-use-n">사용 안 함</label>
+            </td>
+          </tr>
+          <tr>
+            <th>테스트여부</th>
+            <td>
+              <input type="radio" name="test" id="cus-test-y" /> <label for="cus-test-y">사용</label>
+              <input type="radio" name="test" id="cus-test-n" checked="checked" /> <label for="cus-test-n">사용 안 함</label>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <!--트랜스코딩 정보-->
+      <div class="ui-g-12 ui-g-nopad margin-bottom-40 form-container" *ngIf="params['listId'] === 'group' || (params['listId']=='customer' && params['subId']=='add')">
+        <h3 class="form-title" *ngIf="params['subId'] === 'add'">트랜스코딩정보</h3>
+        <h3 class="form-title" *ngIf="params['subId'] === 'modify'">
+          그룹&amp;트랜스코딩 기본정보 트랜스코딩 변환옵션 <button class="btn grey-btn">변환옵션 INI파일 조회</button>
+          <p class="info-txt margin-top-5">(180.182.58.138 :: E://share_content/PRIVATE/doosandonga/doosandonga.xml)</p>
+        </h3>
+        <table class="form-list">
+          <caption>트랜스코딩 정보 테이블</caption>
+          <colgroup>
+            <col style="width: 260px;" />
+            <col style="width: auto;" />
+          </colgroup>
+          <tr *ngIf="params['listId'] === 'group'">
+            <th><label for="select_cc">고객선택</label> <span class="color-red">*</span></th>
+            <td>
+              <select id="select_cc">
+                <option value="">선택하세요.</option>
+              </select>
+            </td>
+          </tr>
+          <tr>
+            <th><label for="transc_exp">트랜스코딩 설명</label> <span class="color-red">*</span></th>
+            <td><input pInputText type="text" id="transc_exp"  title="트랜스코딩 설명 입력" required="required" value="" /></td>
+          </tr>
+          <tr>
+            <th><label for="group_name">그룹명</label> <span class="color-red">*</span></th>
+            <td>
+              <input pInputText type="text" id="group_name" class="margin-right-10" title="그룹명/타입 입력" required="required" value="" />
+              <button class="btn white-btn square-btn">그룹명 중복 확인</button>
+            </td>
+          </tr>
+          <tr>
+            <th><label for="sv_domain">서비스도메인</label> <span class="color-red">*</span></th>
+            <td>
+              <input pInputText type="text" id="sv_domain" title="서비스도메인 입력" required="required" value="" />
+              <p class="color-red info-txt margin-top-10">* 해당 고객이 사용할 도메인명: 미리보기, 실제 서비스 도메인 확인용</p>
+            </td>
+          </tr>
+          <tr>
+            <th><label for="sub_url">서브 URL 경로</label></th>
+            <td>
+              <input pInputText type="text" id="sub_url" title="서브 URL 입력" value="" />
+              <p class="color-red info-txt margin-top-10">* 서비스도메인 이후 sub path 정보</p>
+            </td>
+          </tr>
+          <tr>
+            <th><label for="cburl">고객 콜백 URL</label> </th>
+            <td>
+              <input pInputText type="text" id="cburl"  title="고객 콜백 URL 입력" value="" />
+              <p class="color-red info-txt margin-top-10">* 변환 완료 후 결과전송 URL. 파라메터는 연동 규격서 참고 후 설정</p>
+            </td>
+          </tr>
+          <tr>
+            <th>자막 사용여부 <span class="color-red">*</span></th>
+            <td>
+              <input type="radio" name="smil" id="smil_use" /> <label for="smil_use">사용</label>
+              <input type="radio" name="smil" id="smil_duse" checked="checked" /> <label for="smil_duse">사용 안 함</label>
+            </td>
+          </tr>
+          <tr>
+            <th>Auto Resolution <span class="color-red">*</span></th>
+            <td>
+              <input type="radio" name="autoresolution" id="autoresolution_use" /> <label for="autoresolution_use">사용</label>
+              <input type="radio" name="autoresolution" id="autoresolution_duse" checked="checked" /> <label for="autoresolution_duse">사용 안 함</label>
+            </td>
+          </tr>
+          <tr>
+            <th>변환 파일 접미어 사용 여부 <span class="color-red">*</span></th>
+            <td>
+              <input type="radio" name="fsuffix" id="fsuffix_use" checked="checked" /> <label for="fsuffix_use">사용</label>
+              <input type="radio" name="fsuffix" id="fsuffix_duse" /> <label for="fsuffix_duse">사용 안 함</label>
+              <input type="radio" name="fsuffix" id="fsuffix_same" /> <label for="fsuffix_same">동일</label>
+
+              <p class="color-red info-txt margin-top-10">* 사용: 접미어 / 사용안함: 옵션명 / 동일: 원본명</p>
+            </td>
+          </tr>
+          <tr>
+            <th>썸네일추출여부 <span class="color-red">*</span></th>
+            <td>
+              <input type="radio" name="thextraction" id="thextraction_use" checked="checked" /> <label for="thextraction_use">사용</label>
+              <input type="radio" name="thextraction" id="thextraction_duse" /> <label for="thextraction_duse">사용 안 함</label>
+            </td>
+          </tr>
+          <tr>
+            <th><label for="thumb_domain">썸네일도메인</label> <span class="color-red">*</span></th>
+            <td>
+              <input pInputText type="text" id="thumb_domain" title="썸네일도메인 입력" required="required" value="" />
+              <p class="color-red info-txt margin-top-10">* 썸네일 서비스 도메인 ex) &#123;도메인&#125;/cid/gid/path/fname000N.jpg</p>
+            </td>
+          </tr>
+          <tr>
+            <th>썸네일 서버 정보 <span class="color-red">*</span></th>
+            <td>
+              <span class="form_info_txt">썸네일서버를 추가하려면 추가버튼을 클릭하세요.</span>
+              <button class="btn white-btn square-btn margin-left-10 margin-bottom-10">썸네일 서버추가</button>
+              <div class="thbsv_add_sec">
+                <label for="thbsv_ip" class="thbsv_label">IP</label> : <input pInputText type="text" id="thbsv_ip" title="썸네일서버 IP 입력" value="" />&nbsp;&nbsp;
+                <label for="thbsv_port" class="thbsv_label">Port</label> : <input pInputText type="text" id="thbsv_port" title="썸네일서버 Port 입력" value="" />&nbsp;&nbsp;
+                <label for="thbsv_userID" class="thbsv_label">UserId</label> : <input pInputText type="text" id="thbsv_userID" title="썸네일서버 UserID 입력" value="" />&nbsp;&nbsp;
+                <label for="thbsv_userPW" class="thbsv_label">UserPw</label> : <input pInputText type="text" id="thbsv_userPW" title="썸네일서버 UserPW 입력" value="" />&nbsp;&nbsp;
+                <select>
+                  <option value="PASV">PASV</option>
+                  <option value="ACTV">ACTV</option>
+                </select>
+                <button class="btn grey-btn square-btn margin-left-10">삭제</button>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <th>썸네일 추출간격 <span class="color-red">*</span></th>
+            <td>
+              <input pInputText type="text" title="썸네일 추출간격 입력" required="required" value="" />
+              <p class="color-red info-txt margin-top-10">* sec 단위</p>
+            </td>
+          </tr>
+          <tr>
+            <th>서비스 보안 <span class="color-red">*</span></th>
+            <td>
+              <input type="radio" name="svprot" id="svprot_duse" checked="checked" /> <label for="svprot_duse">사용 안 함</label>
+              <input type="radio" name="svprot" id="svprot_url" /> <label for="svprot_url">URL 보안(=OTU)</label>
+            </td>
+          </tr>
+          <tr>
+            <th>원본 콘텐츠가 있는 서버 IP <span class="color-red">*</span></th>
+            <td>
+              <div class="thbsv_add_sec">
+                <label class="thbsv_label">IP</label> : <input pInputText type="text"  title="썸네일서버 IP 입력" value="" />&nbsp;&nbsp;
+                <label class="thbsv_label">Port</label> : <input pInputText type="text"  title="썸네일서버 Port 입력" value="" />&nbsp;&nbsp;
+                <label class="thbsv_label">UserId</label> : <input pInputText type="text"  title="썸네일서버 UserID 입력" value="" />&nbsp;&nbsp;
+                <label class="thbsv_label">UserPw</label> : <input pInputText type="text"  title="썸네일서버 UserPW 입력" value="" />&nbsp;&nbsp;
+                <select>
+                  <option value="PASV">PASV</option>
+                  <option value="ACTV">ACTV</option>
+                </select>
+                <button class="btn grey-btn square-btn margin-left-10">삭제</button>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <th>원본 백업서버 IP</th>
+            <td>
+              <div class="thbsv_add_sec">
+                <label class="thbsv_label">IP</label> : <input pInputText type="text" title="썸네일서버 IP 입력" value="" />&nbsp;&nbsp;
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <th><label for="sttype">Stream Server 타입</label> <span class="color-red">*</span></th>
+            <td>
+              <select id="sttype" class="w150">
+                <option value="gxp" selected>gxp</option>
+                <option value="wowza">WOWZA</option>
+                <option value="etc">etc</option>
+              </select>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <!--트랜스코딩 변환옵션-->
+      <div class="ui-g-12 ui-g-nopad margin-bottom-40 form-container" *ngIf="params['listId'] === 'group' || (params['listId']=='customer' && params['subId']=='add')">
+        <h3 class="form-title" >트랜스코딩 변환옵션 <button class="btn grey-btn">트랜스코딩 변환옵션 추가</button></h3>
+        <table class="form-list">
+          <caption>트랜스코딩 변환옵션 테이블</caption>
+          <colgroup>
+            <col style="width: 260px;" />
+            <col style="width: 260px;" />
+            <col style="width: 260px;" />
+            <col style="width: 260px;" />
+            <col style="width: 260px;" />
+            <col style="width: 260px;" />
+            <col style="width: 260px;" />
+          </colgroup>
+          <tr>
+            <th rowspan="13">
+              HQ <span class="color-red">*</span> <button class="btn grey-btn square-btn">삭제</button>
+            </th>
+            <td>
+              사용여부 <span class="color-red">*</span>
+            </td>
+            <td colspan="5">
+              <input type="radio" name="trans_option01" id="trans_option01_use" checked="checked" /> <label for="trans_option01_use">사용</label>
+              <input type="radio" name="trans_option01" id="trans_option01_duse" /> <label for="trans_option01_duse">사용 안 함</label>
+            </td>
+          </tr>
+          <tr>
+            <td><label for="op01_name">변환옵션명 <span class="color-red">*</span></label></td>
+            <td><input pInputText type="text" id="op01_name" title="변환옵션명 입력" required="required" value="" /></td>
+            <td><label for="op01_exp">변환옵션설명 <span class="color-red">*</span></label></td>
+            <td><input pInputText type="text" id="op01_exp" title="변환옵션설명 입력" required="required" value="" /></td>
+            <td colspan="2"><p class="color-red info-txt margin-top-10">* 중화질 HD, SD, FHD...</p></td>
+          </tr>
+          <tr>
+            <td><label for="op01_suffix">파일접미어 <span class="color-red">*</span></label></td>
+            <td><input pInputText type="text" id="op01_suffix" title="파일접미어 입력" required="required" value="" /></td>
+            <td><label for="op01_cont">파일컨테이너 <span class="color-red">*</span></label></td>
+            <td><input pInputText type="text" id="op01_cont" title="파일컨테이너 입력" required="required" value="" /></td>
+            <td colspan="2"><p class="color-red info-txt margin-top-10">* mp4, PIV...</p></td>
+          </tr>
+          <tr>
+            <td><label for="op01_vbit">Video Bitrate <span class="color-red">*</span></label></td>
+            <td><input pInputText type="text" id="op01_vbit" title="Video Bitrate 입력" required="required" value="" /></td>
+            <td><label for="op01_abit">Audio Bitrate <span class="color-red">*</span></label></td>
+            <td><input pInputText type="text" id="op01_abit" title="Audio Bitrate 입력" required="required" value="" /></td>
+            <td><label for="op01_mbit">Max Bitrate <span class="color-red">*</span></label></td>
+            <td><input pInputText type="text" id="op01_mbit" title="Max Bitrate 입력" required="required" value="" /></td>
+          </tr>
+          <tr>
+            <td><label for="op01_vrsv">Video RsvOpt</label></td>
+            <td><input pInputText type="text" id="op01_vrsv" title="Video RsvOpt 입력" value="" /></td>
+            <td><label for="op01_arsv">Audio RsvOpt</label></td>
+            <td colspan="3"><input pInputText type="text" id="op01_arsv" title="Audio RsvOpt 입력" value="" /></td>
+          </tr>
+          <tr>
+            <td><label for="op01_resW">해상도-가로 <span class="color-red">*</span></label></td>
+            <td><input pInputText type="text" id="op01_resW" title="해상도-가로 입력" required="required" value="" placeholder="짝수 입력 가능" /></td>
+            <td><label for="op01_resH">해상도-세로 <span class="color-red">*</span></label></td>
+            <td><input pInputText type="text" id="op01_resH" title="해상도-세로 입력" required="required" value="" placeholder="짝수 입력 가능" /></td>
+            <td><label for="op01_scrate">화면비율 <span class="color-red">*</span></label></td>
+            <td>
+              <input pInputText type="text" id="op01_scrate" title="화면비율 입력" required="required" value="AUTO" />
+              <p class="color-red info-txt margin-top-10">* Auto, 1.7, 4:3</p>
+            </td>
+          </tr>
+          <tr>
+            <td><label for="op01_main">Main <span class="color-red">*</span></label></td>
+            <td><input pInputText type="text" id="op01_main" title="Main 입력" required="required" value="" /></td>
+            <td><label for="op01_baseline">Baseline <span class="color-red">*</span></label></td>
+            <td><input pInputText type="text" id="op01_baseline" title="Baseline 입력" required="required" value="" /></td>
+            <td><label for="op01_high">High <span class="color-red">*</span></label></td>
+            <td><input pInputText type="text" id="op01_high" title="High 입력" required="required" value="" /></td>
+          </tr>
+          <tr>
+            <td><label for="op01_brmode">Bitrate Mode <span class="color-red">*</span></label></td>
+            <td>
+              <select id="op01_brmode">
+                <option value="CBR" selectede>CBR</option>
+                <option value="VBR">VBR</option>
+              </select>
+            </td>
+            <td><label for="op01_sharpen">Sharpen <span class="color-red">*</span></label></td>
+            <td colspan="3"><input pInputText type="text" id="op01_sharpen" title="Sharpen 입력" required="required" value="" /></td>
+          </tr>
+          <tr>
+            <td><label for="op01_refs">Refs <span class="color-red">*</span></label></td>
+            <td><input pInputText type="text" id="op01_refs" title="Refs 입력" required="required" value="" /></td>
+            <td><label for="op01_framec">초당 프레임 수 <span class="color-red">*</span></label></td>
+            <td colspan="3">
+              <select id="op01_framec">
+                <option value="copy">copy</option>
+                <option value="29.97" selected>29.97</option>
+                <option value="27.97">27.97</option>
+                <option value="25.97">25.97</option>
+                <option value="23.97">23.97</option>
+              </select>
+            </td>
+          </tr>
+          <tr>
+            <td>Static 사용유무 <span class="color-red">*</span></td>
+            <td colspan="5">
+              <input type="radio" name="opt1_static" id="opt1_static_use" /> <label for="opt1_static_use">사용</label>
+              <input type="radio" name="opt1_static" id="opt1_static_duse" checked="checked" /> <label for="opt1_static_duse">사용 안 함</label>
+              <input type="radio" name="opt1_static" id="opt1_static_ext" /> <label for="opt1_static_ext">Ext</label>
+              <input pInputText type="text" class="margin-left-10" title="Static Ext 입력" required="required" value="" />
+            </td>
+          </tr>
+          <tr>
+            <td>DRM 사용유무 <span class="color-red">*</span></td>
+            <td colspan="5">
+              <input type="radio" name="opt1_drm" id="opt1_drm_duse" checked="checked" /> <label for="opt1_drm_duse">사용 안 함</label>
+              <input type="radio" name="opt1_drm" id="opt1_drm_inka" /> <label for="opt1_drm_inka">INKA</label>
+              <input type="radio" name="opt1_drm" id="opt1_drm_ext" /> <label for="opt1_drm_ext">Etc</label>
+              <input pInputText type="text" class="margin-left-10" title="DRM Etc 입력" required="required" value="" />
+            </td>
+          </tr>
+          <tr>
+            <td colspan="6">
+              서비스 서버 <span class="color-red">*</span><br />
+              <p class="color-red info-txt">변환 완료 후 배포 스트림 서버 정보. "고객정보 요청 필요"</p>
+              <span class="info-txt">서비스 서버를 추가하려면 추가버튼을 클릭하세요.</span> <button class="btn white-btn square-btn margin-left-10 margin-bottom-10">서비스 서버추가</button>
+              <div class="thbsv_add_sec">
+                <label for="svsv_ip" class="thbsv_label">IP <span class="color-red">*</span></label> : <input type="text" id="svsv_ip" class="form_input w150" title="썸네일서버 IP 입력" required="required" value="" />&nbsp;&nbsp;
+                <label for="svsv_port" class="thbsv_label">Port <span class="color-red">*</span></label> : <input type="text" id="svsv_port" class="form_input w80" title="썸네일서버 Port 입력" required="required" value="" />&nbsp;&nbsp;
+                <label for="svsv_userID" class="thbsv_label">UserId <span class="color-red">*</span></label> : <input type="text" id="svsv_userID" class="form_input w150" title="썸네일서버 UserID 입력" required="required" value="" />&nbsp;&nbsp;
+                <label for="svsv_userPW" class="thbsv_label">UserPw <span class="color-red">*</span></label> : <input type="text" id="svsv_userPW" class="form_input w150" title="썸네일서버 UserPW 입력" required="required" value="" />&nbsp;&nbsp;
+                <span class="color-red">*</span> <select>
+                <option value="PASV">PASV</option>
+              </select>
+                <button class="btn grey-btn square-btn margin-left-10">삭제</button>
+              </div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <!--CMS계정 발급-->
+      <div class="ui-g-12 ui-g-nopad margin-bottom-40 form-container" *ngIf="params['listId'] === 'account'">
+        <table class="form-list">
+          <caption>CMS 계정 발급 테이블</caption>
+          <colgroup>
+            <col style="width: 260px;" />
+            <col style="width: auto;" />
+          </colgroup>
+          <tr *ngIf="params['subId'] === 'modify'">
+            <th>고객명</th>
+            <td><span>효성ITX(HyosungITX)</span></td>
+          </tr>
+          <tr *ngIf="params['subId'] === 'modify'">
+            <th>아이디</th>
+            <td><span>itx9002@hyosung.com</span></td>
+          </tr>
+          <tr *ngIf="params['subId'] === 'add'">
+            <th><label for="select_c">고객선택</label> <span class="color-red">*</span></th>
+            <td>
+              <select id="select_c">
+                <option value="">선택하세요.</option>
+              </select>
+            </td>
+          </tr>
+          <tr *ngIf="params['subId'] === 'add'">
+            <th><label for="cust_id">아이디</label> <span class="color-red">*</span></th>
+            <td><input pInputText type="text" id="cust_id" title="아이디 입력" required="required" value="" /></td>
+          </tr>
+          <tr>
+            <th><label for="cust_pw">패스워드</label> <span class="color-red">*</span></th>
+            <td><input pPassword  type="password" id="cust_pw" title="패스워드 입력" required="required" value="" /></td>
+          </tr>
+          <tr>
+            <th><label for="conf_cust_pw">패스워드 확인</label> <span class="color-red">*</span></th>
+            <td><input pPassword  type="password" id="conf_cust_pw" title="패스워드 확인 입력" required="required" value="" /></td>
+          </tr>
+          <tr>
+            <th><label for="cust_name">사용자명</label> <span class="color-red">*</span></th>
+            <td><input pInputText type="text" id="cust_name" title="사용자명 입력" required="required" value="" /></td>
+          </tr>
+          <tr>
+            <th><label for="phone">휴대폰</label></th>
+            <td><input pInputText type="text" id="phone" title="휴대폰 입력" value="" /></td>
+          </tr>
+          <tr>
+            <th><label for="phone2">유선전화</label></th>
+            <td><input pInputText type="text" id="phone2" title="유선전화 입력" value="" /></td>
+          </tr>
+          <tr>
+            <th>사용여부 <span class="color-red">*</span></th>
+            <td>
+              <input type="radio" name="user" id="user_use" checked="checked" /> <label for="user_use">사용</label>
+              <input type="radio" name="user" id="user_duse" /> <label for="user_duse">사용 중지</label>
+            </td>
+          </tr>
+          <tr>
+            <th><label for="note">비고</label></th>
+            <td>
+              <textarea pInputTextarea title="비고" id="note" class="form_txta"></textarea>
+            </td>
+          </tr>
+        </table>
+      </div>
+
+      <!--버튼-->
+      <div class="ui-g-12 ui-g-nopad btn-sec">
+        <button type="submit" class="btn white-btn square-btn" *ngIf="params['subId'] === 'add'">등록</button>
+        <button type="submit" class="btn white-btn square-btn" *ngIf="params['subId'] === 'modify'">수정</button>
+        <button type="reset" class="btn white-btn square-btn">취소</button>
+        <a href="javascript:history.back();"><button type="button" class="btn white-btn square-btn">목록</button></a>
+      </div>
+    </fieldset>
+  </form>
+</div>

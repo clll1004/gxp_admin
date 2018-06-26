@@ -13,15 +13,15 @@
     <button class="btn white-btn" (click)="filteringAll()">전체</button>
     <button class="btn white-btn" (click)="filteringUse()">사용</button>
     <button class="btn white-btn" (click)="filteringDisuse()">미사용</button>
-    <button class="btn white-btn" *ngIf="params['id'] === 'group'">그룹 추가</button>
-    <button class="btn white-btn" *ngIf="params['id'] === 'account'">계정 추가</button>
+    <a routerLink="/manager/group/add"><button class="btn white-btn" *ngIf="params['listId'] === 'group'">그룹 추가</button></a>
+    <a routerLink="/manager/account/add"><button class="btn white-btn" *ngIf="params['listId'] === 'account'">계정 추가</button></a>
   </div>
 
   <div class="ui-g-12 ui-g-nopad row-info-sec margin-bottom-20">
     ㆍTotal <span class="total-row">1</span>건 (<span class="now-page">1</span>Page / <span class="total-page">1</span>Page)
   </div>
 
-  <p-table class="ui-g-12 ui-g-nopad" [value]="customerLists" *ngIf="params['id'] === 'customer'" [paginator]="true" [rows]="10">
+  <p-table class="ui-g-12 ui-g-nopad" [value]="customerLists" *ngIf="params['listId'] === 'customer'" [paginator]="true" [rows]="10">
     <ng-template pTemplate="header">
       <tr>
         <th *ngFor="let col of customerCols">
@@ -31,56 +31,72 @@
     </ng-template>
     <ng-template pTemplate="body" let-customerList>
       <tr>
-        <td *ngFor="let col of customerCols">
-          {{ customerList[col.field] }}
+        <td>{{ customerList.cus_seq }}</td>
+        <td><a routerLink="/manager/customer/modify">{{ customerList.cus_nm_ko }}</a></td>
+        <td>{{ customerList.cus_nm_en }}</td>
+        <td> </td>
+        <td>{{ customerList.cus_inchg_nm }}</td>
+        <td>{{ customerList.cus_inchg_tel }}</td>
+        <td>{{ customerList.cus_use_yn }}</td>
+        <td>{{ customerList.cus_test_yn }}</td>
+        <td>{{ customerList.cus_reg_dtm }}</td>
+        <td><a routerLink="/manager/customer/modify"><button class="btn white-btn" label="수정">수정</button></a></td>
+      </tr>
+    </ng-template>
+  </p-table>
+
+  <p-table class="ui-g-12 ui-g-nopad" [value]="customerLists" *ngIf="params['listId'] === 'group'" [paginator]="true" [rows]="10">
+    <ng-template pTemplate="header">
+      <tr>
+        <th>No.</th>
+        <th>그룹명</th>
+        <th>고객명</th>
+        <th>사용여부</th>
+        <th>등록일</th>
+        <th>수정일</th>
+        <th>관리</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-customerList>
+      <tr>
+        <td>{{ customerList.cus_seq }}</td>
+        <td>{{ customerList.cus_nm_ko }}</td>
+        <td>{{ customerList.cus_nm_ko }}</td>
+        <td>{{ customerList.cus_use_yn }}</td>
+        <td>{{ customerList.cus_reg_dtm }}</td>
+        <td>{{ customerList.cus_reg_dtm }}</td>
+        <td>
+          <a routerLink="/manager/group/modify"><button class="btn white-btn" label="수정">수정</button></a>
+          <button class="btn grey-btn" label="INI파일 조회">INI파일 조회</button>
         </td>
       </tr>
     </ng-template>
   </p-table>
 
-  <p-table class="ui-g-12 ui-g-nopad" [value]="customerLists" *ngIf="params['id'] === 'group'" [paginator]="true" [rows]="10">
+  <p-table class="ui-g-12 ui-g-nopad" [value]="customerLists" *ngIf="params['listId'] === 'account'" [paginator]="true" [rows]="10">
     <ng-template pTemplate="header">
       <tr>
-        <th>a</th>
-        <th>b</th>
-        <th>c</th>
-        <th>d</th>
-        <th>a</th>
-        <th>b</th>
-        <th>c</th>
-        <th>d</th>
-        <th>a</th>
-        <th>b</th>
+        <th>No.</th>
+        <th>아이디</th>
+        <th>고객명</th>
+        <th>사용여부</th>
+        <th>등록일</th>
+        <th>수정일</th>
+        <th>관리</th>
       </tr>
     </ng-template>
     <ng-template pTemplate="body" let-customerList>
       <tr>
-        <td *ngFor="let col of customerCols">
-          {{ customerList[col.field] }}
-        </td>
-      </tr>
-    </ng-template>
-  </p-table>
-
-  <p-table class="ui-g-12 ui-g-nopad" [value]="customerLists" *ngIf="params['id'] === 'account'" [paginator]="true" [rows]="10">
-    <ng-template pTemplate="header">
-      <tr>
-        <th>ee</th>
-        <th>ff</th>
-        <th>gg</th>
-        <th>hh</th>
-        <th>ee</th>
-        <th>ff</th>
-        <th>gg</th>
-        <th>hh</th>
-        <th>ee</th>
-        <th>ff</th>
-      </tr>
-    </ng-template>
-    <ng-template pTemplate="body" let-customerList>
-      <tr>
-        <td *ngFor="let col of customerCols">
-          {{ customerList[col.field] }}
+        <td>{{ customerList.cus_seq }}</td>
+        <td>{{ customerList.cus_nm_ko }}</td>
+        <td>{{ customerList.cus_nm_ko }}</td>
+        <td>{{ customerList.cus_use_yn }}</td>
+        <td>{{ customerList.cus_reg_dtm }}</td>
+        <td>{{ customerList.cus_reg_dtm }}</td>
+        <td>
+          <a routerLink="/manager/account/modify"><button class="btn white-btn" label="수정">수정</button></a>
+          <button class="btn white-btn" label="사용정지">사용정지</button>
+          <button class="btn white-btn" label="로그인">로그인</button>
         </td>
       </tr>
     </ng-template>

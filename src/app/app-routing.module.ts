@@ -5,10 +5,11 @@ import { LoginComponent } from "./login/login.component";
 import { ManagerComponent } from "./manager/manager.component";
 
 const routes: Routes = [
-  { path: '', redirectTo: 'login', pathMatch: 'full' },
+  { path: '', redirectTo: 'manager/customer', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
   { path: 'manager', component: ManagerComponent },
-  { path: 'manager/:id', component: ManagerComponent }
+  { path: 'manager/:listId', component: ManagerComponent },
+  { path: 'manager/:listId/:subId', component: ManagerComponent }
 ];
 
 @NgModule({
