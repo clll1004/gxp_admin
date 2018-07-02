@@ -1,6 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from "@angular/forms";
 import { HttpModule } from "@angular/http";
 
 import { AppComponent } from './app.component';
@@ -15,6 +14,11 @@ import { LoginComponent } from "./login/login.component";
 import { ManagerComponent } from "./manager/manager.component";
 import { ListContainerComponent } from "./manager/list-container/list-container.component";
 import { FormContainerComponent } from "./manager/form-container/form-container.component";
+import { CustomerFormComponent } from "./manager/form-container/customerForm/customerForm.component";
+import { GroupFormComponent } from "./manager/form-container/groupForm/groupForm.component";
+import { AccountFormComponent } from "./manager/form-container/accountForm/accountForm.component";
+
+
 
 import { AppRoutingModule } from "./app-routing.module";
 
@@ -25,6 +29,12 @@ import { TableModule } from 'primeng/table';
 import { AccordionModule } from 'primeng/accordion';
 import { PasswordModule } from 'primeng/password';
 import { InputTextareaModule } from 'primeng/inputtextarea';
+import { GrowlModule } from 'primeng/growl';
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { PanelModule } from 'primeng/panel';
+import { RadioButtonModule } from 'primeng/radiobutton';
+import { KeyFilterModule } from 'primeng/keyfilter';
+import { DropdownModule } from 'primeng/dropdown';
 
 @NgModule({
   declarations: [
@@ -35,7 +45,10 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
     LoginComponent,
     ManagerComponent,
     ListContainerComponent,
-    FormContainerComponent
+    FormContainerComponent,
+    CustomerFormComponent,
+    GroupFormComponent,
+    AccountFormComponent
   ],
   imports: [
     BrowserModule,
@@ -46,7 +59,6 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
     MatSidenavModule,
     MatIconModule,
     MatListModule,
-    FormsModule,
     HttpModule,
 
     InputTextModule,
@@ -55,6 +67,13 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
     AccordionModule,
     PasswordModule,
     InputTextareaModule,
+    GrowlModule,
+    FormsModule,
+    ReactiveFormsModule,
+    PanelModule,
+    RadioButtonModule,
+    KeyFilterModule,
+    DropdownModule,
 
     AppRoutingModule
   ],

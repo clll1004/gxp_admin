@@ -40,6 +40,38 @@ form {
           td {
             padding: 10px;
 
+            .server-group {
+              width: 622px;
+
+              .f-left {
+                float: left;
+                width: 300px;
+              }
+              .f-right {
+                float: right;
+                width: 300px;
+              }
+
+              &.add-server-group {
+                position: relative;
+                padding: 10px;
+                border: 1px solid #ddd;
+                .delete-btn {
+                  position: absolute;
+                  top: 10px; right: 10px;
+                }
+              }
+            }
+            label.w_70px {
+              display: inline-block;
+              width: 70px;
+            }
+
+            input[type='text'],
+            input[type='password'] {
+              width: 50%;
+            }
+
             input[type='radio'] + label {
               display: inline-block;
               width: 110px;
@@ -47,6 +79,16 @@ form {
             textarea {
               width: 600px;
               height: 200px;
+            }
+          }
+        }
+      }
+      .form-list.option-form-list {
+        tr {
+          td {
+            input[type='text'],
+            input[type='password'] {
+              width: 100%;
             }
           }
         }

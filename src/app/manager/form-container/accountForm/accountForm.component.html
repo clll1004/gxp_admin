@@ -1,0 +1,128 @@
+<form [formGroup]="accountform" (ngSubmit)="onSubmit(accountform.value)" class="ui-g-12 ui-g-nopad margin-bottom-50">
+  <fieldset>
+    <legend class="padding-left-10 padding-right-10">CMS 계정</legend>
+    <!--CMS계정 발급-->
+    <div class="ui-g-12 ui-g-nopad margin-bottom-40 form-container">
+      <table class="form-list">
+        <caption>CMS 계정 발급 테이블</caption>
+        <colgroup>
+          <col style="width: 260px;" />
+          <col style="width: auto;" />
+        </colgroup>
+        <tr *ngIf="!isAddRow">
+          <th>고객명</th>
+          <td><span>효성ITX(HyosungITX)</span></td>
+        </tr>
+        <tr *ngIf="!isAddRow">
+          <th>그룹명</th>
+          <td><span>그룹명</span></td>
+        </tr>
+        <tr *ngIf="!isAddRow">
+          <th>아이디</th>
+          <td><span>itx9002@hyosung.com</span></td>
+        </tr>
+        <tr *ngIf="isAddRow">
+          <th><label for="cus_seq">고객선택</label> <span class="color-red">*</span></th>
+          <td>
+            <p-dropdown id="cus_seq" [options]="cus_seq_options" formControlName="cus_seq"></p-dropdown>
+            <div *ngIf="!accountform.controls['cus_seq'].valid && accountform.controls['cus_seq'].dirty">
+              <p class="color-red info-txt margin-top-10" *ngIf="accountform.controls['cus_seq'].errors['required']">필수 선택 사항입니다.</p>
+            </div>
+          </td>
+        </tr>
+        <tr *ngIf="isAddRow">
+          <th><label for="grp_seq">그룹선택</label> <span class="color-red">*</span></th>
+          <td>
+            <p-dropdown id="grp_seq" [options]="grp_seq_options" formControlName="grp_seq"></p-dropdown>
+            <div *ngIf="!accountform.controls['grp_seq'].valid && accountform.controls['grp_seq'].dirty">
+              <p class="color-red info-txt margin-top-10" *ngIf="accountform.controls['grp_seq'].errors['required']">필수 선택 사항입니다.</p>
+            </div>
+          </td>
+        </tr>
+        <tr *ngIf="isAddRow">
+          <th><label for="usr_id">아이디</label> <span class="color-red">*</span></th>
+          <td>
+              <input pInputText type="text" id="usr_id" class="margin-right-10" formControlName="usr_id" title="아이디 입력" autocomplete="off" pKeyFilter="alpha"  maxlength="51" />
+              <button class="btn white-btn square-btn">중복 확인</button>
+              <div *ngIf="!accountform.controls['usr_id'].valid && accountform.controls['usr_id'].dirty">
+                <p class="color-red info-txt margin-top-10" *ngIf="accountform.controls['usr_id'].errors['required']">필수입력 사항 입니다</p>
+                <p class="color-red info-txt margin-top-10" *ngIf="accountform.controls['usr_id'].errors['maxlength']"> 50자 이내로 입력해주세요</p>
+              </div>
+          </td>
+        </tr>
+        <tr>
+          <th><label for="usr_pw">패스워드</label> <span class="color-red">*</span></th>
+          <td>
+            <input pPassword [feedback]="false" type="password" id="usr_pw" title="패스워드 입력" formControlName="usr_pw" maxlength="33" value="" />
+            <div *ngIf="!accountform.controls['usr_pw'].valid && accountform.controls['usr_pw'].dirty">
+              <p class="color-red info-txt margin-top-10" *ngIf="accountform.controls['usr_pw'].errors['required']">필수입력 사항 입니다</p>
+              <p class="color-red info-txt margin-top-10" *ngIf="accountform.controls['usr_pw'].errors['maxlength']"> 32자 이내로 입력해주세요</p>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <th><label for="usr_pw_cf">패스워드 확인</label> <span class="color-red">*</span></th>
+          <td>
+            <input pPassword [feedback]="false" type="password" id="usr_pw_cf" title="패스워드 확인 입력" maxlength="33" />
+            <p class="color-red info-txt margin-top-10" >패스워드가 일치하지 않습니다</p>
+          </td>
+        </tr>
+        <tr>
+          <th><label for="usr_nm">사용자명</label> <span class="color-red">*</span></th>
+          <td>
+            <input pInputText type="text" id="usr_nm" title="사용자명 입력" formControlName="usr_nm" autocomplete="off" maxlength="31" />
+            <div *ngIf="!accountform.controls['usr_nm'].valid && accountform.controls['usr_nm'].dirty">
+              <p class="color-red info-txt margin-top-10" *ngIf="accountform.controls['usr_nm'].errors['required']">필수입력 사항 입니다</p>
+              <p class="color-red info-txt margin-top-10" *ngIf="accountform.controls['usr_nm'].errors['maxlength']"> 30자 이내로 입력해주세요</p>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <th><label for="usr_mobile">휴대폰</label></th>
+          <td>
+            <input pInputText type="text" id="usr_mobile" title="휴대폰 입력" (change)="test()" formControlName="usr_mobile" autocomplete="off" maxlength="15" placeholder="ex)010-0000-0000"/>
+            <div *ngIf="!accountform.controls['usr_mobile'].valid && accountform.controls['usr_mobile'].dirty">
+              <p class="color-red info-txt margin-top-10" *ngIf="accountform.controls['usr_mobile'].errors['maxlength']"> - 포함 13자 이내로 입력해주세요</p>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <th><label for="usr_tel">유선전화</label></th>
+          <td>
+            <input pInputText type="text" id="usr_tel" title="유선전화 입력" formControlName="usr_tel" autocomplete="off" maxlength="15" />
+            <div *ngIf="!accountform.controls['usr_tel'].valid && accountform.controls['usr_tel'].dirty">
+              <p class="color-red info-txt margin-top-10" *ngIf="accountform.controls['usr_tel'].errors['maxlength']"> - 포함 13자 이내로 입력해주세요</p>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <th>사용여부 <span class="color-red">*</span></th>
+          <td>
+            <p-radioButton formControlName="user_use" name="user_use" value="y" label="사용" class="margin-right-30"></p-radioButton>
+            <p-radioButton formControlName="user_use" name="user_use" value="n" label="사용 중지"></p-radioButton>
+          </td>
+        </tr>
+        <tr>
+          <th><label for="usr_remark">비고</label></th>
+          <td>
+            <textarea pInputTextarea title="비고" id="usr_remark" class="form_txta" formControlName="usr_remark" autocomplete="off" maxlength="101"></textarea>
+            <div *ngIf="!accountform.controls['usr_remark'].valid && accountform.controls['usr_remark'].dirty">
+              <p class="color-red info-txt margin-top-10" *ngIf="accountform.controls['usr_remark'].errors['maxlength']"> 100자 이내로 입력해주세요</p>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="ui-g-12 ui-g-nopad txt-center">
+      <button pButton type="submit" label="등록" [disabled]="!accountform.valid" class="margin-right-10"></button>
+      <button pButton type="reset" label="취소"></button>
+    </div>
+    <div style="text-align:center;margin-top:20px" *ngIf="submitted">
+      Form Submitted
+      <br>
+      {{diagnostic}}
+    </div>
+
+  </fieldset>
+</form>
