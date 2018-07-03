@@ -55,7 +55,7 @@ export class ListContainerComponent implements OnInit {
     this.filterCustomerLists = this.customerLists;
     this.totalCustomerList = this.filterCustomerLists.length;
   }
-  filterListUse(data:boolean) {
+  filterListUse(data:string) {
     this.filterCustomerLists = this.customerLists.filter((customerItem) => {
       return customerItem.cus_use_yn === data;
     });

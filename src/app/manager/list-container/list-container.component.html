@@ -19,7 +19,7 @@
 
   <div *ngIf="params['listId'] === 'customer'">
     <div class="ui-g-12 ui-g-nopad row-info-sec margin-bottom-20">
-      ㆍTotal <span class="total-row">{{ totalCustomerList }}</span>건 (<span class="now-page">{{ currentIndex }}</span>Page / <span class="total-page">{{ totalIndex }}</span>Page)
+      ㆍTotal <span class="total-row">{{ totalCustomerList }}</span>건 <!--(<span class="now-page">{{ currentIndex }}</span>Page / <span class="total-page">{{ totalIndex }}</span>Page)-->
     </div>
     <p-table id="customerTable" class="ui-g-12 ui-g-nopad" [value]="filterCustomerLists" [paginator]="true" [rows]="10" [resizableColumns]="true">
       <ng-template pTemplate="colgroup" let-columns>
@@ -37,14 +37,14 @@
       <ng-template pTemplate="body" let-customerList>
         <tr>
           <td>{{ customerList.cus_seq }}</td>
-          <td><a routerLink="/manager/customer/modify">{{ customerList.cus_nm_ko }}</a></td>
+          <td><a routerLink="/manager/customer/modify/{{customerList.cus_seq}}">{{ customerList.cus_nm_ko }}</a></td>
           <td>{{ customerList.cus_nm_en }}</td>
           <td>{{ customerList.cus_inchg_nm }}</td>
           <td>{{ customerList.cus_inchg_tel }}</td>
           <td>{{ customerList.cus_use_yn }}</td>
           <td>{{ customerList.cus_test_yn }}</td>
           <td>{{ customerList.cus_reg_dtm }}</td>
-          <td><a routerLink="/manager/customer/modify"><button class="btn white-btn" label="수정">수정</button></a></td>
+          <td><a routerLink="/manager/customer/modify/{{customerList.cus_seq}}"><button class="btn white-btn" label="수정">수정</button></a></td>
         </tr>
       </ng-template>
     </p-table>

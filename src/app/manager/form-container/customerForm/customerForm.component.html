@@ -1,6 +1,6 @@
 <form [formGroup]="customerform" (ngSubmit)="onSubmit(customerform.value)" class="ui-g-12 ui-g-nopad margin-bottom-50">
   <fieldset>
-    <legend class="padding-left-10 padding-right-10"> CUSTOMER </legend>
+    <legend class="padding-left-10 padding-right-10"> CUSTOMER  </legend>
     <!--고객 기본 정보-->
     <div class="ui-g-12 ui-g-nopad margin-bottom-40 form-container">
       <h3 class="form-title" *ngIf="isAddRow">고객기본정보</h3>
@@ -10,6 +10,7 @@
           <col style="width: 260px;" />
           <col style="width: auto;" />
         </colgroup>
+
         <tr *ngIf="isAddRow">
           <th><label for="cus_nm_en">고객명(영문) <span class="color-red">*</span></label></th>
           <td>
@@ -23,7 +24,7 @@
         </tr>
         <tr *ngIf="!isAddRow">
           <th>고객명(영문) <span class="color-red">*</span></th>
-          <td><span class="name_eng">Hankyung</span></td>
+          <td><span class="name_eng">{{ customerform.value['cus_nm_en'] }}</span></td>
         </tr>
         <tr>
           <th><label for="cus_nm_ko">고객명(한글) </label> <span class="color-red">*</span></th>
@@ -67,23 +68,23 @@
         <tr>
           <th>전용 서버 사용 여부(싱글모드)</th>
           <td>
-            <p-radioButton formControlName="cus_sngl_cvt_yn" name="cus_sngl_cvt_yn" value="y" label="사용" class="margin-right-30"></p-radioButton>
-            <p-radioButton formControlName="cus_sngl_cvt_yn" name="cus_sngl_cvt_yn" value="n" label="사용 안 함"></p-radioButton>
+            <p-radioButton formControlName="cus_sngl_cvt_yn" name="cus_sngl_cvt_yn" value="Y" label="사용" class="margin-right-30"></p-radioButton>
+            <p-radioButton formControlName="cus_sngl_cvt_yn" name="cus_sngl_cvt_yn" value="N" label="사용 안 함"></p-radioButton>
             <span class="color-grey info-txt margin-left-10">* 트랜스코딩서버 IP 입력</span>
           </td>
         </tr>
         <tr>
           <th>사용여부</th>
           <td>
-            <p-radioButton formControlName="cus_use_yn" name="cus_use_yn" value="y" label="사용" class="margin-right-30"></p-radioButton>
-            <p-radioButton formControlName="cus_use_yn" name="cus_use_yn" value="n" label="사용 안 함"></p-radioButton>
+            <p-radioButton formControlName="cus_use_yn" name="cus_use_yn" value="Y" label="사용" class="margin-right-30"></p-radioButton>
+            <p-radioButton formControlName="cus_use_yn" name="cus_use_yn" value="N" label="사용 안 함"></p-radioButton>
           </td>
         </tr>
         <tr>
           <th>테스트여부</th>
           <td>
-            <p-radioButton formControlName="cus_test_yn" name="cus_test_yn" value="y" label="사용" class="margin-right-30"></p-radioButton>
-            <p-radioButton formControlName="cus_test_yn" name="cus_test_yn" value="n" label="사용 안 함"></p-radioButton>
+            <p-radioButton formControlName="cus_test_yn" name="cus_test_yn" value="Y" label="사용" class="margin-right-30"></p-radioButton>
+            <p-radioButton formControlName="cus_test_yn" name="cus_test_yn" value="N" label="사용 안 함"></p-radioButton>
           </td>
         </tr>
       </table>
@@ -561,16 +562,14 @@
       </table>
     </div>
 
-
     <div class="ui-g-12 ui-g-nopad txt-center">
       <button pButton type="submit" label="등록" [disabled]="!customerform.valid" class="margin-right-10"></button>
-      <button pButton type="reset" label="취소"></button>
+      <button pButton type="button" (click)="goBack()" label="취소"></button>
     </div>
-    <div style="text-align:center;margin-top:20px" *ngIf="submitted">
+    <div style="text-align: left; margin-top:20px" *ngIf="submitted">
       Form Submitted
       <br>
-      {{diagnostic}}
+      {{ diagnostic }}
     </div>
-
   </fieldset>
 </form>

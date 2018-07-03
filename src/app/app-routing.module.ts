@@ -9,7 +9,8 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'manager', component: ManagerComponent },
   { path: 'manager/:listId', component: ManagerComponent },
-  { path: 'manager/:listId/:subId', component: ManagerComponent }
+  { path: 'manager/:listId/:subId', component: ManagerComponent },
+  { path: 'manager/:listId/:modify/:index', component: ManagerComponent }
 ];
 
 @NgModule({
