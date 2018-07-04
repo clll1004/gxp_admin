@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Validators,FormControl,FormGroup,FormBuilder  } from '@angular/forms';
+import { Validators,FormControl,FormGroup,FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Params } from "@angular/router";
 import { Location } from '@angular/common';
-import { Http } from '@angular/http';
+import { Http, Headers } from '@angular/http';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'customerForm',
@@ -58,6 +59,7 @@ export class CustomerFormComponent implements OnInit {
   ngOnInit() {
     this.customerform = this.formBuilder.group({
       /*고객 기본 정보*/
+      'cus_seq': new FormControl('', Validators.required),
       'cus_nm_en': new FormControl('', Validators.compose([Validators.required, Validators.maxLength(30)])),
       'cus_nm_ko': new FormControl('', Validators.compose([Validators.required, Validators.maxLength(30)])),
       'cus_inchg_nm': new FormControl('', Validators.maxLength(20)),
@@ -128,8 +130,9 @@ export class CustomerFormComponent implements OnInit {
       urlItem[2].path == 'add' ? this.isAddRow =true : this.isAddRow = false;
 
       if(!this.isAddRow) {
-        this.customerform.controls['cus_nm_en'].setValidators([]);
-
+        this.loadData();
+      }
+      if(!this.isAddRow) {
         this.customerform.controls['grp_tcd_desc'].setValidators([]);
         this.customerform.controls['grp_nm'].setValidators([]);
         this.customerform.controls['grp_svc_domain'].setValidators([]);
@@ -185,15 +188,13 @@ export class CustomerFormComponent implements OnInit {
         this.customerform.controls['gss_ftp_mode'].setValidators([]);
       }
     });
-
-    this.loadData();
   }
 
   onSubmit(value: string) {
     this.submitted = true;
-  }
 
-  get diagnostic() { return JSON.stringify(this.customerform.value); }
+    this.updateData(value);
+  }
 
   goBack() {
     this.location.back();
@@ -202,6 +203,7 @@ export class CustomerFormComponent implements OnInit {
   loadData() {
     this.http.get('http://183.110.11.49/adm/customer/' + this.params.index).subscribe((data) => {
       const getData:any[] = JSON.parse((<any>data)._body);
+      this.customerform.get('cus_seq').setValue(getData['cus_seq']);
       this.customerform.get('cus_nm_en').setValue(getData['cus_nm_en']);
       this.customerform.get('cus_nm_ko').setValue(getData['cus_nm_ko']);
       this.customerform.get('cus_inchg_nm').setValue(getData['cus_inchg_nm']);
@@ -210,6 +212,71 @@ export class CustomerFormComponent implements OnInit {
       this.customerform.get('cus_sngl_cvt_yn').setValue(getData['cus_sngl_cvt_yn']);
       this.customerform.get('cus_use_yn').setValue(getData['cus_use_yn']);
       this.customerform.get('cus_test_yn').setValue(getData['cus_test_yn']);
+
+      this.customerform.get('grp_tcd_desc').setValue(getData['grp_tcd_desc']);
+      this.customerform.get('grp_nm').setValue(getData['grp_nm']);
+      this.customerform.get('grp_svc_domain').setValue(getData['grp_svc_domain']);
+      this.customerform.get('grp_svc_sub_url').setValue(getData['grp_svc_sub_url']);
+      this.customerform.get('grp_callback_url').setValue(getData['grp_callback_url']);
+      this.customerform.get('grp_smil_use_yn').setValue(getData['grp_smil_use_yn']);
+      this.customerform.get('grp_autoresol_use_yn').setValue(getData['grp_autoresol_use_yn']);
+      this.customerform.get('grp_file_suffix_use').setValue(getData['grp_file_suffix_use']);
+      this.customerform.get('grp_thm_make_yn').setValue(getData['grp_thm_make_yn']);
+      this.customerform.get('grp_thm_domain').setValue(getData['grp_thm_domain']);
+      this.customerform.get('gts_ftp_ip').setValue(getData['gts_ftp_ip']);
+      this.customerform.get('gts_ftp_port').setValue(getData['gts_ftp_port']);
+      this.customerform.get('gts_ftp_id').setValue(getData['gts_ftp_id']);
+      this.customerform.get('gts_ftp_pw').setValue(getData['gts_ftp_pw']);
+      this.customerform.get('gts_ftp_mode').setValue(getData['gts_ftp_mode']);
+      this.customerform.get('grp_thm_interval').setValue(getData['grp_thm_interval']);
+      this.customerform.get('grp_security_type').setValue(getData['grp_security_type']);
+      this.customerform.get('grp_ftp_ip').setValue(getData['grp_ftp_ip']);
+      this.customerform.get('grp_ftp_port').setValue(getData['grp_ftp_port']);
+      this.customerform.get('grp_ftp_id').setValue(getData['grp_ftp_id']);
+      this.customerform.get('grp_ftp_pw').setValue(getData['grp_ftp_pw']);
+      this.customerform.get('grp_ftp_mode').setValue(getData['grp_ftp_mode']);
+      this.customerform.get('grp_ftp_bak_ip').setValue(getData['grp_ftp_bak_ip']);
+      this.customerform.get('grp_stream_svr_type').setValue(getData['grp_stream_svr_type']);
+
+      this.customerform.get('gto_use_yn').setValue(getData['gto_use_yn']);
+      this.customerform.get('gto_nm').setValue(getData['gto_nm']);
+      this.customerform.get('gto_desc').setValue(getData['gto_desc']);
+      this.customerform.get('gto_file_suffix').setValue(getData['gto_file_suffix']);
+      this.customerform.get('gto_file_container').setValue(getData['gto_file_container']);
+      this.customerform.get('gto_video_bitrate').setValue(getData['gto_video_bitrate']);
+      this.customerform.get('gto_audio_bitrate').setValue(getData['gto_audio_bitrate']);
+      this.customerform.get('gto_max_bitrate').setValue(getData['gto_max_bitrate']);
+      this.customerform.get('gto_video_rsvopt').setValue(getData['gto_video_rsvopt']);
+      this.customerform.get('gto_audio_rsvopt').setValue(getData['gto_audio_rsvopt']);
+      this.customerform.get('gto_dst_width').setValue(getData['gto_dst_width']);
+      this.customerform.get('gto_dst_height').setValue(getData['gto_dst_height']);
+      this.customerform.get('gto_video_aspect').setValue(getData['gto_video_aspect']);
+      this.customerform.get('gto_main').setValue(getData['gto_main']);
+      this.customerform.get('gto_baseline').setValue(getData['gto_baseline']);
+      this.customerform.get('gto_high').setValue(getData['gto_high']);
+      this.customerform.get('gto_bitrate_mode').setValue(getData['gto_bitrate_mode']);
+      this.customerform.get('gto_sharpen').setValue(getData['gto_sharpen']);
+      this.customerform.get('gto_refs').setValue(getData['gto_refs']);
+      this.customerform.get('gto_frame_rate').setValue(getData['gto_frame_rate']);
+      this.customerform.get('gto_static_use').setValue(getData['gto_static_use']);
+      this.customerform.get('gto_static_encode').setValue(getData['gto_static_encode']);
+      this.customerform.get('gto_drm').setValue(getData['gto_drm']);
+      this.customerform.get('gss_ftp_ip').setValue(getData['gss_ftp_ip']);
+      this.customerform.get('gss_ftp_port').setValue(getData['gss_ftp_port']);
+      this.customerform.get('gss_ftp_id').setValue(getData['gss_ftp_id']);
+      this.customerform.get('gss_ftp_pw').setValue(getData['gss_ftp_pw']);
+      this.customerform.get('gss_ftp_mode').setValue(getData['gss_ftp_mode']);
+
     });
+  }
+
+  updateData(newData): Observable<any> {
+    const body = newData;
+
+    return this.http.put('http://183.110.11.49/adm/customer', body, {
+        headers : {
+          'Content-Type' : 'application/x-www-form-urlencoded; charset=UTF-8'
+        }
+      }).subscribe( () => {});
   }
 }
