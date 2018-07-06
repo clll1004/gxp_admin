@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Validators,FormControl,FormGroup,FormBuilder  } from '@angular/forms';
 import { ActivatedRoute } from "@angular/router";
-
+import { Http } from "@angular/http";
+import { Observable } from "rxjs/internal/Observable";
 
 @Component({
   selector: 'accountForm',
@@ -15,6 +16,7 @@ export class AccountFormComponent implements OnInit {
 
   /*for check add page row*/
   isAddRow: boolean = true;
+  checkID: boolean = false;
 
   /*for dropdown*/
   cus_seq_options: any[];
@@ -22,7 +24,7 @@ export class AccountFormComponent implements OnInit {
   grp_seq_options: any[];
   grp_seq: any[];
 
-  constructor(private formBuilder: FormBuilder, private activatedRoute: ActivatedRoute) {
+  constructor(private formBuilder: FormBuilder, private activatedRoute: ActivatedRoute, private http: Http) {
     this.cus_seq_options = [
       {label:'선택하세요', value:null},
       {label:'고객1', value:true},
@@ -46,7 +48,7 @@ export class AccountFormComponent implements OnInit {
       'usr_mobile': new FormControl('', Validators.maxLength(14)),
       'usr_tel': new FormControl('', Validators.maxLength(14)),
       'usr_remark': new FormControl('', Validators.maxLength(100)),
-      'user_use':  new FormControl('y', Validators.required)
+      'user_use':  new FormControl('Y', Validators.required)
     });
 
     this.activatedRoute.url.subscribe((urlItem) => {
@@ -63,10 +65,20 @@ export class AccountFormComponent implements OnInit {
     this.submitted = true;
   }
 
-  get diagnostic() { return JSON.stringify(this.accountform.value); }
-
-  test() {
-    console.log(this.accountform);
+  get diagnostic() {
+    return JSON.stringify(this.accountform.value);
   }
 
+  checkIDs() {
+    const inputId:string = this.accountform.value['usr_id'];
+    this.getLists('http://183.110.11.49/adm/common/check/userid/'+inputId).subscribe((cont) => {
+      console.log(cont._body);
+      cont._body === 'true' ? this.checkID = true : this.checkID = false;
+    });
+  }
+
+  getLists(listUrl): Observable<any> {
+    console.log(listUrl);
+    return this.http.get(listUrl);
+  }
 }

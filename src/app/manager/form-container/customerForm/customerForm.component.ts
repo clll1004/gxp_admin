@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Validators,FormControl,FormGroup,FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Params } from "@angular/router";
 import { Location } from '@angular/common';
-import { Http, Headers } from '@angular/http';
-import { Observable } from 'rxjs';
+import { Http } from '@angular/http';
+import { Headers } from '@angular/http';
 
 @Component({
   selector: 'customerForm',
@@ -17,7 +17,7 @@ export class CustomerFormComponent implements OnInit {
   customerform: FormGroup;
   submitted: boolean;
 
-  /*for check addpage row*/
+  /*for check addpagebb row*/
   isAddRow: boolean = true;
 
   /*for dropdown*/
@@ -270,13 +270,15 @@ export class CustomerFormComponent implements OnInit {
     });
   }
 
-  updateData(newData): Observable<any> {
-    const body = newData;
+  updateData(newData) {
+    let headers:Headers = new Headers();
+    headers.append('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
 
-    return this.http.put('http://183.110.11.49/adm/customer', body, {
-        headers : {
-          'Content-Type' : 'application/x-www-form-urlencoded; charset=UTF-8'
-        }
-      }).subscribe( () => {});
+    return this.http.put('http://183.110.11.49/adm/customer', newData, { headers: headers }).subscribe(
+      data => console.log("Data: " + data),
+      error => console.log("Error: " + error),
+      function(){
+        alert('수정 완료되었습니다.');
+      });
   }
 }
