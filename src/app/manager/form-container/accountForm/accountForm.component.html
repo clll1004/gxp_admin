@@ -11,15 +11,11 @@
         </colgroup>
         <tr *ngIf="!isAddRow">
           <th>고객명</th>
-          <td><span>효성ITX(HyosungITX)</span></td>
-        </tr>
-        <tr *ngIf="!isAddRow">
-          <th>그룹명</th>
-          <td><span>그룹명</span></td>
+          <td>{{ accountform.value['cus_nm_ko'] }}</td>
         </tr>
         <tr *ngIf="!isAddRow">
           <th>아이디</th>
-          <td><span>itx9002@hyosung.com</span></td>
+          <td>{{ accountform.value['usr_id'] }}</td>
         </tr>
         <tr *ngIf="isAddRow">
           <th><label for="cus_seq">고객선택</label> <span class="color-red">*</span></th>
@@ -54,7 +50,7 @@
             </div>
           </td>
         </tr>
-        <tr>
+        <tr *ngIf="isAddRow">
           <th><label for="usr_pw">패스워드</label> <span class="color-red">*</span></th>
           <td>
             <input pPassword [feedback]="false" type="password" id="usr_pw" title="패스워드 입력" formControlName="usr_pw" maxlength="33" value="" />
@@ -64,7 +60,7 @@
             </div>
           </td>
         </tr>
-        <tr>
+        <tr *ngIf="isAddRow">
           <th><label for="usr_pw_cf">패스워드 확인</label> <span class="color-red">*</span></th>
           <td>
             <input pPassword [feedback]="false" type="password" id="usr_pw_cf" title="패스워드 확인 입력" formControlName="usr_pw_cf" maxlength="33" value="" />
@@ -77,11 +73,10 @@
           </td>
         </tr>
         <tr>
-          <th><label for="usr_nm">사용자명</label> <span class="color-red">*</span></th>
+          <th><label for="usr_nm">사용자명</label></th>
           <td>
             <input pInputText type="text" id="usr_nm" title="사용자명 입력" formControlName="usr_nm" autocomplete="off" maxlength="31" />
             <div *ngIf="!accountform.controls['usr_nm'].valid && accountform.controls['usr_nm'].dirty">
-              <p class="color-red info-txt margin-top-10" *ngIf="accountform.controls['usr_nm'].errors['required']">필수입력 사항 입니다</p>
               <p class="color-red info-txt margin-top-10" *ngIf="accountform.controls['usr_nm'].errors['maxlength']"> 30자 이내로 입력해주세요</p>
             </div>
           </td>
@@ -129,6 +124,3 @@
     </div>
   </fieldset>
 </form>
-<div style="width: 100%; word-break: break-all;" >
-  {{diagnostic}}
-</div>
