@@ -2,7 +2,7 @@
   <fieldset>
     <legend class="padding-left-10 padding-right-10"> CUSTOMER  </legend>
     <!--고객 기본 정보-->
-    <div class="ui-g-12 ui-g-nopad margin-bottom-40 form-container">
+    <div class="ui-g-12 ui-g-nopad margin-bottom-40 form-container" formGroupName="cus">
       <h3 class="form-title" *ngIf="isAddRow">고객기본정보</h3>
       <table class="form-list">
         <caption>고객 기본 정보 테이블</caption>
@@ -15,24 +15,28 @@
           <th><label for="cus_nm_en">고객명(영문) <span class="color-red">*</span></label></th>
           <td>
             <input pInputText type="text" class="margin-right-10" id="cus_nm_en" formControlName="cus_nm_en" title="고객명(영문) 입력" pKeyFilter="alpha" autocomplete="off" maxlength="31" />
-            <button type="button" class="btn white-btn square-btn">중복 확인</button>
-            <div *ngIf="!customerform.controls['cus_nm_en'].valid && customerform.controls['cus_nm_en'].dirty">
-              <p class="color-red info-txt margin-top-10" *ngIf="customerform.controls['cus_nm_en'].errors['required']">필수입력 사항 입니다</p>
-              <p class="color-red info-txt margin-top-10" *ngIf="customerform.controls['cus_nm_en'].errors['maxlength']"> 30자 이내로 입력해주세요</p>
+            <button type="button" class="btn white-btn square-btn" (click)="confirmCustomerName()">중복 확인</button>
+            <div *ngIf="!customerform.controls.cus.get('cus_nm_en').valid && customerform.controls.cus.get('cus_nm_en').dirty">
+              <p class="color-red info-txt margin-top-10" *ngIf="customerform.controls.cus.get('cus_nm_en').errors['required']">필수입력 사항 입니다</p>
+              <p class="color-red info-txt margin-top-10" *ngIf="customerform.controls.cus.get('cus_nm_en').errors['maxlength']"> 30자 이내로 입력해주세요</p>
+            </div>
+            <div *ngIf="showNameDupMsg">
+              <p class="color-blue info-txt margin-top-10" *ngIf="ableCustomerName">사용가능한 고객명입니다.</p>
+              <p class="color-red info-txt margin-top-10" *ngIf="!ableCustomerName">사용중인 고객명입니다.</p>
             </div>
           </td>
         </tr>
         <tr *ngIf="!isAddRow">
           <th>고객명(영문) <span class="color-red">*</span></th>
-          <td><span class="name_eng">{{ customerform.value['cus_nm_en'] }}</span></td>
+          <td>{{ customerform.controls.cus.get('cus_nm_en').value }}</td>
         </tr>
         <tr>
           <th><label for="cus_nm_ko">고객명(한글) </label> <span class="color-red">*</span></th>
           <td>
             <input pInputText type="text" id="cus_nm_ko" formControlName="cus_nm_ko" title="고객명(한글) 입력" autocomplete="off" maxlength="31" />
-            <div *ngIf="!customerform.controls['cus_nm_ko'].valid && customerform.controls['cus_nm_ko'].dirty">
-              <p class="color-red info-txt margin-top-10" *ngIf="customerform.controls['cus_nm_ko'].errors['required']">필수입력 사항 입니다</p>
-              <p class="color-red info-txt margin-top-10" *ngIf="customerform.controls['cus_nm_ko'].errors['maxlength']"> 30자 이내로 입력해주세요</p>
+            <div *ngIf="!customerform.controls.cus.get('cus_nm_ko').valid && customerform.controls.cus.get('cus_nm_ko').dirty">
+              <p class="color-red info-txt margin-top-10" *ngIf="customerform.controls.cus.get('cus_nm_ko').errors['required']">필수입력 사항 입니다</p>
+              <p class="color-red info-txt margin-top-10" *ngIf="customerform.controls.cus.get('cus_nm_ko').errors['maxlength']"> 30자 이내로 입력해주세요</p>
             </div>
           </td>
         </tr>
@@ -40,8 +44,8 @@
           <th><label for="cus_inchg_nm">고객담당자</label></th>
           <td>
             <input pInputText type="text" id="cus_inchg_nm" formControlName="cus_inchg_nm" title="고객담당자 입력" autocomplete="off" maxlength="21" />
-            <div *ngIf="!customerform.controls['cus_inchg_nm'].valid && customerform.controls['cus_inchg_nm'].dirty">
-              <p class="color-red info-txt margin-top-10" *ngIf="customerform.controls['cus_inchg_nm'].errors['maxlength']"> 20자 이내로 입력해주세요</p>
+            <div *ngIf="!customerform.controls.cus.get('cus_inchg_nm').valid && customerform.controls.cus.get('cus_inchg_nm').dirty">
+              <p class="color-red info-txt margin-top-10" *ngIf="customerform.controls.cus.get('cus_inchg_nm').errors['maxlength']"> 20자 이내로 입력해주세요</p>
             </div>
           </td>
         </tr>
@@ -50,8 +54,8 @@
           <td>
             <input pInputText type="text" id="cus_inchg_email" formControlName="cus_inchg_email" title="고객담당자 E-Mail 입력" autocomplete="off" maxlength="51" />
             <span class="color-grey info-txt margin-left-10">* 통계 및 정보 수신</span>
-            <div *ngIf="!customerform.controls['cus_inchg_email'].valid && customerform.controls['cus_inchg_email'].dirty">
-              <p class="color-red info-txt margin-top-10" *ngIf="customerform.controls['cus_inchg_email'].errors['maxlength']"> 50자 이내로 입력해주세요</p>
+            <div *ngIf="!customerform.controls.cus.get('cus_inchg_email').valid && customerform.controls.cus.get('cus_inchg_email').dirty">
+              <p class="color-red info-txt margin-top-10" *ngIf="customerform.controls.cus.get('cus_inchg_email').errors['maxlength']"> 50자 이내로 입력해주세요</p>
             </div>
           </td>
         </tr>
@@ -60,8 +64,8 @@
           <td>
             <input pInputText type="text" id="cus_inchg_tel" formControlName="cus_inchg_tel" autocomplete="off" title="고객담당자 연락처" placeholder="- 포함" maxlength="15" />
             <span class="color-grey info-txt margin-left-10">* SNS 수신 가능</span>
-            <div *ngIf="!customerform.controls['cus_inchg_tel'].valid && customerform.controls['cus_inchg_tel'].dirty">
-              <p class="color-red info-txt margin-top-10" *ngIf="customerform.controls['cus_inchg_tel'].errors['maxlength']"> 14자 이내로 입력해주세요</p>
+            <div *ngIf="!customerform.controls.cus.get('cus_inchg_tel').valid && customerform.controls.cus.get('cus_inchg_tel').dirty">
+              <p class="color-red info-txt margin-top-10" *ngIf="customerform.controls.cus.get('cus_inchg_tel').errors['maxlength']"> 14자 이내로 입력해주세요</p>
             </div>
           </td>
         </tr>
@@ -90,7 +94,7 @@
       </table>
     </div>
     <!--트랜스코딩 정보-->
-    <div class="ui-g-12 ui-g-nopad margin-bottom-40 form-container" *ngIf="isAddRow">
+    <div class="ui-g-12 ui-g-nopad margin-bottom-40 form-container" formGroupName="grp" *ngIf="isAddRow">
       <h3 class="form-title">트랜스코딩정보</h3>
       <table class="form-list">
         <caption>트랜스코딩 정보 테이블</caption>
@@ -102,9 +106,9 @@
           <th><label for="grp_tcd_desc">트랜스코딩 설명 </label> <span class="color-red">*</span></th>
           <td>
             <input pInputText type="text" id="grp_tcd_desc" formControlName="grp_tcd_desc" title="트랜스코딩 설명 입력" autocomplete="off" maxlength="51" />
-            <div *ngIf="!customerform.controls['grp_tcd_desc'].valid && customerform.controls['grp_tcd_desc'].dirty">
-              <p class="color-red info-txt margin-top-10" *ngIf="customerform.controls['grp_tcd_desc'].errors['required']">필수입력 사항 입니다</p>
-              <p class="color-red info-txt margin-top-10" *ngIf="customerform.controls['grp_tcd_desc'].errors['maxlength']"> 50자 이내로 입력해주세요</p>
+            <div *ngIf="!customerform.controls.grp.controls['grp_tcd_desc'].valid && customerform.controls.grp.controls['grp_tcd_desc'].dirty">
+              <p class="color-red info-txt margin-top-10" *ngIf="customerform.controls.grp.controls['grp_tcd_desc'].errors['required']">필수입력 사항 입니다</p>
+              <p class="color-red info-txt margin-top-10" *ngIf="customerform.controls.grp.controls['grp_tcd_desc'].errors['maxlength']"> 50자 이내로 입력해주세요</p>
             </div>
           </td>
         </tr>
@@ -112,11 +116,29 @@
           <th><label for="grp_nm">그룹명 </label> <span class="color-red">*</span></th>
           <td>
             <input pInputText type="text" id="grp_nm" formControlName="grp_nm" pKeyFilter="alpha" class="margin-right-10" title="그룹명/타입 입력" autocomplete="off" maxlength="21" />
-            <button type="button" class="btn white-btn square-btn">중복 확인</button>
-            <div *ngIf="!customerform.controls['grp_nm'].valid && customerform.controls['grp_nm'].dirty">
-              <p class="color-red info-txt margin-top-10" *ngIf="customerform.controls['grp_nm'].errors['required']">필수입력 사항 입니다</p>
-              <p class="color-red info-txt margin-top-10" *ngIf="customerform.controls['grp_nm'].errors['maxlength']"> 20자 이내로 입력해주세요</p>
+            <button type="button" class="btn white-btn square-btn" (click)="confirmGroupName()">중복 확인</button>
+            <div *ngIf="!customerform.controls.grp.controls['grp_nm'].valid && customerform.controls.grp.controls['grp_nm'].dirty">
+              <p class="color-red info-txt margin-top-10" *ngIf="customerform.controls.grp.controls['grp_nm'].errors['required']">필수입력 사항 입니다</p>
+              <p class="color-red info-txt margin-top-10" *ngIf="customerform.controls.grp.controls['grp_nm'].errors['maxlength']"> 20자 이내로 입력해주세요</p>
             </div>
+            <div *ngIf="showGroupDupMsg">
+              <p class="color-blue info-txt margin-top-10" *ngIf="ableGroupName">사용가능한 그룹명입니다.</p>
+              <p class="color-red info-txt margin-top-10" *ngIf="!ableGroupName">사용중인 그룹명입니다.</p>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <th>그룹 사용여부 <span class="color-red">*</span></th>
+          <td>
+            <p-radioButton formControlName="grp_use_yn" name="grp_use_yn" value="Y" label="사용" class="margin-right-30"></p-radioButton>
+            <p-radioButton formControlName="grp_use_yn" name="grp_use_yn" value="N" label="사용 안 함"></p-radioButton>
+          </td>
+        </tr>
+        <tr>
+          <th>기본그룹여부 <span class="color-red">*</span></th>
+          <td>
+            <p-radioButton formControlName="grp_basic_yn" name="grp_basic_yn" value="Y" label="사용" class="margin-right-30"></p-radioButton>
+            <p-radioButton formControlName="grp_basic_yn" name="grp_basic_yn" value="N" label="사용 안 함"></p-radioButton>
           </td>
         </tr>
         <tr>
@@ -124,9 +146,9 @@
           <td>
             <input pInputText type="text" id="grp_svc_domain" formControlName="grp_svc_domain" title="서비스도메인 입력" autocomplete="off" maxlength="51" />
             <p class="color-grey info-txt margin-top-10">* 해당 고객이 사용할 도메인명: 미리보기, 실제 서비스 도메인 확인용</p>
-            <div *ngIf="!customerform.controls['grp_svc_domain'].valid && customerform.controls['grp_svc_domain'].dirty">
-              <p class="color-red info-txt margin-top-10" *ngIf="customerform.controls['grp_svc_domain'].errors['required']">필수입력 사항 입니다</p>
-              <p class="color-red info-txt margin-top-10" *ngIf="customerform.controls['grp_svc_domain'].errors['maxlength']"> 50자 이내로 입력해주세요</p>
+            <div *ngIf="!customerform.controls.grp.controls['grp_svc_domain'].valid && customerform.controls.grp.controls['grp_svc_domain'].dirty">
+              <p class="color-red info-txt margin-top-10" *ngIf="customerform.controls.grp.controls['grp_svc_domain'].errors['required']">필수입력 사항 입니다</p>
+              <p class="color-red info-txt margin-top-10" *ngIf="customerform.controls.grp.controls['grp_svc_domain'].errors['maxlength']"> 50자 이내로 입력해주세요</p>
             </div>
           </td>
         </tr>
@@ -135,8 +157,8 @@
           <td>
             <input pInputText type="text" id="grp_svc_sub_url" formControlName="grp_svc_sub_url" title="서브 URL 입력" value="" autocomplete="off" maxlength="51" />
             <p class="color-grey info-txt margin-top-10">* 서비스도메인 이후 sub path 정보</p>
-            <div *ngIf="!customerform.controls['grp_svc_sub_url'].valid && customerform.controls['grp_svc_sub_url'].dirty">
-              <p class="color-red info-txt margin-top-10" *ngIf="customerform.controls['grp_svc_sub_url'].errors['maxlength']"> 50자 이내로 입력해주세요</p>
+            <div *ngIf="!customerform.controls.grp.controls['grp_svc_sub_url'].valid && customerform.controls.grp.controls['grp_svc_sub_url'].dirty">
+              <p class="color-red info-txt margin-top-10" *ngIf="customerform.controls.grp.controls['grp_svc_sub_url'].errors['maxlength']"> 50자 이내로 입력해주세요</p>
             </div>
           </td>
         </tr>
@@ -145,30 +167,30 @@
           <td>
             <input pInputText type="text" id="grp_callback_url" formControlName="grp_callback_url" title="고객 콜백 URL 입력" autocomplete="off" maxlength="201" />
             <p class="color-grey info-txt margin-top-10">* 변환 완료 후 결과전송 URL. 파라메터는 연동 규격서 참고 후 설정</p>
-            <div *ngIf="!customerform.controls['grp_callback_url'].valid && customerform.controls['grp_callback_url'].dirty">
-              <p class="color-red info-txt margin-top-10" *ngIf="customerform.controls['grp_callback_url'].errors['maxlength']"> 200자 이내로 입력해주세요</p>
+            <div *ngIf="!customerform.controls.grp.controls['grp_callback_url'].valid && customerform.controls.grp.controls['grp_callback_url'].dirty">
+              <p class="color-red info-txt margin-top-10" *ngIf="customerform.controls.grp.controls['grp_callback_url'].errors['maxlength']"> 200자 이내로 입력해주세요</p>
             </div>
           </td>
         </tr>
         <tr>
           <th>SMIL(메타파일) 사용여부 <span class="color-red">*</span></th>
           <td>
-            <p-radioButton formControlName="grp_smil_use_yn" name="grp_smil_use_yn" value="y" label="사용" class="margin-right-30"></p-radioButton>
-            <p-radioButton formControlName="grp_smil_use_yn" name="grp_smil_use_yn" value="n" label="사용 안 함"></p-radioButton>
+            <p-radioButton formControlName="grp_smil_use_yn" name="grp_smil_use_yn" value="Y" label="사용" class="margin-right-30"></p-radioButton>
+            <p-radioButton formControlName="grp_smil_use_yn" name="grp_smil_use_yn" value="N" label="사용 안 함"></p-radioButton>
           </td>
         </tr>
         <tr>
           <th>Auto Resolution <span class="color-red">*</span></th>
           <td>
-            <p-radioButton formControlName="grp_autoresol_use_yn" name="grp_autoresol_use_yn" value="y" label="사용" class="margin-right-30"></p-radioButton>
-            <p-radioButton formControlName="grp_autoresol_use_yn" name="grp_autoresol_use_yn" value="n" label="사용 안 함"></p-radioButton>
+            <p-radioButton formControlName="grp_autoresol_use_yn" name="grp_autoresol_use_yn" value="Y" label="사용" class="margin-right-30"></p-radioButton>
+            <p-radioButton formControlName="grp_autoresol_use_yn" name="grp_autoresol_use_yn" value="N" label="사용 안 함"></p-radioButton>
           </td>
         </tr>
         <tr>
           <th>변환 파일 접미어 사용 여부 <span class="color-red">*</span></th>
           <td>
-            <p-radioButton formControlName="grp_file_suffix_use" name="grp_file_suffix_use" value="y" label="사용" class="margin-right-30"></p-radioButton>
-            <p-radioButton formControlName="grp_file_suffix_use" name="grp_file_suffix_use" value="n" label="사용 안 함" class="margin-right-30"></p-radioButton>
+            <p-radioButton formControlName="grp_file_suffix_use" name="grp_file_suffix_use" value="Y" label="사용" class="margin-right-30"></p-radioButton>
+            <p-radioButton formControlName="grp_file_suffix_use" name="grp_file_suffix_use" value="N" label="사용 안 함" class="margin-right-30"></p-radioButton>
             <p-radioButton formControlName="grp_file_suffix_use" name="grp_file_suffix_use" value="same" label="동일"></p-radioButton>
 
             <p class="color-grey info-txt margin-top-10">* 사용: 접미어 / 사용안함: 옵션명 / 동일: 원본명</p>
@@ -177,8 +199,8 @@
         <tr>
           <th>썸네일추출여부 <span class="color-red">*</span></th>
           <td>
-            <p-radioButton formControlName="grp_thm_make_yn" name="grp_thm_make_yn" value="y" label="사용" class="margin-right-30"></p-radioButton>
-            <p-radioButton formControlName="grp_thm_make_yn" name="grp_thm_make_yn" value="n" label="사용 안 함"></p-radioButton>
+            <p-radioButton formControlName="grp_thm_make_yn" name="grp_thm_make_yn" value="Y" label="사용" class="margin-right-30"></p-radioButton>
+            <p-radioButton formControlName="grp_thm_make_yn" name="grp_thm_make_yn" value="N" label="사용 안 함"></p-radioButton>
           </td>
         </tr>
         <tr>
@@ -186,45 +208,9 @@
           <td>
             <input pInputText type="text" id="grp_thm_domain" formControlName="grp_thm_domain" title="썸네일도메인 입력" autocomplete="off" maxlength="51" />
             <p class="color-grey info-txt margin-top-10">* 썸네일 서비스 도메인 ex) &#123;도메인&#125;/cid/gid/path/fname000N.jpg</p>
-            <div *ngIf="!customerform.controls['grp_thm_domain'].valid && customerform.controls['grp_thm_domain'].dirty">
-              <p class="color-red info-txt margin-top-10" *ngIf="customerform.controls['grp_thm_domain'].errors['required']">필수입력 사항 입니다</p>
-              <p class="color-red info-txt margin-top-10" *ngIf="customerform.controls['grp_thm_domain'].errors['maxlength']"> 50자 이내로 입력해주세요</p>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <th>썸네일 서버 정보 <span class="color-red">*</span></th>
-          <td>
-            <p>
-              <span class="form_info_txt">썸네일서버를 추가하려면 추가버튼을 클릭하세요.</span>
-              <button type="button" class="btn white-btn square-btn margin-left-10 margin-bottom-10">썸네일 서버추가</button>
-            </p>
-            <div class="ui-g-12 ui-g-nopad server-group add-server-group">
-              <button type="button" class="btn grey-btn square-btn delete-btn"><i class="fas fa-times"></i></button>
-              <label for="gts_ftp_ip" class="w-70px margin-bottom-10">IP</label> <input pInputText type="text" id="gts_ftp_ip" formControlName="gts_ftp_ip" title="썸네일서버 IP 입력" autocomplete="off" maxlength="16" /><br>
-              <div *ngIf="!customerform.controls['gts_ftp_ip'].valid && customerform.controls['gts_ftp_ip'].dirty" class="padding-left-70">
-                <p class="color-red info-txt margin-bottom-10" *ngIf="customerform.controls['gts_ftp_ip'].errors['required']">필수입력 사항 입니다</p>
-                <p class="color-red info-txt margin-bottom-10" *ngIf="customerform.controls['gts_ftp_ip'].errors['maxlength']"> 15자 이내로 입력해주세요</p>
-              </div>
-              <label for="gts_ftp_port" class="w-70px margin-bottom-10">Port</label> <input pInputText type="text" id="gts_ftp_port" formControlName="gts_ftp_port" title="썸네일서버 Port 입력" autocomplete="off" maxlength="6" /><br>
-              <div *ngIf="!customerform.controls['gts_ftp_port'].valid && customerform.controls['gts_ftp_port'].dirty" class="padding-left-70">
-                <p class="color-red info-txt margin-bottom-10" *ngIf="customerform.controls['gts_ftp_port'].errors['required']">필수입력 사항 입니다</p>
-                <p class="color-red info-txt margin-bottom-10" *ngIf="customerform.controls['gts_ftp_port'].errors['maxlength']"> 5자 이내로 입력해주세요</p>
-              </div>
-              <label for="gts_ftp_id" class="w-70px margin-bottom-10">UserId</label> <input pInputText type="text" id="gts_ftp_id" formControlName="gts_ftp_id" title="썸네일서버 UserID 입력" autocomplete="off" maxlength="21" /><br>
-              <div *ngIf="!customerform.controls['gts_ftp_id'].valid && customerform.controls['gts_ftp_id'].dirty" class="padding-left-70">
-                <p class="color-red info-txt margin-bottom-10" *ngIf="customerform.controls['gts_ftp_id'].errors['required']">필수입력 사항 입니다</p>
-                <p class="color-red info-txt margin-bottom-10" *ngIf="customerform.controls['gts_ftp_id'].errors['maxlength']"> 20자 이내로 입력해주세요</p>
-              </div>
-              <label for="gts_ftp_pw" class="w-70px margin-bottom-10">UserPw</label> <input pInputText type="text" id="gts_ftp_pw" formControlName="gts_ftp_pw" title="썸네일서버 UserPW 입력" autocomplete="off" maxlength="21" /><br>
-              <div *ngIf="!customerform.controls['gts_ftp_pw'].valid && customerform.controls['gts_ftp_pw'].dirty" class="padding-left-70">
-                <p class="color-red info-txt margin-bottom-10" *ngIf="customerform.controls['gts_ftp_pw'].errors['required']">필수입력 사항 입니다</p>
-                <p class="color-red info-txt margin-bottom-10" *ngIf="customerform.controls['gts_ftp_pw'].errors['maxlength']"> 20자 이내로 입력해주세요</p>
-              </div>
-              <label for="gts_ftp_mode" class="w-70px margin-bottom-10">Mode</label> <p-dropdown id="gts_ftp_mode" [options]="server_mode_options" formControlName="gts_ftp_mode"></p-dropdown>
-              <div *ngIf="!customerform.controls['gts_ftp_mode'].valid && customerform.controls['gts_ftp_mode'].dirty" class="padding-left-70">
-                <p class="color-red info-txt margin-bottom-10" *ngIf="customerform.controls['gts_ftp_mode'].errors['required']">필수입력 사항 입니다</p>
-              </div>
+            <div *ngIf="!customerform.controls.grp.controls['grp_thm_domain'].valid && customerform.controls.grp.controls['grp_thm_domain'].dirty">
+              <p class="color-red info-txt margin-top-10" *ngIf="customerform.controls.grp.controls['grp_thm_domain'].errors['required']">필수입력 사항 입니다</p>
+              <p class="color-red info-txt margin-top-10" *ngIf="customerform.controls.grp.controls['grp_thm_domain'].errors['maxlength']"> 50자 이내로 입력해주세요</p>
             </div>
           </td>
         </tr>
@@ -233,17 +219,17 @@
           <td>
             <input pInputText type="text" title="썸네일 추출간격 입력" id="grp_thm_interval" formControlName="grp_thm_interval" pKeyFilter="num" autocomplete="off"  maxlength="3"/>
             <p class="color-grey info-txt margin-top-10">* sec 단위</p>
-            <div *ngIf="!customerform.controls['grp_thm_interval'].valid && customerform.controls['grp_thm_interval'].dirty">
-              <p class="color-red info-txt margin-top-10" *ngIf="customerform.controls['grp_thm_interval'].errors['required']">필수입력 사항 입니다</p>
-              <p class="color-red info-txt margin-top-10" *ngIf="customerform.controls['grp_thm_interval'].errors['maxlength']"> 2자 이내로 입력해주세요</p>
+            <div *ngIf="!customerform.controls.grp.controls['grp_thm_interval'].valid && customerform.controls.grp.controls['grp_thm_interval'].dirty">
+              <p class="color-red info-txt margin-top-10" *ngIf="customerform.controls.grp.controls['grp_thm_interval'].errors['required']">필수입력 사항 입니다</p>
+              <p class="color-red info-txt margin-top-10" *ngIf="customerform.controls.grp.controls['grp_thm_interval'].errors['maxlength']"> 2자 이내로 입력해주세요</p>
             </div>
           </td>
         </tr>
         <tr>
           <th>서비스 보안 <span class="color-red">*</span></th>
           <td>
-            <p-radioButton formControlName="grp_security_type" name="grp_security_type" value="n" label="사용 안 함" class="margin-right-30"></p-radioButton>
-            <p-radioButton formControlName="grp_security_type" name="grp_security_type" value="otu" label="URL 보안(=OTU) "></p-radioButton>
+            <p-radioButton formControlName="grp_security_type" name="grp_security_type" value="N" label="사용 안 함" class="margin-right-30"></p-radioButton>
+            <p-radioButton formControlName="grp_security_type" name="grp_security_type" value="OTU" label="URL 보안(=OTU) "></p-radioButton>
           </td>
         </tr>
         <tr>
@@ -251,28 +237,28 @@
           <td>
             <div class="ui-g-12 ui-g-nopad server-group">
               <label for="grp_ftp_ip" class="w-70px margin-bottom-10">IP</label> <input pInputText type="text" id="grp_ftp_ip" formControlName="grp_ftp_ip" title="썸네일서버 IP 입력" autocomplete="off" maxlength="16" /><br>
-              <div *ngIf="!customerform.controls['grp_ftp_ip'].valid && customerform.controls['grp_ftp_ip'].dirty" class="padding-left-70">
-                <p class="color-red info-txt margin-bottom-10" *ngIf="customerform.controls['grp_ftp_ip'].errors['required']">필수입력 사항 입니다</p>
-                <p class="color-red info-txt margin-bottom-10" *ngIf="customerform.controls['grp_ftp_ip'].errors['maxlength']"> 15자 이내로 입력해주세요</p>
+              <div *ngIf="!customerform.controls.grp.controls['grp_ftp_ip'].valid && customerform.controls.grp.controls['grp_ftp_ip'].dirty" class="padding-left-70">
+                <p class="color-red info-txt margin-bottom-10" *ngIf="customerform.controls.grp.controls['grp_ftp_ip'].errors['required']">필수입력 사항 입니다</p>
+                <p class="color-red info-txt margin-bottom-10" *ngIf="customerform.controls.grp.controls['grp_ftp_ip'].errors['maxlength']"> 15자 이내로 입력해주세요</p>
               </div>
               <label for="grp_ftp_port" class="w-70px margin-bottom-10">Port</label> <input pInputText type="text" id="grp_ftp_port" formControlName="grp_ftp_port" title="썸네일서버 Port 입력" autocomplete="off" maxlength="6" /><br>
-              <div *ngIf="!customerform.controls['grp_ftp_port'].valid && customerform.controls['grp_ftp_port'].dirty" class="padding-left-70">
-                <p class="color-red info-txt margin-bottom-10" *ngIf="customerform.controls['grp_ftp_port'].errors['required']">필수입력 사항 입니다</p>
-                <p class="color-red info-txt margin-bottom-10" *ngIf="customerform.controls['grp_ftp_port'].errors['maxlength']"> 5자 이내로 입력해주세요</p>
+              <div *ngIf="!customerform.controls.grp.controls['grp_ftp_port'].valid && customerform.controls.grp.controls['grp_ftp_port'].dirty" class="padding-left-70">
+                <p class="color-red info-txt margin-bottom-10" *ngIf="customerform.controls.grp.controls['grp_ftp_port'].errors['required']">필수입력 사항 입니다</p>
+                <p class="color-red info-txt margin-bottom-10" *ngIf="customerform.controls.grp.controls['grp_ftp_port'].errors['maxlength']"> 5자 이내로 입력해주세요</p>
               </div>
               <label for="grp_ftp_id" class="w-70px margin-bottom-10">UserId</label> <input pInputText type="text" id="grp_ftp_id" formControlName="grp_ftp_id" title="썸네일서버 UserID 입력" autocomplete="off" maxlength="21" /><br>
-              <div *ngIf="!customerform.controls['grp_ftp_id'].valid && customerform.controls['grp_ftp_id'].dirty" class="padding-left-70">
-                <p class="color-red info-txt margin-bottom-10" *ngIf="customerform.controls['grp_ftp_id'].errors['required']">필수입력 사항 입니다</p>
-                <p class="color-red info-txt margin-bottom-10" *ngIf="customerform.controls['grp_ftp_id'].errors['maxlength']"> 20자 이내로 입력해주세요</p>
+              <div *ngIf="!customerform.controls.grp.controls['grp_ftp_id'].valid && customerform.controls.grp.controls['grp_ftp_id'].dirty" class="padding-left-70">
+                <p class="color-red info-txt margin-bottom-10" *ngIf="customerform.controls.grp.controls['grp_ftp_id'].errors['required']">필수입력 사항 입니다</p>
+                <p class="color-red info-txt margin-bottom-10" *ngIf="customerform.controls.grp.controls['grp_ftp_id'].errors['maxlength']"> 20자 이내로 입력해주세요</p>
               </div>
               <label for="grp_ftp_pw" class="w-70px margin-bottom-10">UserPw</label> <input pInputText type="text" id="grp_ftp_pw" formControlName="grp_ftp_pw" title="썸네일서버 UserPW 입력" autocomplete="off" maxlength="21" /><br>
-              <div *ngIf="!customerform.controls['grp_ftp_pw'].valid && customerform.controls['grp_ftp_pw'].dirty" class="padding-left-70">
-                <p class="color-red info-txt margin-bottom-10" *ngIf="customerform.controls['grp_ftp_pw'].errors['required']">필수입력 사항 입니다</p>
-                <p class="color-red info-txt margin-bottom-10" *ngIf="customerform.controls['grp_ftp_pw'].errors['maxlength']"> 20자 이내로 입력해주세요</p>
+              <div *ngIf="!customerform.controls.grp.controls['grp_ftp_pw'].valid && customerform.controls.grp.controls['grp_ftp_pw'].dirty" class="padding-left-70">
+                <p class="color-red info-txt margin-bottom-10" *ngIf="customerform.controls.grp.controls['grp_ftp_pw'].errors['required']">필수입력 사항 입니다</p>
+                <p class="color-red info-txt margin-bottom-10" *ngIf="customerform.controls.grp.controls['grp_ftp_pw'].errors['maxlength']"> 20자 이내로 입력해주세요</p>
               </div>
               <label for="grp_ftp_mode" class="w-70px margin-bottom-10">Mode</label> <p-dropdown id="grp_ftp_mode" [options]="server_mode_options" formControlName="grp_ftp_mode"></p-dropdown>
-              <div *ngIf="!customerform.controls['grp_ftp_mode'].valid && customerform.controls['grp_ftp_mode'].dirty" class="padding-left-70">
-                <p class="color-red info-txt margin-bottom-10" *ngIf="customerform.controls['grp_ftp_mode'].errors['required']">필수입력 사항 입니다</p>
+              <div *ngIf="!customerform.controls.grp.controls['grp_ftp_mode'].valid && customerform.controls.grp.controls['grp_ftp_mode'].dirty" class="padding-left-70">
+                <p class="color-red info-txt margin-bottom-10" *ngIf="customerform.controls.grp.controls['grp_ftp_mode'].errors['required']">필수입력 사항 입니다</p>
               </div>
               <p class="color-grey info-txt margin-top-10">* 원본 콘텐츠가 있는 서버 IP </p>
             </div>
@@ -284,8 +270,8 @@
             <div class="thbsv_add_sec">
               <input pInputText type="text" id="grp_ftp_bak_ip" formControlName="grp_ftp_bak_ip" title="썸네일서버 IP 입력" autocomplete="off" maxlength="16" />
               <p class="color-grey info-txt margin-top-10">* 원본 백업 서버 IP </p>
-              <div *ngIf="!customerform.controls['grp_ftp_bak_ip'].valid && customerform.controls['grp_ftp_bak_ip'].dirty">
-                <p class="color-red info-txt margin-top-10" *ngIf="customerform.controls['grp_ftp_bak_ip'].errors['maxlength']"> 15자 이내로 입력해주세요</p>
+              <div *ngIf="!customerform.controls.grp.controls['grp_ftp_bak_ip'].valid && customerform.controls.grp.controls['grp_ftp_bak_ip'].dirty">
+                <p class="color-red info-txt margin-top-10" *ngIf="customerform.controls.grp.controls['grp_ftp_bak_ip'].errors['maxlength']"> 15자 이내로 입력해주세요</p>
               </div>
             </div>
           </td>
@@ -294,16 +280,61 @@
           <th><label for="grp_stream_svr_type">Stream Server 타입 </label> <span class="color-red">*</span></th>
           <td>
             <p-dropdown id="grp_stream_svr_type" [options]="grp_stream_svr_type_options" formControlName="grp_stream_svr_type"></p-dropdown>
-            <div *ngIf="!customerform.controls['grp_stream_svr_type'].valid && customerform.controls['grp_stream_svr_type'].dirty">
-              <p class="color-red info-txt margin-top-10" *ngIf="customerform.controls['grp_stream_svr_type'].errors['required']">필수입력 사항 입니다</p>
+            <div *ngIf="!customerform.controls.grp.controls['grp_stream_svr_type'].valid && customerform.controls.grp.controls['grp_stream_svr_type'].dirty">
+              <p class="color-red info-txt margin-top-10" *ngIf="customerform.controls.grp.controls['grp_stream_svr_type'].errors['required']">필수입력 사항 입니다</p>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
+    <!--썸네일 서버 추가-->
+    <div class="ui-g-12 ui-g-nopad margin-bottom-40 form-container" formArrayName="thm" *ngIf="isAddRow" ><!--*ngFor="let col of customerform.controls.thm" -->
+      <h3 class="form-title" >썸네일 서버 정보 <button type="button" class="btn grey-btn" (click)="addThumbnailServer()">썸네일 서버 추가</button></h3>
+      <table class="form-list option-form-list">
+        <caption>썸네일 서버 정보 테이블</caption>
+        <colgroup>
+          <col style="width: 260px;" />
+          <col style="width: auto;" />
+        </colgroup>
+        <tr [formGroupName]="i" *ngFor="let thumnailItem of customerform.controls.thm.controls; let i = index;">
+          <th>
+            썸네일 서버 정보 <span class="color-red">*</span> <button type="button" class="btn grey-btn square-btn" (click)="removeThumbnailServer(i)">삭제</button>
+          </th>
+          <td>
+            <div class="ui-g-12 ui-g-nopad server-group" id="thumbServerItem">
+              <label for="gts_ftp_ip" class="w-70px margin-bottom-10">IP</label> <input pInputText type="text" id="gts_ftp_ip" formControlName="gts_ftp_ip" title="썸네일서버 IP 입력" autocomplete="off" maxlength="16" /><br>
+              <div *ngIf="!thumnailItem.get('gts_ftp_ip').valid && thumnailItem.get('gts_ftp_ip').dirty" class="padding-left-70">
+                <p class="color-red info-txt margin-bottom-10" *ngIf="thumnailItem.get('gts_ftp_ip').errors['required']">필수입력 사항 입니다</p>
+                <p class="color-red info-txt margin-bottom-10" *ngIf="thumnailItem.get('gts_ftp_ip').errors['maxlength']"> 15자 이내로 입력해주세요</p>
+              </div>
+              <label for="gts_ftp_port" class="w-70px margin-bottom-10">Port</label> <input pInputText type="text" id="gts_ftp_port" formControlName="gts_ftp_port" title="썸네일서버 Port 입력" autocomplete="off" maxlength="6" /><br>
+              <div *ngIf="!thumnailItem.get('gts_ftp_port').valid && thumnailItem.get('gts_ftp_port').dirty" class="padding-left-70">
+                <p class="color-red info-txt margin-bottom-10" *ngIf="thumnailItem.get('gts_ftp_port').errors['required']">필수입력 사항 입니다</p>
+                <p class="color-red info-txt margin-bottom-10" *ngIf="thumnailItem.get('gts_ftp_port').errors['maxlength']"> 5자 이내로 입력해주세요</p>
+              </div>
+              <label for="gts_ftp_id" class="w-70px margin-bottom-10">UserId</label> <input pInputText type="text" id="gts_ftp_id" formControlName="gts_ftp_id" title="썸네일서버 UserID 입력" autocomplete="off" maxlength="21" /><br>
+              <div *ngIf="!thumnailItem.get('gts_ftp_id').valid && thumnailItem.get('gts_ftp_id').dirty" class="padding-left-70">
+                <p class="color-red info-txt margin-bottom-10" *ngIf="thumnailItem.get('gts_ftp_id').errors['required']">필수입력 사항 입니다</p>
+                <p class="color-red info-txt margin-bottom-10" *ngIf="thumnailItem.get('gts_ftp_id').errors['maxlength']"> 20자 이내로 입력해주세요</p>
+              </div>
+              <label for="gts_ftp_pw" class="w-70px margin-bottom-10">UserPw</label> <input pInputText type="text" id="gts_ftp_pw" formControlName="gts_ftp_pw" title="썸네일서버 UserPW 입력" autocomplete="off" maxlength="21" /><br>
+              <div *ngIf="!thumnailItem.get('gts_ftp_pw').valid && thumnailItem.get('gts_ftp_pw').dirty" class="padding-left-70">
+                <p class="color-red info-txt margin-bottom-10" *ngIf="thumnailItem.get('gts_ftp_pw').errors['required']">필수입력 사항 입니다</p>
+                <p class="color-red info-txt margin-bottom-10" *ngIf="thumnailItem.get('gts_ftp_pw').errors['maxlength']"> 20자 이내로 입력해주세요</p>
+              </div>
+              <label for="gts_ftp_mode" class="w-70px margin-bottom-10">Mode</label> <p-dropdown id="gts_ftp_mode" [options]="server_mode_options" formControlName="gts_ftp_mode"></p-dropdown>
+              <div *ngIf="!thumnailItem.get('gts_ftp_mode').valid && thumnailItem.get('gts_ftp_mode').dirty" class="padding-left-70">
+                <p class="color-red info-txt margin-bottom-10" *ngIf="thumnailItem.get('gts_ftp_mode').errors['required']">필수입력 사항 입니다</p>
+              </div>
             </div>
           </td>
         </tr>
       </table>
     </div>
     <!--트랜스코딩 변환옵션-->
-    <div class="ui-g-12 ui-g-nopad margin-bottom-40 form-container" *ngIf="isAddRow">
-      <h3 class="form-title" >트랜스코딩 변환옵션 <button type="button" class="btn grey-btn">트랜스코딩 변환옵션 추가</button></h3>
+    <!--{{ customerform.controls.tcd.get([0]).get('opt').get('gto_use_yn').value }}-->
+    <div class="ui-g-12 ui-g-nopad margin-bottom-40 form-container" formArrayName="tcd" *ngIf="isAddRow">
+      <h3 class="form-title" >트랜스코딩 변환옵션 <button type="button" class="btn grey-btn" (click)="addTranscodingOption()">트랜스코딩 변환옵션 추가</button></h3>
       <table class="form-list option-form-list">
         <caption>트랜스코딩 변환옵션 테이블</caption>
         <colgroup>
@@ -315,255 +346,258 @@
           <col style="width: 230px;" />
           <col style="width: 290px;" />
         </colgroup>
-        <tr>
-          <th rowspan="13">
-            HQ <span class="color-red">*</span> <button type="button" class="btn grey-btn square-btn">삭제</button>
-          </th>
-          <td>
-            사용여부 <span class="color-red">*</span>
-          </td>
-          <td colspan="5">
-            <p-radioButton formControlName="gto_use_yn" name="gto_use_yn" value="y" label="사용" class="margin-right-30"></p-radioButton>
-            <p-radioButton formControlName="gto_use_yn" name="gto_use_yn" value="n" label="사용 안 함"></p-radioButton>
-          </td>
-        </tr>
-        <tr>
-          <td><label for="gto_nm">변환옵션명 <span class="color-red">*</span></label></td>
-          <td>
-            <input pInputText type="text" id="gto_nm" formControlName="gto_nm" title="변환옵션명 입력" autocomplete="off" maxlength="11" />
-            <div *ngIf="!customerform.controls['gto_nm'].valid && customerform.controls['gto_nm'].dirty">
-              <p class="color-red info-txt margin-top-10" *ngIf="customerform.controls['gto_nm'].errors['required']">필수입력 사항 입니다</p>
-              <p class="color-red info-txt margin-top-10" *ngIf="customerform.controls['gto_nm'].errors['maxlength']">10자 이내로 입력해주세요</p>
-            </div>
-          </td>
-          <td><label for="gto_desc">변환옵션설명 <span class="color-red">*</span></label></td>
-          <td>
-            <input pInputText type="text" id="gto_desc" formControlName="gto_desc" title="변환옵션설명 입력" autocomplete="off" maxlength="5"/>
-            <div *ngIf="!customerform.controls['gto_desc'].valid && customerform.controls['gto_desc'].dirty">
-              <p class="color-red info-txt margin-top-10" *ngIf="customerform.controls['gto_desc'].errors['required']">필수입력 사항 입니다</p>
-              <p class="color-red info-txt margin-top-10" *ngIf="customerform.controls['gto_desc'].errors['maxlength']">4자 이내로 입력해주세요</p>
-            </div>
-          </td>
-          <td colspan="2"><p class="color-grey info-txt margin-top-10">* 중화질 HD, SD, FHD...</p></td>
-        </tr>
-        <tr>
-          <td><label for="gto_file_suffix">파일접미어 <span class="color-red">*</span></label></td>
-          <td>
-            <input pInputText type="text" id="gto_file_suffix" formControlName="gto_file_suffix" title="파일접미어 입력" maxlength="10" />
-            <div *ngIf="!customerform.controls['gto_file_suffix'].valid && customerform.controls['gto_file_suffix'].dirty">
-              <p class="color-red info-txt margin-top-10" *ngIf="customerform.controls['gto_file_suffix'].errors['required']">필수입력 사항 입니다</p>
-              <p class="color-red info-txt margin-top-10" *ngIf="customerform.controls['gto_file_suffix'].errors['maxlength']">10자 이내로 입력해주세요</p>
-            </div>
-          </td>
-          <td><label for="gto_file_container">파일컨테이너 <span class="color-red">*</span></label></td>
-          <td>
-            <input pInputText type="text" id="gto_file_container" formControlName="gto_file_container" title="파일컨테이너 입력" required="required" value="" maxlength="6" />
-            <div *ngIf="!customerform.controls['gto_file_container'].valid && customerform.controls['gto_file_container'].dirty">
-              <p class="color-red info-txt margin-top-10" *ngIf="customerform.controls['gto_file_container'].errors['required']">필수입력 사항 입니다</p>
-              <p class="color-red info-txt margin-top-10" *ngIf="customerform.controls['gto_file_container'].errors['maxlength']">5자 이내로 입력해주세요</p>
-            </div>
-          </td>
-          <td colspan="2"><p class="color-grey info-txt margin-top-10">* mp4, PIV...</p></td>
-        </tr>
-        <tr>
-          <td><label for="gto_video_bitrate">Video Bitrate <span class="color-red">*</span></label></td>
-          <td>
-            <input pInputText type="text" id="gto_video_bitrate" formControlName="gto_video_bitrate" title="Video Bitrate 입력" maxlength="6" />
-            <div *ngIf="!customerform.controls['gto_video_bitrate'].valid && customerform.controls['gto_video_bitrate'].dirty">
-              <p class="color-red info-txt margin-top-10" *ngIf="customerform.controls['gto_video_bitrate'].errors['required']">필수입력 사항 입니다</p>
-              <p class="color-red info-txt margin-top-10" *ngIf="customerform.controls['gto_video_bitrate'].errors['maxlength']">5자 이내로 입력해주세요</p>
-            </div>
-          </td>
-          <td><label for="gto_audio_bitrate">Audio Bitrate <span class="color-red">*</span></label></td>
-          <td>
-            <input pInputText type="text" id="gto_audio_bitrate" formControlName="gto_audio_bitrate" title="Audio Bitrate 입력" maxlength="6" />
-            <div *ngIf="!customerform.controls['gto_audio_bitrate'].valid && customerform.controls['gto_audio_bitrate'].dirty">
-              <p class="color-red info-txt margin-top-10" *ngIf="customerform.controls['gto_audio_bitrate'].errors['required']">필수입력 사항 입니다</p>
-              <p class="color-red info-txt margin-top-10" *ngIf="customerform.controls['gto_audio_bitrate'].errors['maxlength']">5자 이내로 입력해주세요</p>
-            </div>
-          </td>
-          <td><label for="gto_max_bitrate">Max Bitrate <span class="color-red">*</span></label></td>
-          <td>
-            <input pInputText type="text" id="gto_max_bitrate" formControlName="gto_max_bitrate" title="Max Bitrate 입력" maxlength="7" />
-            <div *ngIf="!customerform.controls['gto_max_bitrate'].valid && customerform.controls['gto_max_bitrate'].dirty">
-              <p class="color-red info-txt margin-top-10" *ngIf="customerform.controls['gto_max_bitrate'].errors['required']">필수입력 사항 입니다</p>
-              <p class="color-red info-txt margin-top-10" *ngIf="customerform.controls['gto_max_bitrate'].errors['maxlength']">6자 이내로 입력해주세요</p>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td><label for="gto_video_rsvopt">Video RsvOpt</label></td>
-          <td>
-            <input pInputText type="text" id="gto_video_rsvopt" formControlName="gto_video_rsvopt" title="Video RsvOpt 입력" maxlength="100" />
-            <div *ngIf="!customerform.controls['gto_video_rsvopt'].valid && customerform.controls['gto_video_rsvopt'].dirty">
-              <p class="color-red info-txt margin-top-10" *ngIf="customerform.controls['gto_video_rsvopt'].errors['maxlength']">100자 이내로 입력해주세요</p>
-            </div>
-          </td>
-          <td><label for="gto_audio_rsvopt">Audio RsvOpt</label></td>
-          <td>
-            <input pInputText type="text" id="gto_audio_rsvopt" formControlName="gto_audio_rsvopt" title="Audio RsvOpt 입력" value="" maxlength="100" />
-            <div *ngIf="!customerform.controls['gto_audio_rsvopt'].valid && customerform.controls['gto_audio_rsvopt'].dirty">
-              <p class="color-red info-txt margin-top-10" *ngIf="customerform.controls['gto_audio_rsvopt'].errors['maxlength']">100자 이내로 입력해주세요</p>
-            </div>
-          </td>
-          <td></td>
-          <td></td>
-        </tr>
-        <tr>
-          <td><label for="gto_dst_width">해상도-가로 <span class="color-red">*</span></label></td>
-          <td>
-            <input pInputText type="text" id="gto_dst_width" formControlName="gto_dst_width" title="해상도-가로 입력" placeholder="짝수 입력" pKeyFilter="num" maxlength="6" />
-            <div *ngIf="!customerform.controls['gto_dst_width'].valid && customerform.controls['gto_dst_width'].dirty">
-              <p class="color-red info-txt margin-top-10" *ngIf="customerform.controls['gto_dst_width'].errors['required']">필수입력 사항 입니다</p>
-              <p class="color-red info-txt margin-top-10" *ngIf="customerform.controls['gto_dst_width'].errors['maxlength']">5자 이내로 입력해주세요</p>
-            </div>
-          </td>
-          <td><label for="gto_dst_height">해상도-세로 <span class="color-red">*</span></label></td>
-          <td>
-            <input pInputText type="text" id="gto_dst_height" formControlName="gto_dst_height" title="해상도-세로 입력" placeholder="짝수 입력" maxlength="6" />
-            <div *ngIf="!customerform.controls['gto_dst_height'].valid && customerform.controls['gto_dst_height'].dirty">
-              <p class="color-red info-txt margin-top-10" *ngIf="customerform.controls['gto_dst_height'].errors['required']">필수입력 사항 입니다</p>
-              <p class="color-red info-txt margin-top-10" *ngIf="customerform.controls['gto_dst_height'].errors['maxlength']">5자 이내로 입력해주세요</p>
-            </div>
-          </td>
-          <td><label for="gto_video_aspect">화면비율 <span class="color-red">*</span></label></td>
-          <td>
-            <input pInputText type="text" id="gto_video_aspect" formControlName="gto_video_aspect" title="화면비율 입력" maxlength="9" />
-            <p class="color-red info-txt margin-top-10">* Auto, 1.7, 4:3</p>
-            <div *ngIf="!customerform.controls['gto_video_aspect'].valid && customerform.controls['gto_video_aspect'].dirty">
-              <p class="color-red info-txt margin-top-10" *ngIf="customerform.controls['gto_video_aspect'].errors['required']">필수입력 사항 입니다</p>
-              <p class="color-red info-txt margin-top-10" *ngIf="customerform.controls['gto_video_aspect'].errors['maxlength']">8자 이내로 입력해주세요</p>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td><label for="gto_main">Main <span class="color-red">*</span></label></td>
-          <td>
-            <input pInputText type="text" id="gto_main" formControlName="gto_main" title="Main 입력" maxlength="6" />
-            <div *ngIf="!customerform.controls['gto_main'].valid && customerform.controls['gto_main'].dirty">
-              <p class="color-red info-txt margin-top-10" *ngIf="customerform.controls['gto_main'].errors['required']">필수입력 사항 입니다</p>
-              <p class="color-red info-txt margin-top-10" *ngIf="customerform.controls['gto_main'].errors['maxlength']">5자 이내로 입력해주세요</p>
-            </div>
-          </td>
-          <td><label for="gto_baseline">Baseline <span class="color-red">*</span></label></td>
-          <td>
-            <input pInputText type="text" id="gto_baseline" formControlName="gto_baseline" title="Baseline 입력" maxlength="4" />
-            <div *ngIf="!customerform.controls['gto_baseline'].valid && customerform.controls['gto_baseline'].dirty">
-              <p class="color-red info-txt margin-top-10" *ngIf="customerform.controls['gto_baseline'].errors['required']">필수입력 사항 입니다</p>
-              <p class="color-red info-txt margin-top-10" *ngIf="customerform.controls['gto_baseline'].errors['maxlength']">3자 이내로 입력해주세요</p>
-            </div>
-          </td>
-          <td><label for="gto_high">High <span class="color-red">*</span></label></td>
-          <td>
-            <input pInputText type="text" id="gto_high" formControlName="gto_high" title="High 입력" maxlength="4" />
-            <div *ngIf="!customerform.controls['gto_high'].valid && customerform.controls['gto_high'].dirty">
-              <p class="color-red info-txt margin-top-10" *ngIf="customerform.controls['gto_high'].errors['required']">필수입력 사항 입니다</p>
-              <p class="color-red info-txt margin-top-10" *ngIf="customerform.controls['gto_high'].errors['maxlength']">3자 이내로 입력해주세요</p>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td><label for="gto_bitrate_mode">Bitrate Mode <span class="color-red">*</span></label></td>
-          <td>
-            <p-dropdown id="gto_bitrate_mode" [options]="gto_bitrate_mode_options" formControlName="gto_bitrate_mode"></p-dropdown>
-            <div *ngIf="!customerform.controls['gto_bitrate_mode'].valid && customerform.controls['gto_bitrate_mode'].dirty">
-              <p class="color-red info-txt margin-top-10" *ngIf="customerform.controls['gto_bitrate_mode'].errors['required']">필수입력 사항 입니다</p>
-            </div>
-          </td>
-          <td><label for="gto_sharpen">Sharpen <span class="color-red">*</span></label></td>
-          <td>
-            <input pInputText type="text" id="gto_sharpen" formControlName="gto_sharpen" title="Sharpen 입력" maxlength="21" />
-            <div *ngIf="!customerform.controls['gto_sharpen'].valid && customerform.controls['gto_sharpen'].dirty">
-              <p class="color-red info-txt margin-top-10" *ngIf="customerform.controls['gto_sharpen'].errors['required']">필수입력 사항 입니다</p>
-              <p class="color-red info-txt margin-top-10" *ngIf="customerform.controls['gto_sharpen'].errors['maxlength']">20자 이내로 입력해주세요</p>
-            </div>
-          </td>
-          <td></td>
-          <td></td>
-        </tr>
-        <tr>
-          <td><label for="gto_refs">Refs <span class="color-red">*</span></label></td>
-          <td>
-            <input pInputText type="text" id="gto_refs" formControlName="gto_refs" title="Refs 입력" maxlength="4" />
-            <div *ngIf="!customerform.controls['gto_refs'].valid && customerform.controls['gto_refs'].dirty">
-              <p class="color-red info-txt margin-top-10" *ngIf="customerform.controls['gto_refs'].errors['required']">필수입력 사항 입니다</p>
-              <p class="color-red info-txt margin-top-10" *ngIf="customerform.controls['gto_refs'].errors['maxlength']">3자 이내로 입력해주세요</p>
-            </div>
-          </td>
-          <td><label for="gto_frame_rate">초당 프레임 수 <span class="color-red">*</span></label></td>
-          <td colspan="3">
-            <p-dropdown id="gto_frame_rate" [options]="gto_frame_rate_options" formControlName="gto_frame_rate"></p-dropdown>
-            <div *ngIf="!customerform.controls['gto_frame_rate'].valid && customerform.controls['gto_frame_rate'].dirty">
-              <p class="color-red info-txt margin-top-10" *ngIf="customerform.controls['gto_frame_rate'].errors['required']">필수입력 사항 입니다</p>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td>Static 사용유무 <span class="color-red">*</span></td>
-          <td colspan="5">
-            <p-radioButton formControlName="gto_static_use" name="gto_static_use" value="y" label="사용" class="margin-right-30"></p-radioButton>
-            <p-radioButton formControlName="gto_static_use" name="gto_static_use" value="n" label="사용 안 함" class="margin-right-30"></p-radioButton>
-            <p-radioButton formControlName="gto_static_use" name="gto_static_use" value="x" label="Ext"></p-radioButton>
-            <input pInputText type="text" class="w-150 margin-left-10" formControlName="gto_static_encode" title="Static Ext 입력" maxlength="401" />
-            <div *ngIf="!customerform.controls['gto_static_encode'].valid && customerform.controls['gto_static_encode'].dirty">
-              <p class="color-red info-txt margin-top-10" *ngIf="customerform.controls['gto_static_encode'].errors['required']">필수입력 사항 입니다</p>
-              <p class="color-red info-txt margin-top-10" *ngIf="customerform.controls['gto_static_encode'].errors['maxlength']">400자 이내로 입력해주세요</p>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td>DRM 사용유무 <span class="color-red">*</span></td>
-          <td colspan="5">
-            <p-radioButton formControlName="gto_drm" name="gto_drm" value="n" label="사용 안 함" class="margin-right-30"></p-radioButton>
-            <p-radioButton formControlName="gto_drm" name="gto_drm" value="INKA" label="INKA" class="margin-right-30"></p-radioButton>
-            <p-radioButton formControlName="gto_drm" name="gto_drm" value="" label="Etc"></p-radioButton>
+        <div [formGroupName]="i" *ngFor="let trdOptItem of customerform.get('tcd').controls; let i = index;">
+          <tr formGroupName="opt">
+            <th rowspan="13">
+              <button type="button" class="btn grey-btn square-btn" (click)="removeTranscodingOption(i)">삭제</button>
+            </th>
+            <td>
+              사용여부 <span class="color-red">*</span>
+            </td>
+            <td colspan="5">
+              <p-radioButton formControlName="gto_use_yn" name="gto_use_yn{{i}}" value="Y" label="사용" class="margin-right-30"></p-radioButton>
+              <p-radioButton formControlName="gto_use_yn" name="gto_use_yn{{i}}" value="N" label="사용 안 함"></p-radioButton>
+            </td>
+          </tr>
+          <tr formGroupName="opt">
+            <td><label for="gto_nm">변환옵션명 <span class="color-red">*</span></label></td>
+            <td>
+              <input pInputText type="text" id="gto_nm" formControlName="gto_nm" title="변환옵션명 입력" autocomplete="off" maxlength="11" />
+              <div *ngIf="!trdOptItem.get('opt').get('gto_nm').valid && trdOptItem.get('opt').get('gto_nm').dirty">
+                <p class="color-red info-txt margin-top-10" *ngIf="trdOptItem.get('opt').get('gto_nm').errors['required']">필수입력 사항 입니다</p>
+                <p class="color-red info-txt margin-top-10" *ngIf="trdOptItem.get('opt').get('gto_nm').errors['maxlength']">10자 이내로 입력해주세요</p>
+              </div>
+            </td>
+            <td><label for="gto_desc">변환옵션설명 <span class="color-red">*</span></label></td>
+            <td>
+              <input pInputText type="text" id="gto_desc" formControlName="gto_desc" title="변환옵션설명 입력" autocomplete="off" maxlength="5"/>
+              <div *ngIf="!trdOptItem.get('opt').get('gto_desc').valid && trdOptItem.get('opt').get('gto_desc').dirty">
+                <p class="color-red info-txt margin-top-10" *ngIf="trdOptItem.get('opt').get('gto_desc').errors['required']">필수입력 사항 입니다</p>
+                <p class="color-red info-txt margin-top-10" *ngIf="trdOptItem.get('opt').get('gto_desc').errors['maxlength']">4자 이내로 입력해주세요</p>
+              </div>
+            </td>
+            <td colspan="2"><p class="color-grey info-txt margin-top-10">* 중화질 HD, SD, FHD...</p></td>
+          </tr>
+          <tr formGroupName="opt">
+            <td><label for="gto_file_suffix">파일접미어 <span class="color-red">*</span></label></td>
+            <td>
+              <input pInputText type="text" id="gto_file_suffix" formControlName="gto_file_suffix" title="파일접미어 입력" autocomplete="off" maxlength="10" />
+              <div *ngIf="!trdOptItem.get('opt').get('gto_file_suffix').valid && trdOptItem.get('opt').get('gto_file_suffix').dirty">
+                <p class="color-red info-txt margin-top-10" *ngIf="trdOptItem.get('opt').get('gto_file_suffix').errors['required']">필수입력 사항 입니다</p>
+                <p class="color-red info-txt margin-top-10" *ngIf="trdOptItem.get('opt').get('gto_file_suffix').errors['maxlength']">10자 이내로 입력해주세요</p>
+              </div>
+            </td>
+            <td><label for="gto_file_container">파일컨테이너 <span class="color-red">*</span></label></td>
+            <td>
+              <input pInputText type="text" id="gto_file_container" formControlName="gto_file_container" title="파일컨테이너 입력" autocomplete="off" maxlength="6" />
+              <div *ngIf="!trdOptItem.get('opt').get('gto_file_container').valid && trdOptItem.get('opt').get('gto_file_container').dirty">
+                <p class="color-red info-txt margin-top-10" *ngIf="trdOptItem.get('opt').get('gto_file_container').errors['required']">필수입력 사항 입니다</p>
+                <p class="color-red info-txt margin-top-10" *ngIf="trdOptItem.get('opt').get('gto_file_container').errors['maxlength']">5자 이내로 입력해주세요</p>
+              </div>
+            </td>
+            <td colspan="2"><p class="color-grey info-txt margin-top-10">* mp4, PIV...</p></td>
+          </tr>
+          <tr formGroupName="opt">
+            <td><label for="gto_video_bitrate">Video Bitrate <span class="color-red">*</span></label></td>
+            <td>
+              <input pInputText type="text" id="gto_video_bitrate" formControlName="gto_video_bitrate" title="Video Bitrate 입력" autocomplete="off" maxlength="6" />
+              <div *ngIf="!trdOptItem.get('opt').get('gto_video_bitrate').valid && trdOptItem.get('opt').get('gto_video_bitrate').dirty">
+                <p class="color-red info-txt margin-top-10" *ngIf="trdOptItem.get('opt').get('gto_video_bitrate').errors['required']">필수입력 사항 입니다</p>
+                <p class="color-red info-txt margin-top-10" *ngIf="trdOptItem.get('opt').get('gto_video_bitrate').errors['maxlength']">5자 이내로 입력해주세요</p>
+              </div>
+            </td>
+            <td><label for="gto_audio_bitrate">Audio Bitrate <span class="color-red">*</span></label></td>
+            <td>
+              <input pInputText type="text" id="gto_audio_bitrate" formControlName="gto_audio_bitrate" title="Audio Bitrate 입력" autocomplete="off" maxlength="6" />
+              <div *ngIf="!trdOptItem.get('opt').get('gto_audio_bitrate').valid && trdOptItem.get('opt').get('gto_audio_bitrate').dirty">
+                <p class="color-red info-txt margin-top-10" *ngIf="trdOptItem.get('opt').get('gto_audio_bitrate').errors['required']">필수입력 사항 입니다</p>
+                <p class="color-red info-txt margin-top-10" *ngIf="trdOptItem.get('opt').get('gto_audio_bitrate').errors['maxlength']">5자 이내로 입력해주세요</p>
+              </div>
+            </td>
+            <td><label for="gto_max_bitrate">Max Bitrate <span class="color-red">*</span></label></td>
+            <td>
+              <input pInputText type="text" id="gto_max_bitrate" formControlName="gto_max_bitrate" title="Max Bitrate 입력" autocomplete="off" maxlength="7" />
+              <div *ngIf="!trdOptItem.get('opt').get('gto_max_bitrate').valid && trdOptItem.get('opt').get('gto_max_bitrate').dirty">
+                <p class="color-red info-txt margin-top-10" *ngIf="trdOptItem.get('opt').get('gto_max_bitrate').errors['required']">필수입력 사항 입니다</p>
+                <p class="color-red info-txt margin-top-10" *ngIf="trdOptItem.get('opt').get('gto_max_bitrate').errors['maxlength']">6자 이내로 입력해주세요</p>
+              </div>
+            </td>
+          </tr>
+          <tr formGroupName="opt">
+            <td><label for="gto_video_rsvopt">Video RsvOpt</label></td>
+            <td>
+              <input pInputText type="text" id="gto_video_rsvopt" formControlName="gto_video_rsvopt" title="Video RsvOpt 입력" autocomplete="off" maxlength="100" />
+              <div *ngIf="!trdOptItem.get('opt').get('gto_video_rsvopt').valid && trdOptItem.get('opt').get('gto_video_rsvopt').dirty">
+                <p class="color-red info-txt margin-top-10" *ngIf="trdOptItem.get('opt').get('gto_video_rsvopt').errors['maxlength']">100자 이내로 입력해주세요</p>
+              </div>
+            </td>
+            <td><label for="gto_audio_rsvopt">Audio RsvOpt</label></td>
+            <td>
+              <input pInputText type="text" id="gto_audio_rsvopt" formControlName="gto_audio_rsvopt" title="Audio RsvOpt 입력" autocomplete="off" maxlength="100" />
+              <div *ngIf="!trdOptItem.get('opt').get('gto_audio_rsvopt').valid && trdOptItem.get('opt').get('gto_audio_rsvopt').dirty">
+                <p class="color-red info-txt margin-top-10" *ngIf="trdOptItem.get('opt').get('gto_audio_rsvopt').errors['maxlength']">100자 이내로 입력해주세요</p>
+              </div>
+            </td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr formGroupName="opt">
+            <td><label for="gto_dst_width">해상도-가로 <span class="color-red">*</span></label></td>
+            <td>
+              <input pInputText type="text" id="gto_dst_width" formControlName="gto_dst_width" title="해상도-가로 입력" placeholder="짝수 입력" pKeyFilter="num" autocomplete="off" maxlength="6" />
+              <div *ngIf="!trdOptItem.get('opt').get('gto_dst_width').valid && trdOptItem.get('opt').get('gto_dst_width').dirty">
+                <p class="color-red info-txt margin-top-10" *ngIf="trdOptItem.get('opt').get('gto_dst_width').errors['required']">필수입력 사항 입니다</p>
+                <p class="color-red info-txt margin-top-10" *ngIf="trdOptItem.get('opt').get('gto_dst_width').errors['maxlength']">5자 이내로 입력해주세요</p>
+              </div>
+            </td>
+            <td><label for="gto_dst_height">해상도-세로 <span class="color-red">*</span></label></td>
+            <td>
+              <input pInputText type="text" id="gto_dst_height" formControlName="gto_dst_height" title="해상도-세로 입력" placeholder="짝수 입력" autocomplete="off" maxlength="6" />
+              <div *ngIf="!trdOptItem.get('opt').get('gto_dst_height').valid && trdOptItem.get('opt').get('gto_dst_height').dirty">
+                <p class="color-red info-txt margin-top-10" *ngIf="trdOptItem.get('opt').get('gto_dst_height').errors['required']">필수입력 사항 입니다</p>
+                <p class="color-red info-txt margin-top-10" *ngIf="trdOptItem.get('opt').get('gto_dst_height').errors['maxlength']">5자 이내로 입력해주세요</p>
+              </div>
+            </td>
+            <td><label for="gto_video_aspect">화면비율 <span class="color-red">*</span></label></td>
+            <td>
+              <input pInputText type="text" id="gto_video_aspect" formControlName="gto_video_aspect" title="화면비율 입력" autocomplete="off" maxlength="9" />
+              <p class="color-red info-txt margin-top-10">* Auto, 1.7, 4:3</p>
+              <div *ngIf="!trdOptItem.get('opt').get('gto_video_aspect').valid && trdOptItem.get('opt').get('gto_video_aspect').dirty">
+                <p class="color-red info-txt margin-top-10" *ngIf="trdOptItem.get('opt').get('gto_video_aspect').errors['required']">필수입력 사항 입니다</p>
+                <p class="color-red info-txt margin-top-10" *ngIf="trdOptItem.get('opt').get('gto_video_aspect').errors['maxlength']">8자 이내로 입력해주세요</p>
+              </div>
+            </td>
+          </tr>
+          <tr formGroupName="opt">
+            <td><label for="gto_main">Main <span class="color-red">*</span></label></td>
+            <td>
+              <input pInputText type="text" id="gto_main" formControlName="gto_main" title="Main 입력" autocomplete="off" maxlength="6" />
+              <div *ngIf="!trdOptItem.get('opt').get('gto_main').valid && trdOptItem.get('opt').get('gto_main').dirty">
+                <p class="color-red info-txt margin-top-10" *ngIf="trdOptItem.get('opt').get('gto_main').errors['required']">필수입력 사항 입니다</p>
+                <p class="color-red info-txt margin-top-10" *ngIf="trdOptItem.get('opt').get('gto_main').errors['maxlength']">5자 이내로 입력해주세요</p>
+              </div>
+            </td>
+            <td><label for="gto_baseline">Baseline <span class="color-red">*</span></label></td>
+            <td>
+              <input pInputText type="text" id="gto_baseline" formControlName="gto_baseline" title="Baseline 입력" autocomplete="off" maxlength="4" />
+              <div *ngIf="!trdOptItem.get('opt').get('gto_baseline').valid && trdOptItem.get('opt').get('gto_baseline').dirty">
+                <p class="color-red info-txt margin-top-10" *ngIf="trdOptItem.get('opt').get('gto_baseline').errors['required']">필수입력 사항 입니다</p>
+                <p class="color-red info-txt margin-top-10" *ngIf="trdOptItem.get('opt').get('gto_baseline').errors['maxlength']">3자 이내로 입력해주세요</p>
+              </div>
+            </td>
+            <td><label for="gto_high">High <span class="color-red">*</span></label></td>
+            <td>
+              <input pInputText type="text" id="gto_high" formControlName="gto_high" title="High 입력" autocomplete="off" maxlength="4" />
+              <div *ngIf="!trdOptItem.get('opt').get('gto_high').valid && trdOptItem.get('opt').get('gto_high').dirty">
+                <p class="color-red info-txt margin-top-10" *ngIf="trdOptItem.get('opt').get('gto_high').errors['required']">필수입력 사항 입니다</p>
+                <p class="color-red info-txt margin-top-10" *ngIf="trdOptItem.get('opt').get('gto_high').errors['maxlength']">3자 이내로 입력해주세요</p>
+              </div>
+            </td>
+          </tr>
+          <tr formGroupName="opt">
+            <td><label for="gto_bitrate_mode">Bitrate Mode <span class="color-red">*</span></label></td>
+            <td>
+              <p-dropdown id="gto_bitrate_mode" [options]="gto_bitrate_mode_options" formControlName="gto_bitrate_mode"></p-dropdown>
+              <div *ngIf="!trdOptItem.get('opt').get('gto_bitrate_mode').valid && trdOptItem.get('opt').get('gto_bitrate_mode').dirty">
+                <p class="color-red info-txt margin-top-10" *ngIf="trdOptItem.get('opt').get('gto_bitrate_mode').errors['required']">필수입력 사항 입니다</p>
+              </div>
+            </td>
+            <td><label for="gto_sharpen">Sharpen <span class="color-red">*</span></label></td>
+            <td>
+              <input pInputText type="text" id="gto_sharpen" formControlName="gto_sharpen" title="Sharpen 입력" autocomplete="off" maxlength="21" />
+              <div *ngIf="!trdOptItem.get('opt').get('gto_sharpen').valid && trdOptItem.get('opt').get('gto_sharpen').dirty">
+                <p class="color-red info-txt margin-top-10" *ngIf="trdOptItem.get('opt').get('gto_sharpen').errors['required']">필수입력 사항 입니다</p>
+                <p class="color-red info-txt margin-top-10" *ngIf="trdOptItem.get('opt').get('gto_sharpen').errors['maxlength']">20자 이내로 입력해주세요</p>
+              </div>
+            </td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr formGroupName="opt">
+            <td><label for="gto_refs">Refs <span class="color-red">*</span></label></td>
+            <td>
+              <input pInputText type="text" id="gto_refs" formControlName="gto_refs" title="Refs 입력" autocomplete="off" maxlength="4" />
+              <div *ngIf="!trdOptItem.get('opt').get('gto_refs').valid && trdOptItem.get('opt').get('gto_refs').dirty">
+                <p class="color-red info-txt margin-top-10" *ngIf="trdOptItem.get('opt').get('gto_refs').errors['required']">필수입력 사항 입니다</p>
+                <p class="color-red info-txt margin-top-10" *ngIf="trdOptItem.get('opt').get('gto_refs').errors['maxlength']">3자 이내로 입력해주세요</p>
+              </div>
+            </td>
+            <td><label for="gto_frame_rate">초당 프레임 수 <span class="color-red">*</span></label></td>
+            <td colspan="3">
+              <p-dropdown id="gto_frame_rate" [options]="gto_frame_rate_options" formControlName="gto_frame_rate"></p-dropdown>
+              <div *ngIf="!trdOptItem.get('opt').get('gto_frame_rate').valid && trdOptItem.get('opt').get('gto_frame_rate').dirty">
+                <p class="color-red info-txt margin-top-10" *ngIf="trdOptItem.get('opt').get('gto_frame_rate').errors['required']">필수입력 사항 입니다</p>
+              </div>
+            </td>
+          </tr>
+          <tr formGroupName="opt">
+            <td>Static 사용유무 <span class="color-red">*</span></td>
+            <td colspan="5">
+              <p-radioButton formControlName="gto_static_use" name="gto_static_use{{i}}" value="Y" label="사용" class="margin-right-30"></p-radioButton>
+              <p-radioButton formControlName="gto_static_use" name="gto_static_use{{i}}" value="N" label="사용 안 함" class="margin-right-30"></p-radioButton>
+              <p-radioButton formControlName="gto_static_use" name="gto_static_use{{i}}" value="X" label="Ext"></p-radioButton>
+              <input pInputText type="text" class="w-150 margin-left-10" formControlName="gto_static_encode" title="Static Ext 입력" autocomplete="off" maxlength="401" />
+              <div *ngIf="!trdOptItem.get('opt').get('gto_static_encode').valid && trdOptItem.get('opt').get('gto_static_encode').dirty">
+                <p class="color-red info-txt margin-top-10" *ngIf="trdOptItem.get('opt').get('gto_static_encode').errors['required']">필수입력 사항 입니다</p>
+                <p class="color-red info-txt margin-top-10" *ngIf="trdOptItem.get('opt').get('gto_static_encode').errors['maxlength']">400자 이내로 입력해주세요</p>
+              </div>
+            </td>
+          </tr>
+          <tr formGroupName="opt">
+            <td>DRM 사용유무 <span class="color-red">*</span></td>
+            <td colspan="5">
+              <p-radioButton formControlName="gto_drm" name="gto_drm{{i}}" value="N" label="사용 안 함" class="margin-right-30"></p-radioButton>
+              <p-radioButton formControlName="gto_drm" name="gto_drm{{i}}" value="INKA" label="INKA" class="margin-right-30"></p-radioButton>
+              <p-radioButton formControlName="gto_drm" name="gto_drm{{i}}" value="" label="Etc"></p-radioButton>
 
-            <input pInputText type="text" class="w-150 margin-left-10" formControlName="gto_drm" title="DRM Etc 입력" />
-            <div *ngIf="!customerform.controls['gto_drm'].valid && customerform.controls['gto_drm'].dirty">
-              <p class="color-red info-txt margin-top-10" *ngIf="customerform.controls['gto_drm'].errors['required']">필수입력 사항 입니다</p>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td colspan="6">
-            서비스 서버 <span class="color-red">*</span><br />
-            <p class="color-red info-txt">변환 완료 후 배포 스트림 서버 정보. "고객정보 요청 필요"</p>
-            <p><span class="info-txt">서비스 서버를 추가하려면 추가버튼을 클릭하세요.</span> <button class="btn white-btn square-btn margin-left-10 margin-bottom-10">서비스 서버추가</button></p>
-
-            <div class="ui-g-12 ui-g-nopad server-group add-server-group">
-              <button type="button" class="btn grey-btn square-btn delete-btn"><i class="fas fa-times"></i></button>
-              <label for="gss_ftp_ip" class="w-70px margin-bottom-10">IP</label> <input pInputText type="text" id="gss_ftp_ip" formControlName="gss_ftp_ip" title="썸네일서버 IP 입력" autocomplete="off" maxlength="16" /><br>
-              <div *ngIf="!customerform.controls['grp_ftp_ip'].valid && customerform.controls['grp_ftp_ip'].dirty" class="padding-left-70">
-                <p class="color-red info-txt margin-bottom-10" *ngIf="customerform.controls['grp_ftp_ip'].errors['required']">필수입력 사항 입니다</p>
-                <p class="color-red info-txt margin-bottom-10" *ngIf="customerform.controls['grp_ftp_ip'].errors['maxlength']"> 15자 이내로 입력해주세요</p>
+              <input pInputText type="text" class="w-150 margin-left-10" formControlName="gto_drm" title="DRM Etc 입력" autocomplete="off" />
+              <div *ngIf="!trdOptItem.get('opt').get('gto_drm').valid && trdOptItem.get('opt').get('gto_drm').dirty">
+                <p class="color-red info-txt margin-top-10" *ngIf="trdOptItem.get('opt').get('gto_drm').errors['required']">필수입력 사항 입니다</p>
               </div>
-              <label for="gss_ftp_port" class="w-70px margin-bottom-10">Port</label> <input pInputText type="text" id="gss_ftp_port" formControlName="gss_ftp_port" title="썸네일서버 Port 입력" autocomplete="off" maxlength="6" /><br>
-              <div *ngIf="!customerform.controls['gss_ftp_port'].valid && customerform.controls['gss_ftp_port'].dirty" class="padding-left-70">
-                <p class="color-red info-txt margin-bottom-10" *ngIf="customerform.controls['gss_ftp_port'].errors['required']">필수입력 사항 입니다</p>
-                <p class="color-red info-txt margin-bottom-10" *ngIf="customerform.controls['gss_ftp_port'].errors['maxlength']"> 5자 이내로 입력해주세요</p>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="6">
+              서비스 서버 <span class="color-red">*</span><br />
+              <p class="color-red info-txt">변환 완료 후 배포 스트림 서버 정보. "고객정보 요청 필요"</p>
+              <p><span class="info-txt">서비스 서버를 추가하려면 추가버튼을 클릭하세요.</span> <button type="button" (click)="addServiceServer(trdOptItem)" class="btn white-btn square-btn margin-left-10 margin-bottom-10">서비스 서버추가</button></p>
+              <div formArrayName="svc">
+                <div [formGroupName]="j" *ngFor="let svcItem of trdOptItem.controls.svc.controls; let j = index;" class="ui-g-12 ui-g-nopad margin-bottom-10 server-group add-server-group">
+                  <button type="button" (click)="removeServiceServer(i, j)" class="btn grey-btn square-btn delete-btn"><i class="fas fa-times"></i></button>
+                  <label for="gss_ftp_ip" class="w-70px margin-bottom-10">IP</label> <input pInputText type="text" id="gss_ftp_ip" formControlName="gss_ftp_ip" title="썸네일서버 IP 입력" autocomplete="off" maxlength="16" /><br>
+                  <div *ngIf="!svcItem.get('gss_ftp_ip').valid && svcItem.get('gss_ftp_ip').dirty" class="padding-left-70">
+                    <p class="color-red info-txt margin-bottom-10" *ngIf="svcItem.get('gss_ftp_ip').errors['required']">필수입력 사항 입니다</p>
+                    <p class="color-red info-txt margin-bottom-10" *ngIf="svcItem.get('gss_ftp_ip').errors['maxlength']"> 15자 이내로 입력해주세요</p>
+                  </div>
+                  <label for="gss_ftp_port" class="w-70px margin-bottom-10">Port</label> <input pInputText type="text" id="gss_ftp_port" formControlName="gss_ftp_port" title="썸네일서버 Port 입력" autocomplete="off" maxlength="6" /><br>
+                  <div *ngIf="!svcItem.get('gss_ftp_port').valid && svcItem.get('gss_ftp_port').dirty" class="padding-left-70">
+                    <p class="color-red info-txt margin-bottom-10" *ngIf="svcItem.get('gss_ftp_port').errors['required']">필수입력 사항 입니다</p>
+                    <p class="color-red info-txt margin-bottom-10" *ngIf="svcItem.get('gss_ftp_port').errors['maxlength']"> 5자 이내로 입력해주세요</p>
+                  </div>
+                  <label for="gss_ftp_id" class="w-70px margin-bottom-10">UserId</label> <input pInputText type="text" id="gss_ftp_id" formControlName="gss_ftp_id" title="썸네일서버 UserID 입력" autocomplete="off" maxlength="21" /><br>
+                  <div *ngIf="!svcItem.get('gss_ftp_id').valid && svcItem.get('gss_ftp_id').dirty" class="padding-left-70">
+                    <p class="color-red info-txt margin-bottom-10" *ngIf="svcItem.get('gss_ftp_id').errors['required']">필수입력 사항 입니다</p>
+                    <p class="color-red info-txt margin-bottom-10" *ngIf="svcItem.get('gss_ftp_id').errors['maxlength']"> 20자 이내로 입력해주세요</p>
+                  </div>
+                  <label for="gss_ftp_pw" class="w-70px margin-bottom-10">UserPw</label> <input pInputText type="text" id="gss_ftp_pw" formControlName="gss_ftp_pw" title="썸네일서버 UserPW 입력" autocomplete="off" maxlength="21" /><br>
+                  <div *ngIf="!svcItem.get('gss_ftp_pw').valid && svcItem.get('gss_ftp_pw').dirty" class="padding-left-70">
+                    <p class="color-red info-txt margin-bottom-10" *ngIf="svcItem.get('gss_ftp_pw').errors['required']">필수입력 사항 입니다</p>
+                    <p class="color-red info-txt margin-bottom-10" *ngIf="svcItem.get('gss_ftp_pw').errors['maxlength']"> 20자 이내로 입력해주세요</p>
+                  </div>
+                  <label for="gss_ftp_mode" class="w-70px margin-bottom-10">Mode</label> <p-dropdown id="gss_ftp_mode" [options]="server_mode_options" formControlName="gss_ftp_mode"></p-dropdown>
+                  <div *ngIf="!svcItem.get('gss_ftp_mode').valid && svcItem.get('gss_ftp_mode').dirty" class="padding-left-70">
+                    <p class="color-red info-txt margin-bottom-10" *ngIf="svcItem.get('gss_ftp_mode').errors['required']">필수입력 사항 입니다</p>
+                  </div>
+                </div>
               </div>
-              <label for="gss_ftp_id" class="w-70px margin-bottom-10">UserId</label> <input pInputText type="text" id="gss_ftp_id" formControlName="gss_ftp_id" title="썸네일서버 UserID 입력" autocomplete="off" maxlength="21" /><br>
-              <div *ngIf="!customerform.controls['gss_ftp_id'].valid && customerform.controls['gss_ftp_id'].dirty" class="padding-left-70">
-                <p class="color-red info-txt margin-bottom-10" *ngIf="customerform.controls['gss_ftp_id'].errors['required']">필수입력 사항 입니다</p>
-                <p class="color-red info-txt margin-bottom-10" *ngIf="customerform.controls['gss_ftp_id'].errors['maxlength']"> 20자 이내로 입력해주세요</p>
-              </div>
-              <label for="gss_ftp_pw" class="w-70px margin-bottom-10">UserPw</label> <input pInputText type="text" id="gss_ftp_pw" formControlName="gss_ftp_pw" title="썸네일서버 UserPW 입력" autocomplete="off" maxlength="21" /><br>
-              <div *ngIf="!customerform.controls['gss_ftp_pw'].valid && customerform.controls['gss_ftp_pw'].dirty" class="padding-left-70">
-                <p class="color-red info-txt margin-bottom-10" *ngIf="customerform.controls['gss_ftp_pw'].errors['required']">필수입력 사항 입니다</p>
-                <p class="color-red info-txt margin-bottom-10" *ngIf="customerform.controls['gss_ftp_pw'].errors['maxlength']"> 20자 이내로 입력해주세요</p>
-              </div>
-              <label for="gss_ftp_mode" class="w-70px margin-bottom-10">Mode</label> <p-dropdown id="gss_ftp_mode" [options]="server_mode_options" formControlName="gss_ftp_mode"></p-dropdown>
-              <div *ngIf="!customerform.controls['gss_ftp_mode'].valid && customerform.controls['gss_ftp_mode'].dirty" class="padding-left-70">
-                <p class="color-red info-txt margin-bottom-10" *ngIf="customerform.controls['gss_ftp_mode'].errors['required']">필수입력 사항 입니다</p>
-              </div>
-            </div>
-          </td>
-        </tr>
+            </td>
+          </tr>
+        </div>
       </table>
     </div>
 
     <div class="ui-g-12 ui-g-nopad txt-center">
-      <button pButton type="submit" label="등록" *ngIf="isAddRow" [disabled]="!customerform.valid" class="margin-right-10"></button>
+      <button pButton type="submit" label="등록" *ngIf="isAddRow" [disabled]="!customerform.valid || !ableCustomerName || !ableGroupName" class="margin-right-10"></button>
       <button pButton type="submit" label="수정" *ngIf="!isAddRow" [disabled]="!customerform.valid" class="margin-right-10"></button>
       <button pButton type="button" (click)="goBack()" label="취소"></button>
     </div>

@@ -26,7 +26,6 @@ form {
     }
 
     .form-container {
-      border-bottom: 1px solid #ddd;
       border-top: 1px solid #ddd;
       color: #666;
 
@@ -40,7 +39,6 @@ form {
         font-size: 14px;
         tr {
           border-bottom: 1px solid #ddd;
-          &:last-child {border-bottom: none;}
 
           th {
             @include setPadding(0, 20px);
