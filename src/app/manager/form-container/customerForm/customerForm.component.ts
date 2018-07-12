@@ -3,11 +3,13 @@ import { Validators,FormControl,FormGroup,FormBuilder,FormArray } from '@angular
 import { ActivatedRoute, Params, Router } from "@angular/router";
 import { Http, Headers } from '@angular/http';
 import { Observable } from "rxjs/internal/Observable";
+import { CustomerService } from "../../../services/apis/adm/customer/customer.service"
 
 @Component({
   selector: 'customerForm',
   templateUrl: './customerForm.component.html',
-  styleUrls: ['../form-container.component.scss']
+  styleUrls: ['../form-container.component.scss'],
+  providers: [ CustomerService ]
 })
 
 export class CustomerFormComponent implements OnInit {
@@ -33,7 +35,8 @@ export class CustomerFormComponent implements OnInit {
   constructor(private formBuilder: FormBuilder,
                 private router: Router,
                 private activatedRoute: ActivatedRoute,
-                private http: Http) {
+                private http: Http,
+                private customerService: CustomerService) {
     this.server_mode_options = [
       {label:'선택하세요', value:null},
       {label:'PASV', value: 'PASV'},
@@ -180,13 +183,11 @@ export class CustomerFormComponent implements OnInit {
 
   onSubmit(formObject: any) {
     this.submitted = true;
-    const customerValueObject = {};
 
     if(this.isAddRow) {
-      // console.log(formObject);
-      this.postData(formObject);
+      this.customerService.postCustomer(formObject);
     } else {
-      this.updateData(formObject.cus);
+      this.customerService.updateCustomer(formObject.cus);
     }
   }
 
@@ -194,26 +195,21 @@ export class CustomerFormComponent implements OnInit {
     this.router.navigate(['/manager', 'customer']);
   }
 
-  getLists(listUrl): Observable<any> {
-    return this.http.get(listUrl);
-  }
-
   /*중복확인 - 고객명(영문), 그룹명*/
   confirmCustomerName() {
     this.showNameDupMsg = true;
     const inputname:string = this.customerform.get('cus').value['cus_nm_en'];
-    this.getLists('http://183.110.11.49/adm/common/check/customernm/'+inputname).subscribe((cont) => {
+    this.customerService.getLists('http://183.110.11.49/adm/common/check/customernm/'+inputname).subscribe((cont) => {
       this.ableCustomerName = cont._body === 'true';
     });
   }
   confirmGroupName() {
     this.showGroupDupMsg = true;
     const inputname:string = this.customerform.get('grp').value['grp_nm'];
-    this.getLists('http://183.110.11.49/adm/common/check/groupnm/'+inputname).subscribe((cont) => {
+    this.customerService.getLists('http://183.110.11.49/adm/common/check/groupnm/'+inputname).subscribe((cont) => {
       this.ableGroupName = cont._body === 'true';
     });
   }
-
   /*썸네일서버 - 추가, 삭제*/
   addThumbnailServer() {
     (<FormArray>this.customerform.get('thm')).push(
@@ -294,21 +290,8 @@ export class CustomerFormComponent implements OnInit {
     svcList.removeAt(svcIndex);
   }
 
-  postData(data) {
-    let headers:Headers = new Headers();
-    headers.append('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
-
-    this.http.post('http://183.110.11.49/adm/customer', data, { headers: headers }).subscribe(
-      data => this.router.navigate(['/manager', 'customer']),
-      error => console.log("Error: " + error),
-      function(){
-        alert('완료되었습니다.');
-      }
-    );
-  }
-
   loadCustomerList() {
-    this.http.get('http://183.110.11.49/adm/customer/' + this.params.index).subscribe((data) => {
+    this.customerService.getLists('http://183.110.11.49/adm/customer/' + this.params.index).subscribe((data) => {
       const getData:any[] = JSON.parse((<any>data)._body);
       this.customerform.controls.cus.get('cus_seq').setValue(getData['cus_seq']);
       this.customerform.controls.cus.get('cus_nm_en').setValue(getData['cus_nm_en']);
@@ -320,17 +303,5 @@ export class CustomerFormComponent implements OnInit {
       this.customerform.controls.cus.get('cus_use_yn').setValue(getData['cus_use_yn']);
       this.customerform.controls.cus.get('cus_test_yn').setValue(getData['cus_test_yn']);
     });
-  }
-
-  updateData(newData) {
-    let headers:Headers = new Headers();
-    headers.append('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
-
-    return this.http.put('http://183.110.11.49/adm/customer', newData, { headers: headers }).subscribe(
-      data => console.log("Data: " + data),
-      error => console.log("Error: " + error),
-      function(){
-        alert('수정 완료되었습니다.');
-      });
   }
 }

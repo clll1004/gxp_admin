@@ -17,10 +17,10 @@
     <a routerLink="/manager/account/add"><button class="btn white-btn" *ngIf="params['listId'] === 'account'">계정 추가</button></a>
   </div>
 
+  <div class="ui-g-12 ui-g-nopad row-info-sec margin-bottom-20">
+    ㆍTotal <span class="total-row">{{ totalCustomerList }}</span>건 <!--(<span class="now-page">{{ currentIndex }}</span>Page / <span class="total-page">{{ totalIndex }}</span>Page)-->
+  </div>
   <div *ngIf="params['listId'] === 'customer'">
-    <div class="ui-g-12 ui-g-nopad row-info-sec margin-bottom-20">
-      ㆍTotal <span class="total-row">{{ totalCustomerList }}</span>건 <!--(<span class="now-page">{{ currentIndex }}</span>Page / <span class="total-page">{{ totalIndex }}</span>Page)-->
-    </div>
     <p-table id="customerTable" class="ui-g-12 ui-g-nopad" [value]="filterCustomerLists" [paginator]="true" [rows]="10" [resizableColumns]="true">
       <ng-template pTemplate="colgroup" let-columns>
         <colgroup>
@@ -51,9 +51,6 @@
   </div>
 
   <div *ngIf="params['listId'] === 'group'">
-    <div class="ui-g-12 ui-g-nopad row-info-sec margin-bottom-20">
-      ㆍTotal <span class="total-row">{{ totalCustomerList }}</span>건 <!--(<span class="now-page">1</span>Page / <span class="total-page">1</span>Page)-->
-    </div>
     <p-table class="ui-g-12 ui-g-nopad" [value]="filterCustomerLists" [paginator]="true" [rows]="10" [resizableColumns]="true">
       <ng-template pTemplate="colgroup" let-columns>
         <colgroup>
@@ -86,9 +83,6 @@
   </div>
 
   <div *ngIf="params['listId'] === 'account'">
-    <div class="ui-g-12 ui-g-nopad row-info-sec margin-bottom-20">
-      ㆍTotal <span class="total-row">{{ totalCustomerList }}</span>건 <!--(<span class="now-page">1</span>Page / <span class="total-page">1</span>Page)-->
-    </div>
     <p-table class="ui-g-12 ui-g-nopad" [value]="filterCustomerLists" [paginator]="true" [rows]="10" [resizableColumns]="true">
       <ng-template pTemplate="colgroup" let-columns>
         <colgroup>

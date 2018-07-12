@@ -103,37 +103,11 @@ export class ListContainerComponent implements OnInit {
     if(this.searchKey != '') {
       this.filterCustomerLists = [];
       this.customerLists.filter((customerItem) => {
-        if(customerItem.cus_nm_ko.indexOf(this.searchKey)>=0) {
+        if(customerItem.cus_nm_ko && (customerItem.cus_nm_ko.indexOf(this.searchKey)>=0)) {
           this.filterCustomerLists.push(customerItem);
         }
       });
+      this.totalCustomerList = this.filterCustomerLists.length;
     }
-    this.totalCustomerList = this.filterCustomerLists.length;
   }
-
-  // changeUseStatusStop(data) {
-  //   this.customerLists.forEach((item) => {
-  //     if(item.usr_seq === data) {
-  //       item.usr_use_yn = 'N';
-  //       this.http.get('http://183.110.11.49/adm/user/' + this.params.index).subscribe((data) => {
-  //         const getData: any[] = JSON.parse((<any>data)._body);
-  //
-  //       });
-  //
-  //       // this.updateData(item);
-  //     }
-  //   })
-  // }
-
-  // updateData(newData) {
-  //   let headers:Headers = new Headers();
-  //   headers.append('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
-  //
-  //   return this.http.put('http://183.110.11.49/adm/user', newData, { headers: headers }).subscribe(
-  //     data => console.log("Data: " + data),
-  //     error => console.log("Error: " + error),
-  //     function(){
-  //       alert('수정 완료되었습니다.');
-  //     });
-  // }
 }

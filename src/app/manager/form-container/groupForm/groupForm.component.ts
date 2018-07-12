@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { Validators, FormControl, FormGroup, FormBuilder, FormArray } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from "@angular/router";
-import { Http, Headers } from '@angular/http';
-import { Observable } from "rxjs/internal/Observable";
+import { Http } from '@angular/http';
+import { GroupService } from "../../../services/apis/adm/group/group.service"
 
 @Component({
   selector: 'groupForm',
   templateUrl: './groupForm.component.html',
-  styleUrls: ['../form-container.component.scss']
+  styleUrls: ['../form-container.component.scss'],
+  providers: [ GroupService ]
 })
 
 export class GroupFormComponent implements OnInit {
@@ -54,7 +55,8 @@ export class GroupFormComponent implements OnInit {
   constructor(private formBuilder: FormBuilder,
               private router: Router,
               private activatedRoute: ActivatedRoute,
-              private http: Http) {
+              private http: Http,
+              private groupService: GroupService) {
     this.activatedRoute.params.subscribe( (params) => {
       this.params = params;
     });
@@ -153,25 +155,20 @@ export class GroupFormComponent implements OnInit {
     this.submitted = true;
 
     if(this.isAddRow) {
-      this.postData(formObject);
+      this.groupService.postData(formObject);
     } else {
       Object.entries(formObject).forEach((item) => {
         if(item[1]) {
           valueObject[item[0]] = item[1];
         }
       });
-      delete valueObject.grp.grp_cus_seq;
-      console.log(valueObject);
-      // this.updateData(valueObject);
+      delete valueObject['grp'].grp_cus_seq;
+      this.groupService.updateData(valueObject);
     }
   }
 
   goBack() {
     this.router.navigate(['/manager', 'group']);
-  }
-
-  getLists(listUrl): Observable<any> {
-    return this.http.get(listUrl);
   }
 
   load() {
@@ -183,7 +180,7 @@ export class GroupFormComponent implements OnInit {
   }
   loadCustomerList() {
     let list;
-    this.getLists('http://183.110.11.49/adm/customer/list?page=1&row=10000').subscribe((params)=>{
+    this.groupService.getLists('http://183.110.11.49/adm/customer/list?page=1&row=10000').subscribe((params)=>{
       list = JSON.parse(params._body).list;
       list.forEach((item) => {
         item.label = item.cus_nm_en;
@@ -193,22 +190,9 @@ export class GroupFormComponent implements OnInit {
     });
   }
   loadGroupList() {
-    let list;
-    this.getLists('http://183.110.11.49/adm/customer/list?page=1&row=10000').subscribe((params)=>{
-      list = JSON.parse(params._body).list;
-      list.forEach((item) => {
-        this.customerList.push(item);
-      })
-    });
     this.http.get('http://183.110.11.49/adm/group/' + this.params.index).subscribe((data) => {
       const getData = JSON.parse((<any>data)._body);
 
-      this.customerList.forEach((item) => {
-        if(item.cus_nm_ko === getData.grp['cus_nm_ko']) {
-          getData.grp['grp_cus_seq'] = item.cus_seq;
-          this.groupform.get('grp').get('grp_cus_seq').setValue(getData.grp['grp_cus_seq']);
-        }
-      });
       /*load groupform grp*/
       this.customerName = getData.grp['cus_nm_ko'];
       this.groupform.get('grp').get('grp_nm').setValue(getData.grp['grp_nm']);
@@ -307,7 +291,7 @@ export class GroupFormComponent implements OnInit {
   confirmGroupName() {
     this.showGroupDupMsg = true;
     const inputname:string = this.groupform.get('grp').value['grp_nm'];
-    this.getLists('http://183.110.11.49/adm/common/check/groupnm/'+inputname).subscribe((cont) => {
+    this.groupService.getLists('http://183.110.11.49/adm/common/check/groupnm/'+inputname).subscribe((cont) => {
       this.ableGroupName = cont._body === 'true';
     });
   }
@@ -392,28 +376,4 @@ export class GroupFormComponent implements OnInit {
 
   get thmData() { return <FormArray>this.groupform.get('thm'); }
   get tcdData() { return <FormArray>this.groupform.get('tcd'); }
-  postData(data) {
-    let headers:Headers = new Headers();
-    headers.append('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
-
-    this.http.post('http://183.110.11.49/adm/group', data, { headers: headers })
-      .toPromise()
-      .then((response) => {this.router.navigate(['/manager', 'group'])})
-      .then((data) => {alert('완료되었습니다.');})
-      .catch((error) => {
-        console.log(error);
-      });
-  }
-  updateData(newData) {
-    let headers:Headers = new Headers();
-    headers.append('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
-
-    return this.http.put('http://183.110.11.49/adm/group', newData, { headers: headers })
-      .toPromise()
-      .then((response) => {response})
-      .then((data) => {alert('수정 완료되었습니다.');})
-      .catch((error) => {
-        console.log(error);
-      });
-  }
 }
