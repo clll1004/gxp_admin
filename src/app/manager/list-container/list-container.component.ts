@@ -70,9 +70,9 @@ export class ListContainerComponent implements OnInit {
       { field: 'usr_id', header: '아이디', width: '20%' },
       { field: 'cus_nm_ko', header: '고객명(한글)', width: '17%' },
       { field: 'usr_use_yn', header: '사용여부', width: '10%' },
-      { field: 'usr_reg_dtm', header: '등록일', width: '12%' },
-      { field: 'usr_upd_dtm', header: '수정일', width: '12%' },
-      { field: '', header: '관리', width: '24%' }
+      { field: 'usr_reg_dtm', header: '등록일', width: '17%' },
+      { field: 'usr_upd_dtm', header: '수정일', width: '17%' },
+      { field: '', header: '관리', width: '18%' }
     ];
   }
 
@@ -110,4 +110,30 @@ export class ListContainerComponent implements OnInit {
     }
     this.totalCustomerList = this.filterCustomerLists.length;
   }
+
+  // changeUseStatusStop(data) {
+  //   this.customerLists.forEach((item) => {
+  //     if(item.usr_seq === data) {
+  //       item.usr_use_yn = 'N';
+  //       this.http.get('http://183.110.11.49/adm/user/' + this.params.index).subscribe((data) => {
+  //         const getData: any[] = JSON.parse((<any>data)._body);
+  //
+  //       });
+  //
+  //       // this.updateData(item);
+  //     }
+  //   })
+  // }
+
+  // updateData(newData) {
+  //   let headers:Headers = new Headers();
+  //   headers.append('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
+  //
+  //   return this.http.put('http://183.110.11.49/adm/user', newData, { headers: headers }).subscribe(
+  //     data => console.log("Data: " + data),
+  //     error => console.log("Error: " + error),
+  //     function(){
+  //       alert('수정 완료되었습니다.');
+  //     });
+  // }
 }

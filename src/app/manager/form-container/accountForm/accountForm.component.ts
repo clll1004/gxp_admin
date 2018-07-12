@@ -141,7 +141,7 @@ export class AccountFormComponent implements OnInit {
     );
   }
 
-  loadData() {
+  loadAccountList() {
     this.http.get('http://183.110.11.49/adm/user/' + this.params.index).subscribe((data) => {
       const getData:any[] = JSON.parse((<any>data)._body);
       this.accountform.get('usr_seq').setValue(getData['usr_seq']);
