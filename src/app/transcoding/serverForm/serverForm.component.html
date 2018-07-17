@@ -1,0 +1,67 @@
+<script src="../../app.module.ts"></script>
+<div class="ui-g-12 ui-g-nopad margin-bottom-50">
+  <div class="ui-g-12 ui-g-nopad margin-bottom-40 form-info-container">
+    ㆍ <span class="color-red">*</span> 는 필수입력 항목입니다.<br />
+    ㆍ 고객/그룹 선택 후 서버등록이 가능합니다.<br />
+  </div>
+
+  <form [formGroup]="serverform" (ngSubmit)="onSubmit(serverform.value)" class="ui-g-12 ui-g-nopad">
+    <fieldset>
+      <legend class="padding-left-10 padding-right-10">트랜스코딩 서버</legend>
+
+      <div class="ui-g-12 ui-g-nopad margin-bottom-40 form-container">
+        <table class="form-list">
+          <caption>트랜스코딩 서버 등록 테이블</caption>
+          <colgroup>
+            <col style="width: 260px;" />
+            <col style="width: auto;" />
+          </colgroup>
+          <tr>
+            <th><label for="ts_ip">트랜스코딩 서버 IP</label> <span class="color-red">*</span></th>
+            <td>
+              <input pInputText type="text" id="ts_ip" formControlName="ts_ip" class="margin-right-10" title="아이디 입력" autocomplete="off"  maxlength="51" />
+              <button type="button" class="btn white-btn square-btn" (click)="confirmIP()">중복 확인</button>
+              <div *ngIf="!serverform.get('ts_ip').valid && serverform.get('ts_ip').dirty">
+                <p class="color-red info-txt margin-top-10" *ngIf="serverform.get('ts_ip').errors['required']">필수입력 사항 입니다</p>
+              </div>
+              <div *ngIf="showIPDupMsg">
+                <p class="color-blue info-txt margin-top-10" *ngIf="ableIP">사용가능한 IP입니다.</p>
+                <p class="color-red info-txt margin-top-10" *ngIf="!ableIP">사용중인 IP입니다.</p>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <th>트랜스코딩서버 용도 <span class="color-red">*</span></th>
+            <td>
+              <p-radioButton formControlName="ts_type" name="ts_type" value="G" label="일반" class="margin-right-30"></p-radioButton>
+              <p-radioButton formControlName="ts_type" name="ts_type" value="B" label="배치서버"></p-radioButton>
+              <p class="info-txt margin-top-10">(배치 서버: 일괄 배치로 업로드된 파일만 변환을 수행하는 서버 :: UploadType [ISYNC])</p>
+            </td>
+          </tr>
+          <tr>
+            <th>사용여부 <span class="color-red">*</span></th>
+            <td>
+              <p-radioButton formControlName="ts_use_yn" name="ts_use_yn" value="Y" label="사용" class="margin-right-30"></p-radioButton>
+              <p-radioButton formControlName="ts_use_yn" name="ts_use_yn" value="N" label="사용 중지"></p-radioButton>
+            </td>
+          </tr>
+          <tr>
+            <th><label for="ts_desc">트랜스코딩서버 설명</label> </th>
+            <td>
+              <textarea pInputTextarea title="비고" id="ts_desc" formControlName="ts_desc" class="form_txta" autocomplete="off" maxlength="101"></textarea>
+              <div *ngIf="!serverform.get('ts_desc').valid && serverform.get('ts_desc').dirty">
+                <p class="color-red info-txt margin-top-10" *ngIf="serverform.get('ts_desc').errors['maxlength']"> 100자 이내로 입력해주세요</p>
+              </div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="ui-g-12 ui-g-nopad txt-center">
+        <button pButton type="submit" label="등록" *ngIf="isAddPage" [disabled]="!serverform.valid || !ableIP" class="margin-right-10"></button>
+        <button pButton type="submit" label="수정" *ngIf="!isAddPage" [disabled]="!serverform.valid" class="margin-right-10"></button>
+        <button pButton type="reset" label="취소" *ngIf="isAddPage" (click)="goBack()"></button>
+        <button pButton type="reset" label="목록" *ngIf="!isAddPage" (click)="goBack()"></button>
+      </div>
+    </fieldset>
+  </form>
+</div>

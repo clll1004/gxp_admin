@@ -1,0 +1,22 @@
+<div class="ui-g-2 ui-g-nopad">
+  <nav class="ui-g-12 ui-g-nopad lnb-sec">
+    <ul>
+      <li><a routerLink="/transcoding/realTimeServerMT">실시간 서버 모니터링</a></li>
+      <li><a routerLink="/transcoding/tcStandByMT">변환 대기 모니터링</a></li>
+      <li><a routerLink="/transcoding/tcRequestMT">변환 요청 모니터링</a></li>
+      <li><a routerLink="/transcoding/tcProgressMT">변환 진행 모니터링</a></li>
+      <li><a routerLink="/transcoding/tcCompleteMT">변환 완료 모니터링</a></li>
+      <li><a routerLink="/transcoding/tcDelayMT">변환 지연 모니터링</a></li>
+      <li><a routerLink="/transcoding/tcFailMT">변환 실패 모니터링</a></li>
+      <li><a routerLink="/transcoding/tempDeleteList">임시 삭제 목록</a></li>
+    </ul>
+  </nav>
+</div>
+<div class="ui-g-10 ui-g-nopad content-sec">
+  <div class="ui-g-12 ui-g-nopad page-title-sec margin-bottom-40">
+    TRANSCODING / <span class="path"> {{ pageName }} </span>
+  </div>
+
+  <tcListContainer [params]="params" *ngIf="isShow"></tcListContainer>
+  <serverForm [params]="params" *ngIf="!isShow"></serverForm>
+</div>

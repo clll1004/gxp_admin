@@ -67,12 +67,12 @@ export class ListContainerComponent implements OnInit {
     ];
     this.accountCols = [
       { field: 'usr_seq', header: 'No.', width: '5%' },
-      { field: 'usr_id', header: '아이디', width: '20%' },
-      { field: 'cus_nm_ko', header: '고객명(한글)', width: '17%' },
+      { field: 'usr_id', header: '아이디', width: '24%' },
+      { field: 'cus_nm_ko', header: '고객명(한글)', width: '21%' },
       { field: 'usr_use_yn', header: '사용여부', width: '10%' },
       { field: 'usr_reg_dtm', header: '등록일', width: '17%' },
       { field: 'usr_upd_dtm', header: '수정일', width: '17%' },
-      { field: '', header: '관리', width: '18%' }
+      { field: '', header: '관리', width: '10%' }
     ];
   }
 

@@ -1,0 +1,316 @@
+<div class="ui-g-12 ui-g-nopad margin-bottom-50">
+  <div class="ui-g-12 ui-g-nopad page-title-sec margin-bottom-30" *ngIf="params['id'] === 'realTimeServerMT'">
+    ※ 트랜스코딩 진행중인 파일만 표시됩니다.
+  </div>
+
+  <div class="ui-g-12 ui-g-nopad search-sec margin-bottom-30" *ngIf="params['id'] === 'realTimeServerMT'">
+    <p-dropdown placeholder="트랜스코딩 서버 IP 선택" [options]="selectedIPOptions" [(ngModel)]="selectedIP" class="margin-right-10"></p-dropdown>
+    <button pButton type="button" label="검색" (click)="filterIP()"></button>
+  </div>
+  <div class="ui-g-12 ui-g-nopad search-sec margin-bottom-30" *ngIf="params['id'] !== 'realTimeServerMT'">
+    <label for="group-key" class="margin-right-10">변환 그룹 선택</label>
+    <p-dropdown id="group-key" placeholder="그룹 선택" [options]="selectedGroupOptions" [(ngModel)]="selectedGroup" class="margin-right-20"></p-dropdown>
+    <label for="file-key" class="margin-right-10">파일명</label>
+    <input type="text" id="file-key" pInputText placeholder="파일명 입력" [(ngModel)]="searchKey" class="margin-right-20">
+    <button pButton type="button" label="검색" (click)="filterSearch()"></button>
+  </div>
+
+  <div class="ui-g-12 ui-g-nopad btn-sec margin-bottom-30" *ngIf="params['id'] === 'realTimeServerMT'">
+    <button class="btn white-btn margin-right-5" (click)="filterListUseAll()">전체</button>
+    <button class="btn white-btn margin-right-5" (click)="filterListUse('Y')">사용</button>
+    <button class="btn white-btn margin-right-5" (click)="filterListUse('N')">미사용</button>
+    <button class="btn white-btn margin-right-5" (click)="refresh()">새로고침</button>
+    <a routerLink="/transcoding/realTimeServerMT/add"><button class="btn white-btn">트랜스코딩 서버 추가</button></a>
+  </div>
+  <div class="ui-g-12 ui-g-nopad btn-sec margin-bottom-30" *ngIf="params['id'] !== 'realTimeServerMT'">
+    <button class="btn white-btn margin-right-5" (click)="changeStatus()">선택 파일 변환 재시작</button>
+    <button class="btn white-btn margin-right-5" *ngIf="params['id'] === 'tcFailMT'" (click)="changeStatus()">선택 파일 임시 삭제</button>
+    <button class="btn white-btn margin-right-5" (click)="refresh()">새로고침</button>
+  </div>
+
+  <div class="ui-g-12 ui-g-nopad row-info-sec margin-bottom-20">
+    ㆍTotal <span class="total-row">{{ gettotalListLength }}</span>건 <!--(<span class="now-page">{{ currentIndex }}</span>Page / <span class="total-page">{{ totalIndex }}</span>Page)-->
+  </div>
+
+  <div class="ui-g-12 ui-g-nopad" *ngIf="params['id'] === 'realTimeServerMT'">
+    <p-table class="ui-g-12 ui-g-nopad margin-bottom-50" [value]="filterTcMonitoringLists" [paginator]="true" [rows]="10" [rowsPerPageOptions]="[10,30,50,100]" [resizableColumns]="true" dataKey="ts_seq">
+      <ng-template pTemplate="colgroup" let-columns>
+        <colgroup>
+          <col *ngFor="let col of realTimeServerCols" [style.width]="col.width">
+        </colgroup>
+      </ng-template>
+      <ng-template pTemplate="header">
+        <tr>
+          <th *ngFor="let col of realTimeServerCols" pResizableColumn>
+            {{ col.header }}
+          </th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-TcMonitoringList let-expanded="expanded" let-columns="columns">
+        <tr>
+          <td>
+            <a href="#" [pRowToggler]="TcMonitoringList">
+              <i [ngClass]="expanded ? 'pi pi-chevron-circle-down' : 'pi pi-chevron-circle-right'" style="font-size: 1.25em"></i>
+            </a>
+          </td>
+          <td>{{ TcMonitoringList.ts_seq }}</td>
+          <td>{{ TcMonitoringList.ts_ip }}</td>
+          <td>{{ TcMonitoringList.ts_type }}</td>
+          <td>{{ TcMonitoringList.ts_use_yn }}</td>
+          <td>{{ TcMonitoringList.ts_reg_dtm }}</td>
+          <td>{{ TcMonitoringList.ts_upd_dtm }}</td>
+          <td>
+            <a routerLink="/transcoding/realTimeServerMT/modify/{{TcMonitoringList.ts_seq}}"><button class="btn white-btn" label="수정">수정</button></a>
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="rowexpansion" let-TcMonitoringList let-columns="columns">
+        <tr>
+          <td colspan="8">
+            <div class="ui-g-1 ui-g-nopad margin-top-30 margin-bottom-30 padding-top-30 refresh-btn">
+              <i class="fas fa-sync-alt" alt="새로고침" (click)="reloadSubTable()"></i>
+            </div>
+            <p-table class="ui-g-11 ui-g-nopad margin-top-30 margin-bottom-30" [value]="subMonitoringLists" [resizableColumns]="true" dataKey="ts_seq">
+              <ng-template pTemplate="colgroup" let-columns>
+                <colgroup>
+                  <col *ngFor="let col of realTimeJobCols" [style.width]="col.width">
+                </colgroup>
+              </ng-template>
+              <ng-template pTemplate="header">
+                <tr>
+                  <th *ngFor="let col of realTimeJobCols" pResizableColumn>
+                    {{ col.header }}
+                  </th>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="body" let-subMonitoringList let-expanded="expanded" let-columns="columns">
+                <tr *ngIf="TcMonitoringList.ts_ip === subMonitoringList.ft_ts_ip">
+                  <td>{{ subMonitoringList.grp_nm }}</td>
+                  <td>{{ subMonitoringList.ft_path }}</td>
+                  <td>{{ subMonitoringList.gto_nm }}</td>
+                  <td>{{ subMonitoringList.ft_progress }}</td>
+                  <td>{{ subMonitoringList.ft_start_dtm }}</td>
+                  <td>{{ subMonitoringList.ft_end_dtm }}</td>
+                  <td>
+                    <!--<button class="btn white-btn margin-right-5" label="변환 재시작">변환 재시작</button>-->
+                    <button class="btn white-btn" label="ini조회">ini조회</button>
+                  </td>
+                </tr>
+              </ng-template>
+            </p-table>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+  <div class="ui-g-12 ui-g-nopad" *ngIf="params['id'] === 'tcStandByMT'">
+    <p-table class="ui-g-12 ui-g-nopad margin-bottom-50" [value]="filterTcMonitoringLists" [paginator]="true" [rows]="10" [rowsPerPageOptions]="[10,30,50,100]" [resizableColumns]="true" [(selection)]="selectItems" (onRowSelect)="onRowSelect()">
+      <ng-template pTemplate="colgroup" let-columns>
+        <colgroup>
+          <col *ngFor="let col of tcStandByCols" [style.width]="col.width">
+        </colgroup>
+      </ng-template>
+      <ng-template pTemplate="header">
+        <tr>
+          <th *ngFor="let col of tcStandByCols" pResizableColumn>
+            {{ col.header }}
+          </th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-filterTcMonitoringList >
+        <tr [pSelectableRow]="filterTcMonitoringList">
+          <td>
+            <p-tableCheckbox [value]="filterTcMonitoringList" ></p-tableCheckbox>
+          </td>
+          <td></td>
+          <td>{{ filterTcMonitoringList.grp_nm }}</td>
+          <td>{{ filterTcMonitoringList.ft_path }}</td>
+          <td>{{ filterTcMonitoringList.ft_reg_dtm }}</td>
+          <td></td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+  <div class="ui-g-12 ui-g-nopad" *ngIf="params['id'] === 'tcRequestMT'">
+    <p-table class="ui-g-12 ui-g-nopad margin-bottom-50" [value]="filterTcMonitoringLists" [paginator]="true" [rows]="10" [rowsPerPageOptions]="[10,30,50,100]" [resizableColumns]="true" [(selection)]="selectItems" (onRowSelect)="onRowSelect()">
+      <ng-template pTemplate="colgroup" let-columns>
+        <colgroup>
+          <col *ngFor="let col of tcRequestCols" [style.width]="col.width">
+        </colgroup>
+      </ng-template>
+      <ng-template pTemplate="header">
+        <tr>
+          <th *ngFor="let col of tcRequestCols" pResizableColumn>
+            {{ col.header }}
+          </th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-filterTcMonitoringList>
+        <tr [pSelectableRow]="filterTcMonitoringList">
+          <td>
+            <p-tableCheckbox [value]="filterTcMonitoringList" ></p-tableCheckbox>
+          </td>
+          <td></td>
+          <td>{{ filterTcMonitoringList.grp_nm }}</td>
+          <td>{{ filterTcMonitoringList.ft_path }}</td>
+          <td>{{ filterTcMonitoringList.ft_reg_dtm }}</td>
+          <td></td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+  <div class="ui-g-12 ui-g-nopad" *ngIf="params['id'] === 'tcProgressMT'">
+    <p-table class="ui-g-12 ui-g-nopad margin-bottom-50" [value]="filterTcMonitoringLists" [paginator]="true" [rows]="10" [rowsPerPageOptions]="[10,30,50,100]" [resizableColumns]="true" [(selection)]="selectItems" (onRowSelect)="onRowSelect()">
+      <ng-template pTemplate="colgroup" let-columns>
+        <colgroup>
+          <col *ngFor="let col of tcProgressCols" [style.width]="col.width">
+        </colgroup>
+      </ng-template>
+      <ng-template pTemplate="header">
+        <tr>
+          <th *ngFor="let col of tcProgressCols" pResizableColumn>
+            {{ col.header }}
+          </th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-filterTcMonitoringList>
+        <tr [pSelectableRow]="filterTcMonitoringList">
+          <td>
+            <p-tableCheckbox [value]="filterTcMonitoringList" ></p-tableCheckbox>
+          </td>
+          <td></td>
+          <td>{{ filterTcMonitoringList.grp_nm }}</td>
+          <td>{{ filterTcMonitoringList.ft_path }}</td>
+          <td>{{ filterTcMonitoringList.gto_nm }}</td>
+          <td>{{ filterTcMonitoringList.ft_progress }}</td>
+          <td>{{ filterTcMonitoringList.ft_ts_ip }}</td>
+          <td>{{ filterTcMonitoringList.ft_reg_dtm }}</td>
+          <td>{{ filterTcMonitoringList.ft_start_dtm }}</td>
+          <td>{{ filterTcMonitoringList.ft_end_dtm }}</td>
+          <td></td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+  <div class="ui-g-12 ui-g-nopad" *ngIf="params['id'] === 'tcCompleteMT'">
+    <p-table class="ui-g-12 ui-g-nopad margin-bottom-50" [value]="filterTcMonitoringLists" [paginator]="true" [rows]="10" [rowsPerPageOptions]="[10,30,50,100]" [resizableColumns]="true" [(selection)]="selectItems" (onRowSelect)="onRowSelect()">
+      <ng-template pTemplate="colgroup" let-columns>
+        <colgroup>
+          <col *ngFor="let col of tcCompleteCols" [style.width]="col.width">
+        </colgroup>
+      </ng-template>
+      <ng-template pTemplate="header">
+        <tr>
+          <th *ngFor="let col of tcCompleteCols" pResizableColumn>
+            {{ col.header }}
+          </th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-filterTcMonitoringList>
+        <tr [pSelectableRow]="filterTcMonitoringList">
+          <td>
+            <p-tableCheckbox [value]="filterTcMonitoringList" ></p-tableCheckbox>
+          </td>
+          <td></td>
+          <td>{{ filterTcMonitoringList.grp_nm }}</td>
+          <td>{{ filterTcMonitoringList.ft_path }}</td>
+          <td>{{ filterTcMonitoringList.ft_ts_ip }}</td>
+          <td>{{ filterTcMonitoringList.ft_reg_dtm }}</td>
+          <td>{{ filterTcMonitoringList.ft_start_dtm }}</td>
+          <td>{{ filterTcMonitoringList.ft_end_dtm }}</td>
+          <td></td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+  <div class="ui-g-12 ui-g-nopad" *ngIf="params['id'] === 'tcDelayMT'">
+    <p-table class="ui-g-12 ui-g-nopad margin-bottom-50" [value]="filterTcMonitoringLists" [paginator]="true" [rows]="10" [rowsPerPageOptions]="[10,30,50,100]" [resizableColumns]="true" [(selection)]="selectItems" (onRowSelect)="onRowSelect()">
+      <ng-template pTemplate="colgroup" let-columns>
+        <colgroup>
+          <col *ngFor="let col of tcDelayCols" [style.width]="col.width">
+        </colgroup>
+      </ng-template>
+      <ng-template pTemplate="header">
+        <tr>
+          <th *ngFor="let col of tcDelayCols" pResizableColumn>
+            {{ col.header }}
+          </th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-filterTcMonitoringList>
+        <tr [pSelectableRow]="filterTcMonitoringList">
+          <td>
+            <p-tableCheckbox [value]="filterTcMonitoringList" ></p-tableCheckbox>
+          </td>
+          <td></td>
+          <td>{{ filterTcMonitoringList.grp_nm }}</td>
+          <td>{{ filterTcMonitoringList.ft_path }}</td>
+          <td>{{ filterTcMonitoringList.ft_reg_dtm }}</td>
+          <td>{{ filterTcMonitoringList.ts_upd_dtm }}</td>
+          <td></td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+  <div class="ui-g-12 ui-g-nopad" *ngIf="params['id'] === 'tcFailMT'">
+    <p-table class="ui-g-12 ui-g-nopad margin-bottom-50" [value]="filterTcMonitoringLists" [paginator]="true" [rows]="10" [rowsPerPageOptions]="[10,30,50,100]" [resizableColumns]="true" [(selection)]="selectItems" (onRowSelect)="onRowSelect()">
+      <ng-template pTemplate="colgroup" let-columns>
+        <colgroup>
+          <col *ngFor="let col of tcFailCols" [style.width]="col.width">
+        </colgroup>
+      </ng-template>
+      <ng-template pTemplate="header">
+        <tr>
+          <th *ngFor="let col of tcFailCols" pResizableColumn>
+            {{ col.header }}
+          </th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-filterTcMonitoringList>
+        <tr [pSelectableRow]="filterTcMonitoringList">
+          <td>
+            <p-tableCheckbox [value]="filterTcMonitoringList" ></p-tableCheckbox>
+          </td>
+          <td></td>
+          <td>{{ filterTcMonitoringList.grp_nm }}</td>
+          <td>{{ filterTcMonitoringList.ft_path }}</td>
+          <td>{{ filterTcMonitoringList.ft_ts_ip }}</td>
+          <td>{{ filterTcMonitoringList.ft_fail_cnt }}</td>
+          <td>{{ filterTcMonitoringList.ft_msg }}</td>
+          <td>{{ filterTcMonitoringList.ft_end_dtm }}</td>
+          <td></td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+  <div class="ui-g-12 ui-g-nopad" *ngIf="params['id'] === 'tempDeleteList'">
+    <p-table class="ui-g-12 ui-g-nopad margin-bottom-50" [value]="filterTcMonitoringLists" [paginator]="true" [rows]="10" [rowsPerPageOptions]="[10,30,50,100]" [resizableColumns]="true" [(selection)]="selectItems" (onRowSelect)="onRowSelect()">
+      <ng-template pTemplate="colgroup" let-columns>
+        <colgroup>
+          <col *ngFor="let col of tempDeleteCols" [style.width]="col.width">
+        </colgroup>
+      </ng-template>
+      <ng-template pTemplate="header">
+        <tr>
+          <th *ngFor="let col of tempDeleteCols" pResizableColumn>
+            {{ col.header }}
+          </th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-filterTcMonitoringList>
+        <tr [pSelectableRow]="filterTcMonitoringList">
+          <td>
+            <p-tableCheckbox [value]="filterTcMonitoringList" ></p-tableCheckbox>
+          </td>
+          <td></td>
+          <td>{{ filterTcMonitoringList.grp_nm }}</td>
+          <td>{{ filterTcMonitoringList.ft_path }}</td>
+          <td>{{ filterTcMonitoringList.ft_reg_dtm }}</td>
+          <td>{{ filterTcMonitoringList.ft_start_dtm }}</td>
+          <td>{{ filterTcMonitoringList.ft_end_dtm }}</td>
+          <td></td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</div>

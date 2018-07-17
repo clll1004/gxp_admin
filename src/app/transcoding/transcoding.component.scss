@@ -1,0 +1,142 @@
+.btn-sec {
+  .btn {
+    padding: 5px 10px;
+    margin-right: 5px;
+  }
+}
+
+.row-info-sec {
+  font-size: 14px;
+  color: #888;
+  .total-row {
+    font-weight: bold;
+    color: #ff6400;
+  }
+}
+
+.form-info-container {
+  font-size: 13px;
+  line-height: 20px;
+  color: #666;
+}
+.info-txt {font-size: 13px;}
+
+@mixin setSize($width, $height: $width) {
+  width: $width;
+  height: $height;
+}
+@mixin setMargin($TopBottom, $LeftRight: $TopBottom) {
+  margin: $TopBottom $LeftRight;
+}
+@mixin setPadding($TopBottom, $LeftRight: $TopBottom) {
+  padding: $TopBottom $LeftRight;
+}
+
+.form-info-container {
+  font-size: 13px;
+  line-height: 20px;
+  color: #666;
+}
+.info-txt {font-size: 13px;}
+
+form {
+  fieldset {
+    padding: 30px;
+    border: 1px solid #ddd;
+
+    legend {
+      font-size: 14px;
+    }
+
+    .form-container {
+      border-top: 1px solid #ddd;
+      color: #666;
+
+      .form-title {
+        padding: 10px 20px;
+        border-bottom: 1px solid #ddd;
+        background: #f5f5f5;
+        font-weight: bold;
+      }
+      .form-list {
+        font-size: 14px;
+        tr {
+          border-bottom: 1px solid #ddd;
+
+          th {
+            @include setPadding(0, 20px);
+            text-align: left;
+            vertical-align: middle;
+            font-weight: bold;
+          }
+          td {
+            @include setPadding(10px);
+
+
+            .server-group {
+              position: relative;
+              width: 600px;
+              .delete-btn {
+                position: absolute;
+                top:10px; right: 10px;
+              }
+
+              &.add-server-group {
+                @include setPadding(10px);
+                border:1px solid #ddd;
+              }
+
+            }
+            label.w-70px {
+              display: inline-block;
+              width: 70px;
+            }
+            input[type='text'],
+            input[type='password'] {
+              @include setSize(50%, auto);
+            }
+            input[type='radio'] + label {
+              display: inline-block;
+              width: 110px;
+            }
+            textarea {
+              @include setSize(600px, 200px);
+            }
+          }
+        }
+
+        &.option-form-list {
+          tr {
+            td {
+              input[type='text'],
+              input[type='password'] {
+                @include setSize(100%, auto);
+                &.w-150 {
+                  @include setSize(150px, auto);
+                }
+              }
+
+              .server-group {
+                input[type='text'],
+                input[type='password'] {
+                  @include setSize(50%, auto);
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.refresh-btn {
+  text-align: center;
+  i {
+    color: #666;
+    cursor: pointer;
+    &:hover {
+      color: #00a8ff;
+    }
+  }
+}

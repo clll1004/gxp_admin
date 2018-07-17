@@ -17,8 +17,9 @@ import { FormContainerComponent } from "./manager/form-container/form-container.
 import { CustomerFormComponent } from "./manager/form-container/customerForm/customerForm.component";
 import { GroupFormComponent } from "./manager/form-container/groupForm/groupForm.component";
 import { AccountFormComponent } from "./manager/form-container/accountForm/accountForm.component";
-
-
+import { TransCodingComponent } from "./transcoding/transcoding.component";
+import { TcListContainerComponent } from "./transcoding/tcListContainer/tcListContainer.component";
+import { ServerFormComponent } from "./transcoding/serverForm/serverForm.component";
 
 import { AppRoutingModule } from "./app-routing.module";
 
@@ -26,6 +27,7 @@ import { AppRoutingModule } from "./app-routing.module";
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
 import { TableModule } from 'primeng/table';
+import { TreeTableModule } from 'primeng/treetable';
 import { AccordionModule } from 'primeng/accordion';
 import { PasswordModule } from 'primeng/password';
 import { InputTextareaModule } from 'primeng/inputtextarea';
@@ -48,7 +50,10 @@ import { DropdownModule } from 'primeng/dropdown';
     FormContainerComponent,
     CustomerFormComponent,
     GroupFormComponent,
-    AccountFormComponent
+    AccountFormComponent,
+    TransCodingComponent,
+    TcListContainerComponent,
+    ServerFormComponent
   ],
   imports: [
     BrowserModule,
@@ -64,6 +69,7 @@ import { DropdownModule } from 'primeng/dropdown';
     InputTextModule,
     ButtonModule,
     TableModule,
+    TreeTableModule,
     AccordionModule,
     PasswordModule,
     InputTextareaModule,
