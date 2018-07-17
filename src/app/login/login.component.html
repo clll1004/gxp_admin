@@ -4,14 +4,16 @@
       <img src="../../assets/images/logo.png" alt="로고 이미지"  />
     </div>
 
-    <form class="info-container" (ngSubmit)="login()">
-      <label for="input-id"></label>
-      <input pInputText type="text" id="input-id" class="margin-bottom-10" title="아이디 입력" placeholder="아이디 입력" name="userID" autocomplete="off" [(ngModel)]="userData.userId" />
+    <form [formGroup]="loginform" (ngSubmit)="onSubmit(loginform.value)" class="info-container">
+      <fieldset>
+        <label for="input-id"></label>
+        <input pInputText type="text" id="input-id" formControlName="user_id" class="margin-bottom-10" title="아이디 입력" placeholder="아이디 입력" name="userID" autocomplete="off" />
 
-      <label for="input-pswd"></label>
-      <input pPassword type="password" id="input-pswd" class="margin-bottom-30" title="비밀번호 입력" placeholder="비밀번호 입력" name="userPassword" [(ngModel)]="userData.userPassword" />
+        <label for="input-pswd"></label>
+        <input pPassword [feedback]="false" type="password" id="input-pswd" formControlName="user_password" class="margin-bottom-30" title="비밀번호 입력" placeholder="비밀번호 입력" name="userPassword" />
 
-      <button class="btn orange-btn big-btn">LOGIN</button>
+        <button pButton type="submit" [disabled]="!loginform.valid" class="btn orange-btn big-btn" >LOGIN</button>
+      </fieldset>
     </form>
   </div>
 </div>

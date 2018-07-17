@@ -15,25 +15,23 @@ import { UserService } from "../../../services/apis/adm/user/user.service"
 export class AccountFormComponent implements OnInit {
   params: Params;
 
-  accountform: FormGroup;
-  submitted: boolean;
+  public accountform: FormGroup;
+  public submitted: boolean;
 
   /*for check add page row*/
-  isAddRow: boolean = true;
-  ableID: boolean = false;
-  showIdDupMsg: boolean = false;
+  public isAddRow: boolean = true;
+  public ableID: boolean = false;
+  public showIdDupMsg: boolean = false;
 
   /*for dropdown*/
-  cus_seq_options: any[];
-  grp_seq_options: any[];
+  public cus_seq_options: any[] = [];
+  public grp_seq_options: any[] = [];
 
   constructor(private formBuilder: FormBuilder,
               private router: Router,
               private activatedRoute: ActivatedRoute,
               private http: Http,
               private userService: UserService) {
-    this.cus_seq_options = [ ];
-    this.grp_seq_options = [ ];
 
     this.activatedRoute.params.subscribe( (params) => {
       this.params = params;

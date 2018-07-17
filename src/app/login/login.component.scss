@@ -1,7 +1,7 @@
 .login-container {
 
   width: 450px;
-  margin: 230px auto 0;
+  margin: 250px auto 0;
   border: 1px solid #ddd;
   border-radius: 10px;
   text-align: center;
@@ -10,6 +10,17 @@
     input {
       width: 90%;
       height: 40px;
+    }
+  }
+
+  .btn {
+    padding-top: 13px;
+    border: none;
+    &:hover, &:focus {
+      background: #ea5c00;
+    }
+    &:active {
+      background: #cf5100;
     }
   }
 }

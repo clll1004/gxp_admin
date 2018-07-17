@@ -6,7 +6,7 @@ import { ManagerComponent } from "./manager/manager.component";
 import { TransCodingComponent } from "./transcoding/transcoding.component";
 
 const routes: Routes = [
-  { path: '', redirectTo: 'manager/customer', pathMatch: 'full' },
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
   { path: 'manager', component: ManagerComponent },
   { path: 'manager/:listId', component: ManagerComponent },

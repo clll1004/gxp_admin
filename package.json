@@ -48,6 +48,7 @@
     "raw-loader": "^0.5.1",
     "rimraf": "^2.6.2",
     "sass-loader": "^7.0.1",
+    "ts-md5": "^1.2.4",
     "typescript": "~2.7.2",
     "webpack": "^4.7.0",
     "webpack-cli": "^2.1.2",
