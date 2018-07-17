@@ -3,12 +3,13 @@
     CUSTOMER / <span class="path">{{ pathName }}</span>
   </div>
 
+  <!--고객명(한글) 검색-->
   <div class="ui-g-12 ui-g-nopad search-sec margin-bottom-30">
     <label for="search-key" class="margin-right-10">고객명(한글)</label>
     <input type="text" pInputText id="search-key" class="margin-right-10" [(ngModel)]="searchKey" placeholder="고객명(한글) 입력" autocomplete="off">
     <button pButton type="button" label="검색" (click)="filterCustomerName()"></button>
   </div>
-
+  <!--사용/미사용 필터-->
   <div class="ui-g-12 ui-g-nopad btn-sec margin-bottom-30">
     <button class="btn white-btn" (click)="filterListUseAll()">전체</button>
     <button class="btn white-btn" (click)="filterListUse('Y')">사용</button>
@@ -17,6 +18,7 @@
     <a routerLink="/manager/account/add"><button class="btn white-btn" *ngIf="params['listId'] === 'account'">계정 추가</button></a>
   </div>
 
+  <!--테이블-->
   <div class="ui-g-12 ui-g-nopad row-info-sec margin-bottom-20">
     ㆍTotal <span class="total-row">{{ totalCustomerList }}</span>건 <!--(<span class="now-page">{{ currentIndex }}</span>Page / <span class="total-page">{{ totalIndex }}</span>Page)-->
   </div>
@@ -36,7 +38,7 @@
       </ng-template>
       <ng-template pTemplate="body" let-customerList>
         <tr>
-          <td>{{ customerList.cus_seq }}</td>
+          <td>{{ customerList.index }}</td>
           <td><a routerLink="/manager/customer/modify/{{customerList.cus_seq}}">{{ customerList.cus_nm_ko }}</a></td>
           <td>{{ customerList.cus_nm_en }}</td>
           <td>{{ customerList.cus_inchg_nm }}</td>
@@ -66,7 +68,7 @@
       </ng-template>
       <ng-template pTemplate="body" let-customerList>
         <tr>
-          <td>{{ customerList.grp_seq }}</td>
+          <td>{{ customerList.index }}</td>
           <td><a routerLink="/manager/group/modify/{{customerList.grp_seq}}">{{ customerList.grp_nm }}</a></td>
           <td>{{ customerList.cus_nm_ko }}</td>
           <td>{{ customerList.grp_basic_yn }}</td>
@@ -98,7 +100,7 @@
       </ng-template>
       <ng-template pTemplate="body" let-customerList>
         <tr>
-          <td>{{ customerList.usr_seq }}</td>
+          <td>{{ customerList.index }}</td>
           <td><a routerLink="/manager/account/modify/{{customerList.usr_seq}}">{{ customerList.usr_id }}</a></td>
           <td>{{ customerList.cus_nm_ko }}</td>
           <td>{{ customerList.usr_use_yn }}</td>

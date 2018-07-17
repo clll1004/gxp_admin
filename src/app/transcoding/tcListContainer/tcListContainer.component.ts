@@ -157,6 +157,8 @@ export class TcListContainerComponent implements OnInit {
           this.filterTcMonitoringLists = this.tcMonitoringLists['list'];
           this.gettotalListLength = this.filterTcMonitoringLists.length;
           this.subMonitoringLists = this.tcMonitoringLists['trans'];
+
+          this.setTableIndex();
         });
 
       this.load();
@@ -214,6 +216,8 @@ export class TcListContainerComponent implements OnInit {
         this.filterTcMonitoringLists.push(item);
       }
     });
+    this.gettotalListLength = this.filterTcMonitoringLists.length;
+    this.setTableIndex();
   }
   filterIP() {
     this.filterTcMonitoringLists = [];
@@ -223,10 +227,12 @@ export class TcListContainerComponent implements OnInit {
       }
     });
     this.gettotalListLength = this.filterTcMonitoringLists.length;
+    this.setTableIndex();
   }
   filterListUseAll() {
     this.filterTcMonitoringLists = this.tcMonitoringLists['list'];
     this.gettotalListLength = this.filterTcMonitoringLists.length;
+    this.setTableIndex();
   }
   filterListUse(data:string) {
     this.filterTcMonitoringLists = [];
@@ -236,6 +242,7 @@ export class TcListContainerComponent implements OnInit {
       }
     });
     this.gettotalListLength = this.filterTcMonitoringLists.length;
+    this.setTableIndex();
   }
   refresh() {
     window.location.reload();
@@ -253,6 +260,9 @@ export class TcListContainerComponent implements OnInit {
       newItemArray.push(itemObject);
     });
     this.updateTranscodingStatus(newItemArray);
+
+    this.gettotalListLength = this.filterTcMonitoringLists.length;
+    this.setTableIndex();
   }
   updateTranscodingStatus (newData) {
     let headers:Headers = new Headers();
@@ -271,5 +281,13 @@ export class TcListContainerComponent implements OnInit {
       .catch((error) => {
         console.log(error);
       });
+  }
+
+  setTableIndex() {
+    let num:number = 0;
+    this.filterTcMonitoringLists.forEach((item) => {
+      num = num + 1;
+      item.index = num;
+    });
   }
 }
