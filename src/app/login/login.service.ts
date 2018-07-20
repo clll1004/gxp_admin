@@ -1,7 +1,6 @@
 import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
 import { Http, Headers } from '@angular/http';
-import { Md5 } from 'ts-md5/dist/md5';
 
 @Injectable()
 export class LoginService {
@@ -15,7 +14,7 @@ export class LoginService {
   login(id:string, password:string) {
     const data:any = {};
     data.usr_id = id;
-    data.usr_pw = Md5.hashStr(password);
+    data.usr_pw = password;
 
     let headers:Headers = new Headers();
     headers.append('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
