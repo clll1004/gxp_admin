@@ -526,7 +526,8 @@
     <div class="ui-g-12 ui-g-nopad txt-center">
       <button pButton type="submit" label="등록" *ngIf="isAddRow" [disabled]="!groupform.valid || !ableGroupName" class="margin-right-10"></button>
       <button pButton type="submit" label="수정" *ngIf="!isAddRow" [disabled]="!groupform.valid" class="margin-right-10"></button>
-      <button pButton type="button" (click)="goBack()" label="취소"></button>
+      <button pButton type="reset" (click)="goBack()" *ngIf="isAddRow" label="취소"></button>
+      <button pButton type="reset" (click)="goBack()" *ngIf="!isAddRow" label="목록"></button>
     </div>
   </fieldset>
 </form>

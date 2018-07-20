@@ -11,7 +11,7 @@
     <label for="group-key" class="margin-right-10">변환 그룹 선택</label>
     <p-dropdown id="group-key" placeholder="그룹 선택" [options]="selectedGroupOptions" [(ngModel)]="selectedGroup" class="margin-right-20"></p-dropdown>
     <label for="file-key" class="margin-right-10">파일명</label>
-    <input type="text" id="file-key" pInputText placeholder="파일명 입력" [(ngModel)]="searchKey" class="margin-right-20">
+    <input type="text" id="file-key" pInputText placeholder="파일명 입력" [(ngModel)]="searchKey" class="margin-right-20" autocomplete="off">
     <button pButton type="button" label="검색" (click)="filterSearch()"></button>
   </div>
 

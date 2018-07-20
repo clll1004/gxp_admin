@@ -49,6 +49,11 @@
           <td><a routerLink="/manager/customer/modify/{{customerList.cus_seq}}"><button class="btn white-btn" label="수정">수정</button></a></td>
         </tr>
       </ng-template>
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td colspan="9" style="padding: 30px; text-align: center; font-size: 14px; color: #999;">표시할 데이터가 없습니다.</td>
+        </tr>
+      </ng-template>
     </p-table>
   </div>
 
@@ -81,6 +86,11 @@
           </td>
         </tr>
       </ng-template>
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td colspan="8" style="padding: 30px; text-align: center; font-size: 14px; color: #999;">표시할 데이터가 없습니다.</td>
+        </tr>
+      </ng-template>
     </p-table>
   </div>
 
@@ -111,6 +121,11 @@
             <!--<button class="btn white-btn" label="사용정지" >사용정지</button>-->
             <!--<button class="btn white-btn" label="로그인">로그인</button>-->
           </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td colspan="7" style="padding: 30px; text-align: center; font-size: 14px; color: #999;">표시할 데이터가 없습니다.</td>
         </tr>
       </ng-template>
     </p-table>

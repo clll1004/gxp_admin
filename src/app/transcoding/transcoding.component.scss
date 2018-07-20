@@ -72,7 +72,6 @@ form {
           td {
             @include setPadding(10px);
 
-
             .server-group {
               position: relative;
               width: 600px;
@@ -139,4 +138,11 @@ form {
       color: #00a8ff;
     }
   }
+}
+
+td {
+  padding: 10px!important;
+  font-size: 14px;
+  color: #666;
+  word-break: break-all;
 }
