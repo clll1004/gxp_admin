@@ -160,7 +160,10 @@ export class TcListContainerComponent implements OnInit {
           this.subMonitoringLists = this.tcMonitoringLists['trans'];
 
           this.setTableIndex();
-        });
+        })
+        .catch((error) => {
+          console.log(error);
+        })
 
       this.load();
     });
