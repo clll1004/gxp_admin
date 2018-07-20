@@ -20,13 +20,8 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.load();
     this.loginService.checkUserInfo();
     this.initLayoutStatus();
-  }
-
-  load() {
-    this.isShow = false;
   }
 
   initLayoutStatus() {

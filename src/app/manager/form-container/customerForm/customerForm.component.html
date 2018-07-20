@@ -488,7 +488,7 @@
                 <p class="color-red info-txt margin-top-10" *ngIf="trdOptItem.get('opt').get('gto_bitrate_mode').errors['required']">필수입력 사항 입니다</p>
               </div>
             </td>
-            <td><label for="gto_sharpen">Sharpen <span class="color-red">*</span></label></td>
+            <td><label for="gto_sharpen">Sharpen</label></td>
             <td>
               <input pInputText type="text" id="gto_sharpen" formControlName="gto_sharpen" title="Sharpen 입력" autocomplete="off" maxlength="21" />
               <div *ngIf="!trdOptItem.get('opt').get('gto_sharpen').valid && trdOptItem.get('opt').get('gto_sharpen').dirty">
