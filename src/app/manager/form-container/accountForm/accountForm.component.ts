@@ -4,6 +4,7 @@ import { ActivatedRoute, Params, Router } from "@angular/router";
 import { Http } from "@angular/http";
 import { AccountFormValidator } from './passwordValidator';
 import { UserService } from "../../../services/apis/adm/user/user.service"
+import { Md5 } from "ts-md5/dist/md5";
 
 @Component({
   selector: 'accountForm',
@@ -83,6 +84,7 @@ export class AccountFormComponent implements OnInit {
           valueObject[item[0]] = item[1];
         }
       });
+      valueObject['usr_pw'] = Md5.hashStr(valueObject['usr_pw']);
       this.userService.postUser(valueObject);
     } else {
       Object.entries(value).forEach((item) => {
