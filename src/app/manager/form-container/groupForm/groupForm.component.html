@@ -226,7 +226,7 @@
         </colgroup>
         <tr [formGroupName]="i" *ngFor="let thumnailItem of thmData.controls; let i = index;">
           <th>
-            썸네일 서버 정보 <span class="color-red">*</span> <button type="button" class="btn grey-btn square-btn" (click)="removeThumbnailServer(i)">삭제</button>
+            썸네일 서버 정보 <span class="color-red">*</span> <button type="button" class="btn grey-btn square-btn" *ngIf="isAddRow" (click)="removeThumbnailServer(i)">삭제</button>
           </th>
           <td>
             <div class="ui-g-12 ui-g-nopad server-group" id="thumbServerItem">
@@ -276,7 +276,8 @@
         <div [formGroupName]="i" *ngFor="let trdOptItem of tcdData.controls; let i = index;">
           <tr formGroupName="opt">
             <th rowspan="13">
-              <button type="button" class="btn grey-btn square-btn" (click)="removeTranscodingOption(i)">삭제</button>
+              <button type="button" class="btn grey-btn square-btn" *ngIf="isAddRow" (click)="removeTranscodingOption(i)">삭제</button>
+              <span>{{ trdOptItem.get('opt').get('gto_nm').value }}</span>
             </th>
             <td>
               사용여부 <span class="color-red">*</span>
@@ -462,7 +463,7 @@
             <td colspan="5">
               <p-radioButton formControlName="gto_static_use" name="gto_static_use{{i}}" value="Y" label="사용" class="margin-right-30"></p-radioButton>
               <p-radioButton formControlName="gto_static_use" name="gto_static_use{{i}}" value="N" label="사용 안 함" class="margin-right-30"></p-radioButton>
-              <p-radioButton formControlName="gto_static_use" name="gto_static_use{{i}}" value="X" label="Ext"></p-radioButton>
+              <p-radioButton formControlName="gto_static_use" name="gto_static_use{{i}}" value="X" label="Ext" (click)="toggleStaticEncodeDisabled()"></p-radioButton>
               <input pInputText type="text" class="w-150 margin-left-10" formControlName="gto_static_encode" title="Static Ext 입력" autocomplete="off" maxlength="401" />
               <div *ngIf="!trdOptItem.get('opt').get('gto_static_encode').valid && trdOptItem.get('opt').get('gto_static_encode').dirty">
                 <p class="color-red info-txt margin-top-10" *ngIf="trdOptItem.get('opt').get('gto_static_encode').errors['required']">필수입력 사항 입니다</p>
@@ -477,7 +478,7 @@
               <p-radioButton formControlName="gto_drm" name="gto_drm{{i}}" value="INKA" label="INKA" class="margin-right-30"></p-radioButton>
               <p-radioButton formControlName="gto_drm" name="gto_drm{{i}}" value="" label="Etc"></p-radioButton>
 
-              <input pInputText type="text" class="w-150 margin-left-10" formControlName="gto_drm" title="DRM Etc 입력" autocomplete="off" />
+              <input pInputText type="text" class="w-150 margin-left-10" title="DRM Etc 입력" autocomplete="off" />
               <div *ngIf="!trdOptItem.get('opt').get('gto_drm').valid && trdOptItem.get('opt').get('gto_drm').dirty">
                 <p class="color-red info-txt margin-top-10" *ngIf="trdOptItem.get('opt').get('gto_drm').errors['required']">필수입력 사항 입니다</p>
               </div>
@@ -490,7 +491,7 @@
               <p><span class="info-txt">서비스 서버를 추가하려면 추가버튼을 클릭하세요.</span> <button type="button" *ngIf="isAddRow" (click)="addServiceServer(trdOptItem)" class="btn white-btn square-btn margin-left-10 margin-bottom-10">서비스 서버추가</button></p>
               <div formArrayName="svc">
                 <div [formGroupName]="j" *ngFor="let svcItem of trdOptItem.controls.svc.controls; let j = index;" class="ui-g-12 ui-g-nopad margin-bottom-10 server-group add-server-group">
-                  <button type="button" (click)="removeServiceServer(i, j)" class="btn grey-btn square-btn delete-btn"><i class="fas fa-times"></i></button>
+                  <button type="button" *ngIf="isAddRow" (click)="removeServiceServer(i, j)" class="btn grey-btn square-btn delete-btn"><i class="fas fa-times"></i></button>
                   <label for="gss_ftp_ip" class="w-70px margin-bottom-10">IP</label> <input pInputText type="text" id="gss_ftp_ip" formControlName="gss_ftp_ip" title="썸네일서버 IP 입력" autocomplete="off" maxlength="16" /><br>
                   <div *ngIf="!svcItem.get('gss_ftp_ip').valid && svcItem.get('gss_ftp_ip').dirty" class="padding-left-70">
                     <p class="color-red info-txt margin-bottom-10" *ngIf="svcItem.get('gss_ftp_ip').errors['required']">필수입력 사항 입니다</p>
@@ -526,8 +527,8 @@
     <div class="ui-g-12 ui-g-nopad txt-center">
       <button pButton type="submit" label="등록" *ngIf="isAddRow" [disabled]="!groupform.valid || !ableGroupName" class="margin-right-10"></button>
       <button pButton type="submit" label="수정" *ngIf="!isAddRow" [disabled]="!groupform.valid" class="margin-right-10"></button>
-      <button pButton type="reset" (click)="goBack()" *ngIf="isAddRow" label="취소"></button>
-      <button pButton type="reset" (click)="goBack()" *ngIf="!isAddRow" label="목록"></button>
+      <button pButton type="reset" (click)="goList()" *ngIf="isAddRow" label="취소"></button>
+      <button pButton type="reset" (click)="goList()" *ngIf="!isAddRow" label="목록"></button>
     </div>
   </fieldset>
 </form>

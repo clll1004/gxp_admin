@@ -14,34 +14,34 @@ import { GroupService } from "../../../services/apis/adm/group/group.service"
 export class GroupFormComponent implements OnInit {
   params: Params;
 
-  groupform: FormGroup;
-  customerList: any[]= [ ];
-  customerName: string;
-  submitted: boolean;
+  public groupform: FormGroup;
+  public customerList: any[]= [ ];
+  public customerName: string;
+  public submitted: boolean;
 
   /*for check addpagebb row*/
-  isAddRow: boolean = true;
-  ableGroupName: boolean = false;
-  showGroupDupMsg: boolean = false;
+  public isAddRow: boolean = true;
+  public ableGroupName: boolean = false;
+  public showGroupDupMsg: boolean = false;
 
   /*for dropdown*/
-  server_mode_options = [
+  public server_mode_options = [
     {label:'선택하세요', value:null},
     {label:'PASV', value: 'PASV'},
     {label:'ACTV', value: 'ACTV'}
   ];
-  grp_stream_svr_type_options = [
+  public grp_stream_svr_type_options = [
     {label:'선택하세요', value:null},
     {label:'gxp', value: 'gxp'},
     {label:'WOWZA', value: 'WOWZA'},
     {label:'etc', value: 'etc'}
   ];
-  gto_bitrate_mode_options =[
+  public gto_bitrate_mode_options =[
     {label:'선택하세요', value:null},
     {label:'CBR', value: 'CBR'},
     {label:'VBR', value: 'VBR'}
   ];
-  gto_frame_rate_options =[
+  public gto_frame_rate_options =[
     {label:'선택하세요', value:null},
     {label:'copy', value: 'copy'},
     {label:'29.97', value: '29.97'},
@@ -50,7 +50,8 @@ export class GroupFormComponent implements OnInit {
     {label:'23.97', value: '23.97'}
   ];
 
-  cus_seq_options: any[]= [ ];
+  public cus_seq_options: any[]= [ ];
+  public isStaticEncodeMode:boolean = true;
 
   constructor(private formBuilder: FormBuilder,
               private router: Router,
@@ -132,7 +133,7 @@ export class GroupFormComponent implements OnInit {
             'gto_refs': new FormControl(null, Validators.compose([Validators.required, Validators.maxLength(3)])),
             'gto_frame_rate': new FormControl('29.97', Validators.compose([Validators.required, Validators.maxLength(5)])),
             'gto_static_use': new FormControl('N', Validators.required),
-            'gto_static_encode': new FormControl('N', Validators.compose([Validators.required, Validators.maxLength(400)])),
+            'gto_static_encode': new FormControl(null, Validators.compose([Validators.required, Validators.maxLength(400)])),
             'gto_drm': new FormControl('N', Validators.compose([Validators.required, Validators.maxLength(10)]))
           }),
           svc: this.formBuilder.array([
@@ -167,7 +168,7 @@ export class GroupFormComponent implements OnInit {
     }
   }
 
-  goBack() {
+  goList() {
     this.router.navigate(['/manager', 'group']);
   }
 
@@ -287,6 +288,10 @@ export class GroupFormComponent implements OnInit {
     });
   }
 
+  toggleStaticEncodeDisabled() {
+    console.log('r')
+  }
+;
   /*중복확인 - 그룹명*/
   confirmGroupName() {
     this.showGroupDupMsg = true;
@@ -338,7 +343,7 @@ export class GroupFormComponent implements OnInit {
           'gto_refs': new FormControl(null, Validators.compose([Validators.required, Validators.maxLength(3)])),
           'gto_frame_rate': new FormControl('29.97', Validators.compose([Validators.required, Validators.maxLength(5)])),
           'gto_static_use': new FormControl('N', Validators.required),
-          'gto_static_encode': new FormControl('N', Validators.compose([Validators.required, Validators.maxLength(400)])),
+          'gto_static_encode': new FormControl(null, Validators.compose([Validators.required, Validators.maxLength(400)])),
           'gto_drm': new FormControl('N', Validators.compose([Validators.required, Validators.maxLength(10)]))
         }),
         svc: this.formBuilder.array([
