@@ -4,7 +4,7 @@ import { ActivatedRoute, Params, Router } from "@angular/router";
 import { Http } from "@angular/http";
 import { AccountFormValidator } from './passwordValidator';
 import { UserService } from "../../../services/apis/adm/user/user.service"
-import { Md5 } from "ts-md5/dist/md5";
+import { Md5 } from "ts-md5";
 
 @Component({
   selector: 'accountForm',

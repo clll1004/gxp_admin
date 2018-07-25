@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
 import { Http, Headers } from '@angular/http';
-import { Md5 } from "ts-md5/dist/md5";
+import { Md5 } from "ts-md5";
 
 @Injectable()
 export class LoginService {
