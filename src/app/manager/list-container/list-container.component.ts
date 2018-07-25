@@ -1,11 +1,13 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Http } from "@angular/http";
 import { ActivatedRoute } from "@angular/router";
+import { AdminApis } from '../../services/apis/apis';
 
 @Component({
   selector: 'list-container',
   templateUrl: './list-container.component.html',
-  styleUrls: ['./list-container.component.scss']
+  styleUrls: ['./list-container.component.scss'],
+  providers: [ AdminApis ]
 })
 
 export class ListContainerComponent implements OnInit {
@@ -50,18 +52,18 @@ export class ListContainerComponent implements OnInit {
   public totalCustomerList: number = 0;
   public searchKey: string = '';
 
-  constructor(private http: Http, private activatedRoute: ActivatedRoute) {}
+  constructor(private http: Http, private activatedRoute: ActivatedRoute, private adminApis: AdminApis) {}
 
   ngOnInit() {
     this.activatedRoute.url.subscribe((urlItem) => {
       this.customerLists = [];
       let url: string = '';
       if(urlItem[1]['path'] == 'customer') {
-        url = 'http://183.110.11.49/adm/customer/list?page=1&row=10000';
+        url = this.adminApis.loadCustomerList;
       } else if (urlItem[1]['path'] == 'group') {
-        url = 'http://183.110.11.49/adm/group/list?page=1&row=10000'
+        url = this.adminApis.loadGroupList;
       } else if (urlItem[1]['path'] == 'account') {
-        url = 'http://183.110.11.49/adm/user/list?page=1&row=10000'
+        url = this.adminApis.loadUserList;
       }
       this.http.get(url)
         .toPromise()
