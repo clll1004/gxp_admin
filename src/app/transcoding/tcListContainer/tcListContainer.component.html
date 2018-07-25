@@ -83,7 +83,7 @@
                   </th>
                 </tr>
               </ng-template>
-              <ng-template pTemplate="body" let-subMonitoringList let-expanded="expanded" let-columns="columns">
+              <ng-template pTemplate="body" let-subMonitoringList let-columns="columns">
                 <tr *ngIf="TcMonitoringList.ts_ip === subMonitoringList.ft_ts_ip">
                   <td>{{ subMonitoringList.grp_nm }}</td>
                   <td>{{ subMonitoringList.ft_path }}</td>

@@ -7,7 +7,8 @@ import { Md5 } from "ts-md5/dist/md5";
 export class LoginService {
   public loginStatus:boolean = false;
 
-  constructor(private http: Http, private router: Router) {}
+  constructor(private http: Http, private router: Router) {
+  }
 
   getLoginStatus () {
     return !!this.getCookie('userInfo');
@@ -18,16 +19,19 @@ export class LoginService {
     this.loginStatus = true;
     const data:any = {};
     data.usr_id = id;
-    data.usr_pw = Md5.hashStr(password);
+    data.usr_pw = password;
+    // data.usr_pw = Md5.hashStr(password);
 
     let headers:Headers = new Headers();
     headers.append('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
 
     return this.http.post('http://183.110.11.49/adm/login', data, { headers: headers })
       .toPromise()
-      .then(() => {
+      .then((item) => {
         const cookieData = id + "/" + password ;
         this.setCookie("userInfo", cookieData, 7, true);
+        this.setCookie("userSeq", JSON.parse(item['_body']).usr_seq, 7);
+        this.setCookie("userName", JSON.parse(item['_body']).usr_nm, 7);
         this.router.navigate(['/', 'manager','customer']);
       })
       .catch((error) => {
@@ -40,6 +44,8 @@ export class LoginService {
   logout() {
     if(this.getCookie('userInfo')) {
       this.deleteCookie('userInfo');
+      this.deleteCookie('userSeq');
+      this.deleteCookie('userName');
       this.router.navigate(['/', 'login']);
     }
   }

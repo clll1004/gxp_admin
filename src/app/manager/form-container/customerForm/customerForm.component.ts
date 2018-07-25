@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Validators,FormControl,FormGroup,FormBuilder,FormArray } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from "@angular/router";
-import { Http } from '@angular/http';
 import { CustomerService } from '../../../services/apis/adm/customer/customer.service';
 import { AdminApis } from '../../../services/apis/apis';
 
@@ -54,7 +53,6 @@ export class CustomerFormComponent implements OnInit {
   constructor(private formBuilder: FormBuilder,
                 private router: Router,
                 private activatedRoute: ActivatedRoute,
-                private http: Http,
                 private customerService: CustomerService,
                 private adminApis: AdminApis) {
     this.activatedRoute.params.subscribe( (params) => {
@@ -177,11 +175,11 @@ export class CustomerFormComponent implements OnInit {
   }
 
   onSubmit(formObject: any) {
-    const valueObject = {};
+    let valueObject = {};
     this.submitted = true;
 
     if(this.isAddRow) {
-      Object.entries(formObject).forEach((item) => {
+      Object.entries(formObject).forEach((item:any) => {
         if(item[0] === 'tcd') {
           item[1].forEach((optItem) => {
             if(optItem.opt.gto_drm_encode) {
@@ -191,7 +189,7 @@ export class CustomerFormComponent implements OnInit {
         }
       });
       valueObject = formObject;
-      Object.entries(valueObject).forEach((item) => {
+      Object.entries(valueObject).forEach((item:any) => {
         if(item[0] === 'tcd') {
           item[1].forEach((optItem) => {
             if(optItem.opt.gto_drm_encode) {
@@ -310,7 +308,7 @@ export class CustomerFormComponent implements OnInit {
   }
 
   loadCustomerList() {
-    this.customerService.getLists('http://183.110.11.49/adm/customer/' + this.params.index).subscribe((data) => {
+    this.customerService.getLists(this.adminApis.loadCustomer + this.params.index).subscribe((data) => {
       const getData:any[] = JSON.parse((<any>data)._body);
       this.customerform.controls.cus.get('cus_seq').setValue(getData['cus_seq']);
       this.customerform.controls.cus.get('cus_nm_en').setValue(getData['cus_nm_en']);

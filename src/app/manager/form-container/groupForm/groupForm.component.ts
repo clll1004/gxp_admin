@@ -154,11 +154,11 @@ export class GroupFormComponent implements OnInit {
   }
 
   onSubmit(formObject: any) {
-    const valueObject = {};
+    let valueObject = {};
     this.submitted = true;
 
     if(this.isAddRow) {
-      Object.entries(formObject).forEach((item) => {
+      Object.entries(formObject).forEach((item:any) => {
         if(item[0] === 'tcd') {
           item[1].forEach((optItem) => {
             if(optItem.opt.gto_drm_encode) {
@@ -168,7 +168,7 @@ export class GroupFormComponent implements OnInit {
         }
       });
       valueObject = formObject;
-      Object.entries(valueObject).forEach((item) => {
+      Object.entries(valueObject).forEach((item:any) => {
         if(item[0] === 'tcd') {
           item[1].forEach((optItem) => {
             if(optItem.opt.gto_drm_encode) {
@@ -179,7 +179,7 @@ export class GroupFormComponent implements OnInit {
       });
       this.groupService.postData(valueObject);
     } else {
-      Object.entries(formObject).forEach((item) => {
+      Object.entries(formObject).forEach((item:any) => {
         if(item[0] === 'tcd') {
           item[1].forEach((optItem) => {
             if(optItem.opt.gto_drm_encode) {
@@ -189,7 +189,7 @@ export class GroupFormComponent implements OnInit {
         }
       });
       valueObject = formObject;
-      Object.entries(valueObject).forEach((item) => {
+      Object.entries(valueObject).forEach((item:any) => {
         if(item[0] === 'tcd') {
           item[1].forEach((optItem) => {
             if(optItem.opt.gto_drm_encode) {

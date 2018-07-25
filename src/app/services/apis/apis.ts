@@ -14,7 +14,7 @@ export class AdminApis {
   public loadCustomerNames = this.ip + 'adm/common/list/customer';
   public loadGroupNames = this.ip + 'adm/common/list/group/';
   /* 중복확인 */
-  public checkDupCustomerName = this.ip + 'adm/common/check/userid/';
+  public checkDupCustomerName = this.ip + 'adm/common/check/customernm/';
   public checkDupGroupName = this.ip + 'adm/common/check/groupnm/';
   public checkDupUserId = this.ip + 'adm/common/check/userid/';
   public checkDupTransServerIp = this.ip + 'adm/common/check/tserverip/';
