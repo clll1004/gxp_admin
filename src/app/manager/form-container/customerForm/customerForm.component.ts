@@ -1,68 +1,62 @@
 import { Component, OnInit } from '@angular/core';
 import { Validators,FormControl,FormGroup,FormBuilder,FormArray } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from "@angular/router";
-import { Http, Headers } from '@angular/http';
-import { Observable } from "rxjs/internal/Observable";
-import { CustomerService } from "../../../services/apis/adm/customer/customer.service"
+import { Http } from '@angular/http';
+import { CustomerService } from '../../../services/apis/adm/customer/customer.service';
+import { AdminApis } from '../../../services/apis/apis';
 
 @Component({
   selector: 'customerForm',
   templateUrl: './customerForm.component.html',
   styleUrls: ['../form-container.component.scss'],
-  providers: [ CustomerService ]
+  providers: [ CustomerService, AdminApis ]
 })
 
 export class CustomerFormComponent implements OnInit {
   params: Params;
 
-  customerform: FormGroup;
-  submitted: boolean;
-  transOptionNames: any[];
+  public customerform: FormGroup;
+  public submitted: boolean;
 
   /*for check addpagebb row*/
-  isAddRow: boolean = true;
-  ableCustomerName: boolean = false;
-  showNameDupMsg: boolean = false;
-  ableGroupName: boolean = false;
-  showGroupDupMsg: boolean = false;
+  public isAddRow: boolean = true;
+  public ableCustomerName: boolean = false;
+  public showNameDupMsg: boolean = false;
+  public ableGroupName: boolean = false;
+  public showGroupDupMsg: boolean = false;
 
   /*for dropdown*/
-  server_mode_options: any[];
-  grp_stream_svr_type_options: any[];
-  gto_bitrate_mode_options: any[];
-  gto_frame_rate_options: any[];
+  public server_mode_options: any[] = [
+    {label:'선택하세요', value:null},
+    {label:'PASV', value: 'PASV'},
+    {label:'ACTV', value: 'ACTV'}
+  ];
+  public grp_stream_svr_type_options: any[] = [
+    {label:'선택하세요', value:null},
+    {label:'gxp', value: 'gxp'},
+    {label:'WOWZA', value: 'WOWZA'},
+    {label:'etc', value: 'etc'}
+  ];
+  public gto_bitrate_mode_options: any[] = [
+    {label:'선택하세요', value:null},
+    {label:'CBR', value: 'CBR'},
+    {label:'VBR', value: 'VBR'}
+  ];
+  public gto_frame_rate_options: any[] = [
+    {label:'선택하세요', value:null},
+    {label:'copy', value: 'copy'},
+    {label:'29.97', value: '29.97'},
+    {label:'27.97', value: '27.97'},
+    {label:'25.97', value: '25.97'},
+    {label:'23.97', value: '23.97'}
+  ];
 
   constructor(private formBuilder: FormBuilder,
                 private router: Router,
                 private activatedRoute: ActivatedRoute,
                 private http: Http,
-                private customerService: CustomerService) {
-    this.server_mode_options = [
-      {label:'선택하세요', value:null},
-      {label:'PASV', value: 'PASV'},
-      {label:'ACTV', value: 'ACTV'}
-    ];
-    this.grp_stream_svr_type_options = [
-      {label:'선택하세요', value:null},
-      {label:'gxp', value: 'gxp'},
-      {label:'WOWZA', value: 'WOWZA'},
-      {label:'etc', value: 'etc'}
-    ];
-    this.gto_bitrate_mode_options =[
-      {label:'선택하세요', value:null},
-      {label:'CBR', value: 'CBR'},
-      {label:'VBR', value: 'VBR'}
-    ];
-    this.gto_frame_rate_options =[
-      {label:'선택하세요', value:null},
-      {label:'copy', value: 'copy'},
-      {label:'29.97', value: '29.97'},
-      {label:'27.97', value: '27.97'},
-      {label:'25.97', value: '25.97'},
-      {label:'23.97', value: '23.97'}
-    ];
-    this.transOptionNames = ['HQ', 'MQ', 'LQ', 'C1', 'C2'];
-
+                private customerService: CustomerService,
+                private adminApis: AdminApis) {
     this.activatedRoute.params.subscribe( (params) => {
       this.params = params;
     });
@@ -148,8 +142,9 @@ export class CustomerFormComponent implements OnInit {
               'gto_refs': new FormControl(null, Validators.compose([Validators.required, Validators.maxLength(3)])),
               'gto_frame_rate': new FormControl('29.97', Validators.compose([Validators.required, Validators.maxLength(5)])),
               'gto_static_use': new FormControl('N', Validators.required),
-              'gto_static_encode': new FormControl('N', Validators.compose([Validators.required, Validators.maxLength(400)])),
-              'gto_drm': new FormControl('N', Validators.compose([Validators.required, Validators.maxLength(10)]))
+              'gto_static_encode': new FormControl({value: null, disabled: true}, Validators.compose([Validators.required, Validators.maxLength(400)])),
+              'gto_drm': new FormControl('N', Validators.required),
+              'gto_drm_encode': new FormControl({value: null, disabled: true}, Validators.compose([Validators.required, Validators.maxLength(10)]))
             }),
             svc: this.formBuilder.array([
               this.formBuilder.group({
@@ -182,10 +177,30 @@ export class CustomerFormComponent implements OnInit {
   }
 
   onSubmit(formObject: any) {
+    const valueObject = {};
     this.submitted = true;
 
     if(this.isAddRow) {
-      this.customerService.postCustomer(formObject);
+      Object.entries(formObject).forEach((item) => {
+        if(item[0] === 'tcd') {
+          item[1].forEach((optItem) => {
+            if(optItem.opt.gto_drm_encode) {
+              optItem.opt.gto_drm = optItem.opt.gto_drm_encode;
+            }
+          });
+        }
+      });
+      valueObject = formObject;
+      Object.entries(valueObject).forEach((item) => {
+        if(item[0] === 'tcd') {
+          item[1].forEach((optItem) => {
+            if(optItem.opt.gto_drm_encode) {
+              delete optItem.opt.gto_drm_encode;
+            }
+          })
+        }
+      });
+      this.customerService.postCustomer(valueObject);
     } else {
       this.customerService.updateCustomer(formObject.cus);
     }
@@ -198,17 +213,21 @@ export class CustomerFormComponent implements OnInit {
   /*중복확인 - 고객명(영문), 그룹명*/
   confirmCustomerName() {
     this.showNameDupMsg = true;
-    const inputname:string = this.customerform.get('cus').value['cus_nm_en'];
-    this.customerService.getLists('http://183.110.11.49/adm/common/check/customernm/'+inputname).subscribe((cont) => {
-      this.ableCustomerName = cont._body === 'true';
-    });
+    const inputName:string = this.customerform.get('cus').value['cus_nm_en'];
+    this.customerService.getLists(this.adminApis.checkDupCustomerName + inputName)
+      .toPromise()
+      .then((cont) => {
+        this.ableCustomerName = cont._body === 'true';
+      });
   }
   confirmGroupName() {
     this.showGroupDupMsg = true;
-    const inputname:string = this.customerform.get('grp').value['grp_nm'];
-    this.customerService.getLists('http://183.110.11.49/adm/common/check/groupnm/'+inputname).subscribe((cont) => {
-      this.ableGroupName = cont._body === 'true';
-    });
+    const inputName:string = this.customerform.get('grp').value['grp_nm'];
+    this.customerService.getLists(this.adminApis.checkDupGroupName + inputName)
+      .toPromise()
+      .then((cont) => {
+        this.ableGroupName = cont._body === 'true';
+      });
   }
   /*썸네일서버 - 추가, 삭제*/
   addThumbnailServer() {
@@ -253,8 +272,9 @@ export class CustomerFormComponent implements OnInit {
           'gto_refs': new FormControl(null, Validators.compose([Validators.required, Validators.maxLength(3)])),
           'gto_frame_rate': new FormControl('29.97', Validators.compose([Validators.required, Validators.maxLength(5)])),
           'gto_static_use': new FormControl('N', Validators.required),
-          'gto_static_encode': new FormControl('N', Validators.compose([Validators.required, Validators.maxLength(400)])),
-          'gto_drm': new FormControl('N', Validators.compose([Validators.required, Validators.maxLength(10)]))
+          'gto_static_encode': new FormControl({value: null, disabled: true}, Validators.compose([Validators.required, Validators.maxLength(400)])),
+          'gto_drm': new FormControl('N', Validators.required),
+          'gto_drm_encode': new FormControl({value: null, disabled: true}, Validators.compose([Validators.required, Validators.maxLength(10)]))
         }),
         svc: this.formBuilder.array([
           this.formBuilder.group({
@@ -267,7 +287,6 @@ export class CustomerFormComponent implements OnInit {
         ])
       })
     );
-    console.log(this.customerform);
   }
   removeTranscodingOption(index) {
     const tcdList = <FormArray>this.customerform.get('tcd');
@@ -303,5 +322,12 @@ export class CustomerFormComponent implements OnInit {
       this.customerform.controls.cus.get('cus_use_yn').setValue(getData['cus_use_yn']);
       this.customerform.controls.cus.get('cus_test_yn').setValue(getData['cus_test_yn']);
     });
+  }
+
+  changeStaticEncodeStatus(item) {
+    item.get('opt').get('gto_static_use').value === 'X' ? item.get('opt').get('gto_static_encode').enable() : item.get('opt').get('gto_static_encode').disable();
+  }
+  changeDrmEncodeStatus(item) {
+    item.get('opt').get('gto_drm').value === 'X' ? item.get('opt').get('gto_drm_encode').enable() : item.get('opt').get('gto_drm_encode').disable();
   }
 }

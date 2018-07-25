@@ -519,9 +519,9 @@
           <tr formGroupName="opt">
             <td>Static 사용유무 <span class="color-red">*</span></td>
             <td colspan="5">
-              <p-radioButton formControlName="gto_static_use" name="gto_static_use{{i}}" value="Y" label="사용" class="margin-right-30"></p-radioButton>
-              <p-radioButton formControlName="gto_static_use" name="gto_static_use{{i}}" value="N" label="사용 안 함" class="margin-right-30"></p-radioButton>
-              <p-radioButton formControlName="gto_static_use" name="gto_static_use{{i}}" value="X" label="Ext"></p-radioButton>
+              <p-radioButton formControlName="gto_static_use" name="gto_static_use{{i}}" value="Y" label="사용" class="margin-right-30" (click)="changeStaticEncodeStatus(trdOptItem)"></p-radioButton>
+              <p-radioButton formControlName="gto_static_use" name="gto_static_use{{i}}" value="N" label="사용 안 함" class="margin-right-30" (click)="changeStaticEncodeStatus(trdOptItem)"></p-radioButton>
+              <p-radioButton formControlName="gto_static_use" name="gto_static_use{{i}}" value="X" label="Ext" (click)="changeStaticEncodeStatus(trdOptItem)"></p-radioButton>
               <input pInputText type="text" class="w-150 margin-left-10" formControlName="gto_static_encode" title="Static Ext 입력" autocomplete="off" maxlength="401" />
               <div *ngIf="!trdOptItem.get('opt').get('gto_static_encode').valid && trdOptItem.get('opt').get('gto_static_encode').dirty">
                 <p class="color-red info-txt margin-top-10" *ngIf="trdOptItem.get('opt').get('gto_static_encode').errors['required']">필수입력 사항 입니다</p>
@@ -532,13 +532,13 @@
           <tr formGroupName="opt">
             <td>DRM 사용유무 <span class="color-red">*</span></td>
             <td colspan="5">
-              <p-radioButton formControlName="gto_drm" name="gto_drm{{i}}" value="N" label="사용 안 함" class="margin-right-30"></p-radioButton>
-              <p-radioButton formControlName="gto_drm" name="gto_drm{{i}}" value="INKA" label="INKA" class="margin-right-30"></p-radioButton>
-              <p-radioButton formControlName="gto_drm" name="gto_drm{{i}}" value="" label="Etc"></p-radioButton>
-
-              <input pInputText type="text" class="w-150 margin-left-10" formControlName="gto_drm" title="DRM Etc 입력" autocomplete="off" />
-              <div *ngIf="!trdOptItem.get('opt').get('gto_drm').valid && trdOptItem.get('opt').get('gto_drm').dirty">
-                <p class="color-red info-txt margin-top-10" *ngIf="trdOptItem.get('opt').get('gto_drm').errors['required']">필수입력 사항 입니다</p>
+              <p-radioButton formControlName="gto_drm" name="gto_drm{{i}}" value="N" label="사용 안 함" class="margin-right-30" (click)="changeDrmEncodeStatus(trdOptItem)"></p-radioButton>
+              <p-radioButton formControlName="gto_drm" name="gto_drm{{i}}" value="INKA" label="INKA" class="margin-right-30" (click)="changeDrmEncodeStatus(trdOptItem)"></p-radioButton>
+              <p-radioButton formControlName="gto_drm" name="gto_drm{{i}}" value="X" label="Etc" (click)="changeDrmEncodeStatus(trdOptItem)"></p-radioButton>
+              <input pInputText type="text" class="w-150 margin-left-10" formControlName="gto_drm_encode" title="DRM Etc 입력" autocomplete="off" maxlength="11" />
+              <div *ngIf="!trdOptItem.get('opt').get('gto_drm_encode').valid && trdOptItem.get('opt').get('gto_drm_encode').dirty">
+                <p class="color-red info-txt margin-top-10" *ngIf="trdOptItem.get('opt').get('gto_drm_encode').errors['required']">필수입력 사항 입니다</p>
+                <p class="color-red info-txt margin-top-10" *ngIf="trdOptItem.get('opt').get('gto_drm_encode').errors['maxlength']">10자 이내로 입력해주세요</p>
               </div>
             </td>
           </tr>
