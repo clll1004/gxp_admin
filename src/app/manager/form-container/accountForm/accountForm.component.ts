@@ -80,19 +80,32 @@ export class AccountFormComponent implements OnInit {
 
     if(this.isAddRow) {
       Object.entries(value).forEach((item) => {
-        if(item[0] !== 'usr_pw_cf' && item[0] !== 'usr_nm' && item[0] !== 'cus_nm_ko' && item[1]) {
+        if(item[0] !== 'usr_pw_cf' && item[0] !== 'cus_nm_ko' && item[1]) {
           valueObject[item[0]] = item[1];
         }
       });
       valueObject['usr_pw'] = Md5.hashStr(valueObject['usr_pw']);
-      this.userService.postUser(valueObject);
+      this.userService.postUser(valueObject)
+        .toPromise()
+        .then(() => {
+          alert('완료되었습니다.');
+          this.router.navigate(['/manager', 'account']);
+        })
+        .catch((error) => { console.log(error); });
+
     } else {
       Object.entries(value).forEach((item) => {
         if(item[0] !== 'cus_nm_ko' && item[1]) {
           valueObject[item[0]] = item[1];
         }
       });
-      this.userService.updateData(valueObject);
+      this.userService.updateData(valueObject)
+        .toPromise()
+        .then(() => {
+          alert('수정 완료되었습니다.');
+          window.location.reload();
+        })
+        .catch((error) => { console.log(error); });
     }
   }
 
@@ -102,22 +115,29 @@ export class AccountFormComponent implements OnInit {
 
   loadCustomerGroupList() {
     let list;
-    this.userService.getLists('http://183.110.11.49/adm/customer/list?page=1&row=10000').subscribe((params)=>{
-      list = JSON.parse(params["_body"]).list;
-      list.forEach((item) => {
-        item.label = item.cus_nm_ko;
-        item.value = item.cus_seq;
-        this.cus_seq_options.push(item);
-      });
-    });
-    this.userService.getLists('http://183.110.11.49/adm/group/list?page=1&row=10000').subscribe((params)=>{
-      list = JSON.parse(params["_body"]).list;
-      list.forEach((item) => {
-        item.label = item.grp_nm;
-        item.value = item.grp_seq;
-        this.grp_seq_options.push(item);
-      });
-    });
+    this.userService.getLists('http://183.110.11.49/adm/common/list/customer')
+      .toPromise()
+      .then((params) => {
+        list = JSON.parse(params["_body"]);
+        list.forEach((customerItem) => {
+          customerItem.label = customerItem.cus_nm_ko;
+          customerItem.value = customerItem.cus_seq;
+          this.cus_seq_options.push(customerItem);
+
+          this.userService.getLists('http://183.110.11.49/adm/common/list/group/' + customerItem.value)
+            .toPromise()
+            .then((params) => {
+              list = JSON.parse(params["_body"]);
+              list.forEach((groupItem) => {
+                groupItem.label = groupItem.grp_nm;
+                groupItem.value = groupItem.grp_seq;
+                this.grp_seq_options.push(groupItem);
+              });
+            })
+            .catch((error) => { console.log(error); })
+        });
+      })
+      .catch((error) => { console.log(error); });
   }
 
   confirmID() {
@@ -129,16 +149,18 @@ export class AccountFormComponent implements OnInit {
   }
 
   loadAccountList() {
-    this.userService.getLists('http://183.110.11.49/adm/user/' + this.params.index).subscribe((data) => {
-      const getData:any[] = JSON.parse(data["_body"]);
-      this.accountform.get('usr_seq').setValue(getData['usr_seq']);
-      this.accountform.get('cus_nm_ko').setValue(getData['cus_nm_ko']);
-      this.accountform.get('usr_id').setValue(getData['usr_id']);
-      this.accountform.get('usr_nm').setValue(getData['usr_nm']);
-      this.accountform.get('usr_mobile').setValue(getData['usr_mobile']);
-      this.accountform.get('usr_tel').setValue(getData['usr_tel']);
-      this.accountform.get('usr_use_yn').setValue(getData['usr_use_yn']);
-      this.accountform.get('usr_remark').setValue(getData['usr_remark']);
-    });
+    this.userService.getLists('http://183.110.11.49/adm/user/' + this.params.index)
+      .toPromise()
+      .then((data) => {
+          const getData:any[] = JSON.parse(data["_body"]);
+          this.accountform.get('usr_seq').setValue(getData['usr_seq']);
+          this.accountform.get('cus_nm_ko').setValue(getData['cus_nm_ko']);
+          this.accountform.get('usr_id').setValue(getData['usr_id']);
+          this.accountform.get('usr_nm').setValue(getData['usr_nm']);
+          this.accountform.get('usr_mobile').setValue(getData['usr_mobile']);
+          this.accountform.get('usr_tel').setValue(getData['usr_tel']);
+          this.accountform.get('usr_use_yn').setValue(getData['usr_use_yn']);
+          this.accountform.get('usr_remark').setValue(getData['usr_remark']);
+       });
   }
 }
