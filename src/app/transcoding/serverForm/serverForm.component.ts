@@ -3,13 +3,15 @@
  */
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from "@angular/router";
-import { Http, Headers } from "@angular/http";
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { TranscodingService } from '../../services/apis/adm/transcoding/transcoding.service';
+import { AdminApis } from '../../services/apis/apis';
 
 @Component({
   selector: 'serverForm',
   templateUrl: './serverForm.component.html',
-  styleUrls: ['../transcoding.component.scss']
+  styleUrls: ['../transcoding.component.scss'],
+  providers: [ TranscodingService, AdminApis ]
 })
 export class ServerFormComponent implements OnInit {
   @Input() params: object;
@@ -25,8 +27,9 @@ export class ServerFormComponent implements OnInit {
 
   constructor(private activatedRoute: ActivatedRoute,
               private formBuilder: FormBuilder,
-              private http: Http,
-              private router: Router) { }
+              private router: Router,
+              private transcodingService: TranscodingService,
+              private adminApis: AdminApis) { }
 
   ngOnInit() {
     this.activatedRoute.url.subscribe((urlItem) => {
@@ -57,9 +60,21 @@ export class ServerFormComponent implements OnInit {
           valueObject[item[0]] = item[1];
         }
       });
-      this.postServer(valueObject);
+      this.transcodingService.postData(this.adminApis.postServer, valueObject)
+        .toPromise()
+        .then(() => {
+          alert('완료되었습니다.');
+          this.router.navigate(['/transcoding', 'realTimeServerMT']);
+        })
+        .catch((error) => { console.log(error);});
     } else {
-      this.updateServer(formObject);
+      this.transcodingService.updateData(this.adminApis.updateServer, formObject)
+        .toPromise()
+        .then(() => {
+          alert('수정 완료되었습니다.');
+          window.location.reload();
+        })
+        .catch((error) => { console.log(error);});
     }
   }
 
@@ -70,10 +85,10 @@ export class ServerFormComponent implements OnInit {
   }
 
   loadServerData() {
-    this.http.get('http://183.110.11.49/adm/transcoding/server/' + this.params['index'])
+    this.transcodingService.getLists(this.adminApis.loadServer + this.params['index'])
       .toPromise()
       .then((data) => {
-        const getData = JSON.parse((<any>data)._body);
+        const getData = JSON.parse(data['_body']);
         this.serverform.get('ts_seq').setValue(getData.ts_seq);
         this.serverform.get('ts_ip').setValue(getData.ts_ip);
         this.serverform.get('ts_type').setValue(getData.ts_type);
@@ -81,40 +96,13 @@ export class ServerFormComponent implements OnInit {
         this.serverform.get('ts_desc').setValue(getData.ts_desc);
       });
   }
-
   confirmIP() {
     this.showIPDupMsg = true;
     const inputIP:string = this.serverform.value['ts_ip'];
-    this.http.get('http://183.110.11.49/adm/common/check/tserverip/' + inputIP)
+    this.transcodingService.getLists(this.adminApis.checkDupTransServerIp + inputIP)
       .toPromise()
       .then((cont) => {
         this.ableIP = cont['_body'] === 'true';
       });
   }
-
-  postServer(data) {
-    let headers:Headers = new Headers();
-    headers.append('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
-    return this.http.post('http://183.110.11.49/adm/transcoding/server', data, { headers: headers })
-      .toPromise()
-      .then(() => {this.router.navigate(['/transcoding', 'realTimeServerMT'])})
-      .then(() => {alert('완료되었습니다.');})
-      .catch((error) => {
-        console.log(error);
-      });
-  }
-
-  updateServer(newData) {
-    let headers:Headers = new Headers();
-    headers.append('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
-
-    return this.http.put('http://183.110.11.49/adm/transcoding/server', newData, { headers: headers })
-      .toPromise()
-      .then(() => {window.location.reload();})
-      .then(() => {alert('수정 완료되었습니다.');})
-      .catch((error) => {
-        console.log(error);
-      })
-  }
-
 }

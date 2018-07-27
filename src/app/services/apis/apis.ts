@@ -47,7 +47,7 @@ export class AdminApis {
   public postServer = this.ip + 'adm/transcoding/server';
   public updateServer = this.ip + 'adm/transcoding/server';
   /* 변환 정보 */
-  public loadTranscodingGroupNames = this.ip + 'adm/transcoding/llist/group';
+  public loadTranscodingGroupNames = this.ip + 'adm/transcoding/list/group';
   public loadStandbyList = this.ip + 'adm/transcoding/list?page=1&row=10000&ft_status=U';
   public loadRequestList = this.ip + 'adm/transcoding/list?page=1&row=10000&ft_status=TR';
   public loadProgressList = this.ip + 'adm/transcoding/list?page=1&row=10000&ft_status=TT';
