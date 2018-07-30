@@ -270,11 +270,23 @@ export class TcListContainerComponent implements OnInit {
     }
   }
   refresh() {
-    window.location.reload();
+    this.transcodingService.getLists(this.url)
+      .toPromise()
+      .then((cont) => {
+        this.tcMonitoringLists = JSON.parse(cont['_body']);
+        this.filterTcMonitoringLists = this.tcMonitoringLists['list'];
+        this.subMonitoringLists = this.tcMonitoringLists['trans'];
+
+        if(this.filterTcMonitoringLists) {
+          this.gettotalListLength = this.filterTcMonitoringLists.length;
+          this.setTableIndex();
+        }
+      })
+      .catch((error) => { console.log(error); });
   }
 
   onRowSelect() {
-
+    
   }
   changeStatus() {
     let newItemArray:any[] = [];
@@ -305,7 +317,9 @@ export class TcListContainerComponent implements OnInit {
 
     return this.transcodingService.updateData(statusUrl, newData)
       .toPromise()
-      .then(() => {window.location.reload();})
+      .then(() => {
+        this.refresh();
+      })
       .catch((error) => { console.log(error); });
   }
 
