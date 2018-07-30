@@ -51,9 +51,9 @@ export class AdminApis {
   public loadStandbyList = this.ip + 'adm/transcoding/list?page=1&row=10000&ft_status=U';
   public loadRequestList = this.ip + 'adm/transcoding/list?page=1&row=10000&ft_status=TR';
   public loadProgressList = this.ip + 'adm/transcoding/list?page=1&row=10000&ft_status=TT';
-  public loadCompleteList = this.ip + 'adm/transcoding/list?page=1&row=10000&ft_status=TS';
-  public loadDelayList = this.ip + 'adm/transcoding/list?page=1&row=10000&ft_status=TF';
-  public loadFailList = this.ip + 'adm/transcoding/list?page=1&row=10000&ft_status=TO';
+  public loadCompleteList = this.ip + 'adm/transcoding/list?page=1&row=10000&ft_status=SS';
+  public loadDelayList = this.ip + 'adm/transcoding/list?page=1&row=10000&ft_status=TD';
+  public loadFailList = this.ip + 'adm/transcoding/list?page=1&row=10000&ft_status=TF';
   public loadTempDeleteList = this.ip + 'adm/transcoding/list?page=1&row=10000&ft_status=DT';
   /* 변환 상태 변경 */
   public reStartTranscoding = this.ip + 'adm/transcoding/updateretry';
