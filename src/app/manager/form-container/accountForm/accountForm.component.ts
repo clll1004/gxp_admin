@@ -86,17 +86,18 @@ export class AccountFormComponent implements OnInit {
       });
 
       bcryptjs.genSalt(10, (err, salt) => {
-        this.goBack();
-      })
+        bcryptjs.hash(valueObject['usr_pw'], salt, (err, hash) => {
+          valueObject['usr_pw'] = hash;
 
-      // valueObject['usr_pw'] = Md5.hashStr(valueObject['usr_pw']);
-      // this.userService.postUser(valueObject)
-      //   .toPromise()
-      //   .then(() => {
-      //     alert('완료되었습니다.');
-      //     this.router.navigate(['/manager', 'account']);
-      //   })
-      //   .catch((error) => { console.log(error); });
+          this.userService.postUser(valueObject)
+            .toPromise()
+            .then(() => {
+              alert('완료되었습니다.');
+              location.replace('/manager/account');
+            })
+            .catch((error) => { console.log(error); });
+        });
+      });
 
     } else {
       Object.entries(value).forEach((item) => {
@@ -128,8 +129,12 @@ export class AccountFormComponent implements OnInit {
           customerItem.label = customerItem.cus_nm_ko;
           customerItem.value = customerItem.cus_seq;
           this.cus_seq_options.push(customerItem);
-
-          this.userService.getLists('http://183.110.11.49/adm/common/list/group/' + customerItem.value)
+         });
+        return list;
+      })
+      .then((res: any[]) => {
+        res.forEach((customerItem) => {
+          this.userService.getLists('http://183.110.11.49/adm/common/list/group/' + customerItem.cus_seq)
             .toPromise()
             .then((params) => {
               list = JSON.parse(params["_body"]);
@@ -139,8 +144,11 @@ export class AccountFormComponent implements OnInit {
                 this.grp_seq_options.push(groupItem);
               });
             })
-            .catch((error) => { console.log(error); })
+            .catch((error) => {
+              console.log(error);
+            })
         });
+
       })
       .catch((error) => { console.log(error); });
   }
