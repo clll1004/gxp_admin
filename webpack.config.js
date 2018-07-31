@@ -93,7 +93,11 @@ module.exports = function(env, argv) {
           from: getRoot("src", "assets"), to: getRoot("dist", "assets")
         }
 
-      ])
+      ]),
+
+      new webpack.ProvidePlugin({
+        'bcryptjs': 'bcryptjs'
+      })
     ],
     devServer: {
       host: 'localhost',
