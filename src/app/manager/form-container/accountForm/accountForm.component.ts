@@ -3,14 +3,14 @@ import { Validators,FormControl,FormGroup,FormBuilder  } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from "@angular/router";
 import { Http } from "@angular/http";
 import { AccountFormValidator } from './passwordValidator';
-import { UserService } from "../../../services/apis/adm/user/user.service"
-declare let bcryptjs: any;
+import { UserService } from "../../../services/apis/adm/user/user.service";
+import { Sha256 } from "../../../services/library/hash/sha256";
 
 @Component({
   selector: 'accountForm',
   templateUrl: './accountForm.component.html',
   styleUrls: ['../form-container.component.scss'],
-  providers: [ UserService ]
+  providers: [ UserService, Sha256 ]
 })
 
 export class AccountFormComponent implements OnInit {
@@ -32,7 +32,8 @@ export class AccountFormComponent implements OnInit {
               private router: Router,
               private activatedRoute: ActivatedRoute,
               private http: Http,
-              private userService: UserService) {
+              private userService: UserService,
+              private sha256: Sha256) {
 
     this.activatedRoute.params.subscribe( (params) => {
       this.params = params;
@@ -85,20 +86,15 @@ export class AccountFormComponent implements OnInit {
         }
       });
 
-      bcryptjs.genSalt(10, (err, salt) => {
-        bcryptjs.hash(valueObject['usr_pw'], salt, (err, hash) => {
-          valueObject['usr_pw'] = hash;
+      valueObject['usr_pw'] = this.sha256.get(valueObject['usr_pw']);
 
-          this.userService.postUser(valueObject)
-            .toPromise()
-            .then(() => {
-              alert('완료되었습니다.');
-              location.replace('/manager/account');
-            })
-            .catch((error) => { console.log(error); });
-        });
-      });
-
+      this.userService.postUser(valueObject)
+        .toPromise()
+        .then(() => {
+          alert('완료되었습니다.');
+          location.replace('/manager/account');
+        })
+        .catch((error) => { console.log(error); });
     } else {
       Object.entries(value).forEach((item) => {
         if(item[0] !== 'cus_nm_ko' && item[1]) {
