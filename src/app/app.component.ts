@@ -1,4 +1,4 @@
-import { Component, OnInit, HostListener } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { LoginService } from "./login/login.service";
 import { Router, NavigationEnd } from "@angular/router";
 import '../assets/scss/style.scss';
@@ -10,13 +10,10 @@ import '../assets/scss/style.scss';
   providers: [ LoginService ]
 })
 
-@HostListener('window:onbeforeunload', ['$event'])
-
 export class AppComponent implements OnInit {
   public isShow: boolean = false;
 
   constructor(private router: Router, private loginService: LoginService ) {
-    this.onBeforeUnload();
   }
 
   ngOnInit() {
@@ -29,11 +26,5 @@ export class AppComponent implements OnInit {
         this.isShow = !!this.loginService.getCookie('userInfo');
       }
     });
-  }
-
-  onBeforeUnload() {
-    this.loginService.deleteCookie('userInfo');
-    this.loginService.deleteCookie('userSeq');
-    this.loginService.deleteCookie('userName');
   }
 }
