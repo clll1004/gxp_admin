@@ -143,6 +143,7 @@
           <td>
             <input pInputText type="text" id="grp_svc_sub_url" formControlName="grp_svc_sub_url" title="서브 URL 입력" value="" autocomplete="off" maxlength="51" />
             <p class="color-grey info-txt margin-top-10">* 서비스도메인 이후 sub path 정보</p>
+            <p class="color-grey info-txt margin-top-10">* gxp경우 sub url 구분(mp4 : gxmp4 / 다운로드 : gxdwn / hls : gxhls / dash : gxdsh )</p>
             <div *ngIf="!customerform.controls.grp.controls['grp_svc_sub_url'].valid && customerform.controls.grp.controls['grp_svc_sub_url'].dirty">
               <p class="color-red info-txt margin-top-10" *ngIf="customerform.controls.grp.controls['grp_svc_sub_url'].errors['maxlength']"> 50자 이내로 입력해주세요</p>
             </div>
@@ -193,7 +194,8 @@
           <th><label for="grp_thm_domain">썸네일도메인 </label> <span class="color-red">*</span></th>
           <td>
             <input pInputText type="text" id="grp_thm_domain" formControlName="grp_thm_domain" title="썸네일도메인 입력" autocomplete="off" maxlength="51" />
-            <p class="color-grey info-txt margin-top-10">* 썸네일 서비스 도메인 ex) &#123;도메인&#125;/cid/gid/path/fname000N.jpg</p>
+            <p class="color-grey info-txt margin-top-10">* 썸네일 서비스 도메인 ex) &#123;도메인&#125;/suburl/gid/path/filename/filename000N.jpg</p>
+            <p class="color-grey info-txt margin-top-10">* gxp사용일 경우 str.gomgxp.com/gxthm/ 입력, url 유형 ex) str.gomgxp.com/gxthm/gid/path/filename.mp4/thumb-&#123;offset&#125;-w&#123;width&#125;-h&#123;height&#125;.jpg</p>
             <div *ngIf="!customerform.controls.grp.controls['grp_thm_domain'].valid && customerform.controls.grp.controls['grp_thm_domain'].dirty">
               <p class="color-red info-txt margin-top-10" *ngIf="customerform.controls.grp.controls['grp_thm_domain'].errors['required']">필수입력 사항 입니다</p>
               <p class="color-red info-txt margin-top-10" *ngIf="customerform.controls.grp.controls['grp_thm_domain'].errors['maxlength']"> 50자 이내로 입력해주세요</p>
