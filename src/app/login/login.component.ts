@@ -12,13 +12,13 @@ import { Sha256 } from "../services/library/hash/sha256";
 })
 
 export class LoginComponent implements OnInit {
-  userData: userData = {
+  public userData: userData = {
     userId: null,
     userPassword: null
   };
-
   public loginform: FormGroup;
   public submitted: boolean = false;
+
 
   constructor(private formBuilder: FormBuilder, private loginService: LoginService, private sha256: Sha256) { }
 
@@ -31,7 +31,6 @@ export class LoginComponent implements OnInit {
 
   onSubmit(value) {
     this.submitted = true;
-
     this.userData.userId = value.user_id;
     this.userData.userPassword = this.sha256.get(value.user_password);
 

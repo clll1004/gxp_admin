@@ -1,31 +1,20 @@
 import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
 import { Http, Headers } from '@angular/http';
-import { Md5 } from "ts-md5";
 
 @Injectable()
 export class LoginService {
-  public loginStatus:boolean = false;
-
-  constructor(private http: Http, private router: Router) {
-  }
-
-  getLoginStatus () {
-    return !!this.getCookie('userInfo');
-  }
-
+  constructor(private http: Http, private router: Router) { }
   /* login function */
   login(id:string, password:string) {
-    this.loginStatus = true;
     const data:any = {};
     data.usr_id = id;
     data.usr_pw = password;
-    // data.usr_pw = Md5.hashStr(password);
 
     let headers:Headers = new Headers();
     headers.append('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
 
-    return this.http.post('http://183.110.11.49/adm/login', data, { headers: headers })
+    this.http.post('http://183.110.11.49/adm/login', data, { headers: headers })
       .toPromise()
       .then((item) => {
         const cookieData = id + "/" + password ;
@@ -42,17 +31,10 @@ export class LoginService {
 
   /* logout function */
   logout() {
-    if(this.getCookie('userInfo')) {
-      this.deleteCookie('userInfo');
-      this.deleteCookie('userSeq');
-      this.deleteCookie('userName');
-      this.router.navigate(['/', 'login']);
-    }
-  }
-  checkUserInfo() {
-    if(!(this.getCookie('userInfo'))) {
-      this.router.navigate(['/', 'login']);
-    }
+    this.deleteCookie('userInfo');
+    this.deleteCookie('userSeq');
+    this.deleteCookie('userName');
+    this.router.navigate(['/', 'login']);
   }
 
   /* Cookie */
