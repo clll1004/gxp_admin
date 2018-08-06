@@ -19,7 +19,7 @@ export class TcListContainerComponent implements OnInit {
 
   /*for dropdown*/
   public selectedGroupOptions: any[] = [];
-  public selectedGroup: any[];
+  public selectedGroup: string;
   public selectedIPOptions: any[] = [];
   public selectedIP: any[];
 
@@ -189,11 +189,11 @@ export class TcListContainerComponent implements OnInit {
   }
   loadGroupList() {
     this.selectedGroupOptions = [];
-    let list;
+    this.selectedGroupOptions.push({label: '전체 그룹', value: 'allGroup'});
     this.transcodingService.getLists(this.adminApis.loadTranscodingGroupNames)
       .toPromise()
       .then((params) => {
-        list = JSON.parse(params["_body"]);
+        let list = JSON.parse(params["_body"]);
         list.forEach((item) => {
           item.label = item.grp_nm;
           item.value = item.grp_nm;
@@ -216,11 +216,15 @@ export class TcListContainerComponent implements OnInit {
     }
     this.filterTcMonitoringLists = [];
     this.tcMonitoringLists['list'].filter((item) => {
-      if (!this.searchKey && item.grp_nm && (item.grp_nm === this.selectedGroup)) {
+      if (this.selectedGroup === 'allGroup' && item.ft_path && (item.ft_path.indexOf(this.searchKey) >= 0)) {
+        this.filterTcMonitoringLists.push(item);
+      } else if (this.selectedGroup === 'allGroup' && !this.searchKey) {
+        this.filterTcMonitoringLists.push(item);
+      } else if (item.grp_nm && (item.grp_nm === this.selectedGroup) && item.ft_path && (item.ft_path.indexOf(this.searchKey) >= 0)) {
+        this.filterTcMonitoringLists.push(item);
+      } else if (item.grp_nm && (item.grp_nm === this.selectedGroup) && !this.searchKey) {
         this.filterTcMonitoringLists.push(item);
       } else if (!this.selectedGroup && item.ft_path && (item.ft_path.indexOf(this.searchKey) >= 0)) {
-        this.filterTcMonitoringLists.push(item);
-      } else if(item.grp_nm && (item.grp_nm === this.selectedGroup) && item.ft_path && (item.ft_path.indexOf(this.searchKey) >= 0)) {
         this.filterTcMonitoringLists.push(item);
       }
     });
