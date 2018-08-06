@@ -293,22 +293,33 @@ export class TcListContainerComponent implements OnInit {
     
   }
   changeStatus() {
-    let newItemArray:any[] = [];
-    let itemObject:any = {};
-    if(!this.selectItems.length) {
-      return false;
-    }
-    this.selectItems.forEach((item) => {
-      itemObject = {};
-      itemObject.ft_seq = item.ft_seq;
-      itemObject.ft_status = item.ft_status;
-      newItemArray.push(itemObject);
-    });
-    this.updateTranscodingStatus(newItemArray);
+    if(this.selectItems.length) {
+      let isChangeStatus:boolean;
+      if (this.params['id'] === 'tcFailMT') {
+        isChangeStatus = confirm('파일을 임시삭제 하시겠습니까?')
+      } else {
+        isChangeStatus = confirm('변환을 재시작 하시겠습니까?')
+      }
 
-    if(this.filterTcMonitoringLists) {
-      this.gettotalListLength = this.filterTcMonitoringLists.length;
-      this.setTableIndex();
+      if(isChangeStatus) {
+        let newItemArray:any[] = [];
+        let itemObject:any = {};
+        if(!this.selectItems.length) {
+          return false;
+        }
+        this.selectItems.forEach((item) => {
+          itemObject = {};
+          itemObject.ft_seq = item.ft_seq;
+          itemObject.ft_status = item.ft_status;
+          newItemArray.push(itemObject);
+        });
+        this.updateTranscodingStatus(newItemArray);
+
+        if(this.filterTcMonitoringLists) {
+          this.gettotalListLength = this.filterTcMonitoringLists.length;
+          this.setTableIndex();
+        }
+      }
     }
   }
   updateTranscodingStatus (newData) {
@@ -322,6 +333,11 @@ export class TcListContainerComponent implements OnInit {
     return this.transcodingService.updateData(statusUrl, newData)
       .toPromise()
       .then(() => {
+        if(this.params['id'] === 'tcFailMT') {
+          alert('임시 삭제 되었습니다.');
+        } else {
+          alert('파일이 재시작 됩니다.');
+        }
         this.refresh();
       })
       .catch((error) => { console.log(error); });
