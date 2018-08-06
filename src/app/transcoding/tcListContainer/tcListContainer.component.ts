@@ -45,7 +45,7 @@ export class TcListContainerComponent implements OnInit {
   ];
   public realTimeJobCols = [
     {field: 'grp_nm', header: '그룹명', width: '15%'},
-    {field: 'ft_path', header: '파일 경로', width: '25%'},
+    {field: 'ft_path', header: '원본 파일 경로', width: '25%'},
     {field: 'gto_nm', header: '변환 옵션', width: '10%'},
     {field: 'ft_progress', header: '진행율', width: '14%'},
     {field: 'ft_start_dtm', header: '변환시작일시', width: '13%'},
@@ -56,7 +56,7 @@ export class TcListContainerComponent implements OnInit {
     {field: '', header: '', width: '5%'},
     {field: '', header: 'No', width: '5%'},
     {field: 'grp_nm', header: '그룹명', width: '25%'},
-    {field: 'ft_path', header: '파일 경로', width: '25%'},
+    {field: 'ft_path', header: '원본 파일 경로', width: '25%'},
     {field: 'ft_reg_dtm', header: '등록일', width: '20%'},
     {field: '', header: '관리', width: '10%'}
   ];
@@ -64,7 +64,7 @@ export class TcListContainerComponent implements OnInit {
     {field: '', header: '', width: '5%'},
     {field: '', header: 'No', width: '5%'},
     {field: 'grp_nm', header: '그룹명', width: '25%'},
-    {field: 'ft_path', header: '파일 경로', width: '35%'},
+    {field: 'ft_path', header: '원본 파일 경로', width: '35%'},
     {field: 'ft_reg_dtm', header: '등록일', width: '20%'},
     {field: '', header: '관리', width: '10%'}
   ];
