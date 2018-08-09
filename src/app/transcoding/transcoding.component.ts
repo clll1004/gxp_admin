@@ -14,14 +14,14 @@ export class TransCodingComponent implements OnInit {
   public isShow:boolean = true;
   /*for path*/
   public pagePath = {
-    realTimeServerMT: '실시간 서버 모니터링',
-    tcStandByMT: '변환 대기 모니터링',
-    tcRequestMT: '변환 요청 모니터링',
-    tcProgressMT: '변환 진행 모니터링',
-    tcCompleteMT: '변환 완료 모니터링',
-    tcDelayMT: '변환 지연 모니터링',
-    tcFailMT: '변환 실패 모니터링',
-    tempDeleteList: '임시 삭제 목록'
+    server: '실시간 서버 모니터링',
+    standby: '변환 대기 모니터링',
+    request: '변환 요청 모니터링',
+    progress: '변환 진행 모니터링',
+    complete: '변환 완료 모니터링',
+    delay: '변환 지연 모니터링',
+    fail: '변환 실패 모니터링',
+    tempDelete: '임시 삭제 목록'
   };
   public pageName: string = '';
 

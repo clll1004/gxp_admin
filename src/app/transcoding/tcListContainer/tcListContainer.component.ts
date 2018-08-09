@@ -136,21 +136,21 @@ export class TcListContainerComponent implements OnInit {
       this.gettotalListLength = 0;
 
       this.tcMonitoringLists = [];
-      if (this.params['id'] === 'realTimeServerMT') {
+      if (this.params['id'] === 'server') {
         this.url = this.adminApis.loadServerList;
-      } else if (this.params['id'] === 'tcStandByMT') {
+      } else if (this.params['id'] === 'standby') {
         this.url = this.adminApis.loadStandbyList;
-      } else if (this.params['id'] === 'tcRequestMT') {
+      } else if (this.params['id'] === 'request') {
         this.url = this.adminApis.loadRequestList;
-      } else if (this.params['id'] === 'tcProgressMT') {
+      } else if (this.params['id'] === 'progress') {
         this.url = this.adminApis.loadProgressList;
-      } else if (this.params['id'] === 'tcCompleteMT') {
+      } else if (this.params['id'] === 'complete') {
         this.url = this.adminApis.loadCompleteList;
-      } else if (this.params['id'] === 'tcDelayMT') {
+      } else if (this.params['id'] === 'delay') {
         this.url = this.adminApis.loadDelayList;
-      } else if (this.params['id'] === 'tcFailMT') {
+      } else if (this.params['id'] === 'fail') {
         this.url = this.adminApis.loadFailList;
-      } else if (this.params['id'] === 'tempDeleteList') {
+      } else if (this.params['id'] === 'tempDelete') {
         this.url = this.adminApis.loadTempDeleteList;
       }
 
@@ -171,7 +171,7 @@ export class TcListContainerComponent implements OnInit {
   }
 
   load() {
-    this.params['id'] === 'realTimeServerMT' ? this.loadIPList() : this.loadGroupList();
+    this.params['id'] === 'server' ? this.loadIPList() : this.loadGroupList();
   }
   loadIPList() {
     this.selectedIPOptions = [];
@@ -295,7 +295,7 @@ export class TcListContainerComponent implements OnInit {
   changeStatus() {
     if(this.selectItems.length) {
       let isChangeStatus:boolean;
-      if (this.params['id'] === 'tcFailMT') {
+      if (this.params['id'] === 'fail') {
         isChangeStatus = confirm('파일을 임시삭제 하시겠습니까?')
       } else {
         isChangeStatus = confirm('변환을 재시작 하시겠습니까?')
@@ -324,16 +324,16 @@ export class TcListContainerComponent implements OnInit {
   }
   updateTranscodingStatus (newData) {
     let statusUrl:string = '';
-    if(this.params['id'] === 'tcFailMT') {
+    if(this.params['id'] === 'fail') {
       statusUrl = this.adminApis.tempDeleteItem;
     } else {
       statusUrl = this.adminApis.reStartTranscoding;
     }
 
-    return this.transcodingService.updateData(statusUrl, newData)
+    this.transcodingService.updateData(statusUrl, newData)
       .toPromise()
       .then(() => {
-        if(this.params['id'] === 'tcFailMT') {
+        if(this.params['id'] === 'fail') {
           alert('임시 삭제 되었습니다.');
         } else {
           alert('파일이 재시작 됩니다.');

@@ -47,7 +47,7 @@ export class ServerFormComponent implements OnInit {
   }
 
   goBack() {
-    this.router.navigate(['/transcoding', 'realTimeServerMT']);
+    this.router.navigate(['/transcoding', 'server']);
   }
 
   onSubmit(formObject: any) {
@@ -64,7 +64,7 @@ export class ServerFormComponent implements OnInit {
         .toPromise()
         .then(() => {
           alert('완료되었습니다.');
-          this.router.navigate(['/transcoding', 'realTimeServerMT']);
+          this.router.navigate(['/transcoding', 'server']);
         })
         .catch((error) => { console.log(error);});
     } else {
