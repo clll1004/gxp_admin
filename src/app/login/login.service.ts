@@ -4,36 +4,56 @@ import { Http, Headers } from '@angular/http';
 
 @Injectable()
 export class LoginService {
+  public loginInfo:any = {};
+  public loginStatus:boolean = false;
+
   constructor(private http: Http, private router: Router) { }
-  /* login function */
-  login(id:string, password:string) {
-    const data:any = {};
-    data.usr_id = id;
-    data.usr_pw = password;
+
+  getLoginStatus() {
+    return this.loginStatus;
+  }
+
+  setLogin() {
+    this.loginStatus = true;
+  }
+
+  setLogout() {
+    this.loginStatus = false;
+  }
+
+  login(url:string, id:string, password:string) {
+    this.loginInfo.usr_id = id;
+    this.loginInfo.usr_pw = password;
 
     let headers:Headers = new Headers();
     headers.append('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
 
-    this.http.post('http://183.110.11.49/adm/login', data, { headers: headers })
-      .toPromise()
-      .then((item) => {
-        const cookieData = id + "/" + password ;
-        this.setCookie("userInfo", cookieData, 7, true);
-        this.setCookie("userSeq", JSON.parse(item['_body']).usr_seq, 7);
-        this.setCookie("userName", JSON.parse(item['_body']).usr_nm, 7);
-        this.router.navigate(['/', 'manager','customer']);
-      })
-      .catch((error) => {
-        alert('로그인 정보를 확인해주세요.');
-        console.log(error);
-      });
+    return this.http.post(url, this.loginInfo, { headers: headers });
   }
 
-  /* logout function */
+  setCookieData(userInfo, user_seq, user_name) {
+    this.setCookie('userInfo', userInfo, 7, true);
+    this.setCookie('usr_seq', user_seq, 7);
+    this.setCookie('usr_nm', user_name, 7);
+  }
+
   logout() {
+    if(this.getCookie('userInfo')) {
+      this.clearUserInfo();
+    }
+  }
+
+  checkUserInfo() {
+    if(!(this.getCookie('userInfo'))) {
+      this.clearUserInfo();
+    }
+  }
+
+  clearUserInfo() {
+    this.setLogout();
     this.deleteCookie('userInfo');
-    this.deleteCookie('userSeq');
-    this.deleteCookie('userName');
+    this.deleteCookie('usr_seq');
+    this.deleteCookie('usr_nm');
     this.router.navigate(['/', 'login']);
   }
 

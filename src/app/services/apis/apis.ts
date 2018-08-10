@@ -8,7 +8,7 @@ export class AdminApis {
   public ip = 'http://183.110.11.49/';
 
   /* 로그인 */
-  // public login = this.ip + 'adm/login';
+  public login = this.ip + 'adm/login';
   /**** 공통 ****/
   /* 리스트 */
   public loadCustomerNames = this.ip + 'adm/common/list/customer';

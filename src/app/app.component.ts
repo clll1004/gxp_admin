@@ -6,24 +6,21 @@ import '../assets/scss/style.scss';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss'],
-  providers: [ LoginService ]
+  styleUrls: ['./app.component.scss']
 })
 
 export class AppComponent implements OnInit {
-  public isShow: boolean = false;
+  public isLayoutShow: boolean = false;
 
   constructor(private router: Router, private loginService: LoginService ) {
   }
 
   ngOnInit() {
-    this.initLayoutStatus();
-  }
+    this.loginService.checkUserInfo();
 
-  initLayoutStatus() {
     this.router.events.subscribe((event) => {
       if(event instanceof NavigationEnd) {
-        this.isShow = !!this.loginService.getCookie('userInfo');
+        this.isLayoutShow = this.loginService.getLoginStatus();
       }
     });
   }

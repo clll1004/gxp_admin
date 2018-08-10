@@ -4,8 +4,7 @@ import { LoginService } from "../login/login.service";
 @Component({
   selector: 'header',
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.scss'],
-  providers: [ LoginService ]
+  styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent {
   constructor(private loginService: LoginService) { }

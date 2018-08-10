@@ -4,11 +4,11 @@
 
 <div class="ui-g ui-g-nopad" id="content">
   <!--헤더-->
-  <header class="ui-g-12 ui-g-nopad" *ngIf="isShow"></header>
+  <header class="ui-g-12 ui-g-nopad" *ngIf="isLayoutShow"></header>
   <!--콘텐츠-->
   <div class="ui-g-12 ui-g-nopad">
     <router-outlet></router-outlet>
   </div>
   <!--푸터-->
-  <footer class="ui-g-12 ui-g-nopad" *ngIf="isShow"></footer>
+  <footer class="ui-g-12 ui-g-nopad" *ngIf="isLayoutShow"></footer>
 </div>

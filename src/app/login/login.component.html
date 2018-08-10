@@ -17,3 +17,10 @@
     </form>
   </div>
 </div>
+
+<p-dialog [(visible)]="isShowLoginMessage" [width]="400" [modal]="true" [showHeader]="false">
+  <p class="txt-center margin-top-15 margin-bottom-30"> 로그인 정보를 확인해주세요.</p>
+  <div class="txt-center">
+    <button type="button" class="btn white-btn" (click)="isShowLoginMessage=false;" label="confirm"><i class="fas fa-check"></i> 확인</button>
+  </div>
+</p-dialog>
