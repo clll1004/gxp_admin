@@ -20,7 +20,10 @@ export class AppComponent implements OnInit {
 
     this.router.events.subscribe((event) => {
       if(event instanceof NavigationEnd) {
-        this.isLayoutShow = this.loginService.getLoginStatus();
+        if(event.url === '/login') {
+          this.loginService.logout();
+        }
+        this.isLayoutShow = !!this.loginService.getCookie('userInfo');
       }
     });
   }
