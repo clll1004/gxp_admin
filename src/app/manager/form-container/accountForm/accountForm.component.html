@@ -20,7 +20,7 @@
         <tr *ngIf="isAddRow">
           <th><label for="cus_seq">고객선택</label> <span class="color-red">*</span></th>
           <td>
-            <p-dropdown id="cus_seq" [options]="cus_seq_options" formControlName="usr_cus_seq" placeholder="선택하세요"></p-dropdown>
+            <p-dropdown id="cus_seq" [options]="cus_seq_options" formControlName="usr_cus_seq" placeholder="선택하세요" (onChange)="loadGroupList()"></p-dropdown>
             <div *ngIf="!accountform.controls['usr_cus_seq'].valid && accountform.controls['usr_cus_seq'].dirty">
               <p class="color-red info-txt margin-top-10" *ngIf="accountform.controls['usr_cus_seq'].errors['required']">필수 선택 사항입니다.</p>
             </div>
@@ -120,8 +120,16 @@
     <div class="ui-g-12 ui-g-nopad txt-center">
       <button pButton type="submit" label="등록" *ngIf="isAddRow" [disabled]="!accountform.valid || !ableID" class="margin-right-10"></button>
       <button pButton type="submit" label="수정" *ngIf="!isAddRow" [disabled]="!accountform.valid" class="margin-right-10"></button>
-      <button pButton type="reset" (click)="goBack()" *ngIf="isAddRow" label="취소"></button>
-      <button pButton type="reset" (click)="goBack()" *ngIf="!isAddRow" label="목록"></button>
+      <button pButton type="reset" (click)="goList()" *ngIf="isAddRow" label="취소"></button>
+      <button pButton type="reset" (click)="goList()" *ngIf="!isAddRow" label="목록"></button>
     </div>
   </fieldset>
 </form>
+
+<p-dialog [(visible)]="isShowMessage" [width]="400" [modal]="true" [showHeader]="false">
+  <p class="txt-center margin-top-20 margin-bottom-25" *ngIf="isAddRow">완료 되었습니다.</p>
+  <p class="txt-center margin-top-20 margin-bottom-25" *ngIf="!isAddRow">수정 완료 되었습니다.</p>
+  <div class="txt-center">
+    <button type="button" class="btn white-btn" (click)="isShowMessage=false;" label="confirm"><i class="fas fa-check"></i> 확인</button>
+  </div>
+</p-dialog>

@@ -1,16 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { Validators,FormControl,FormGroup,FormBuilder  } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from "@angular/router";
-import { Http } from "@angular/http";
 import { AccountFormValidator } from './passwordValidator';
 import { UserService } from "../../../services/apis/adm/user/user.service";
 import { Sha256 } from "../../../services/library/hash/sha256";
+import { AdminApis } from '../../../services/apis/apis';
 
 @Component({
   selector: 'accountForm',
   templateUrl: './accountForm.component.html',
   styleUrls: ['../form-container.component.scss'],
-  providers: [ UserService, Sha256 ]
+  providers: [ UserService, Sha256, AdminApis ]
 })
 
 export class AccountFormComponent implements OnInit {
@@ -18,6 +18,7 @@ export class AccountFormComponent implements OnInit {
 
   public accountform: FormGroup;
   public submitted: boolean;
+  public isShowMessage: boolean = false;
 
   /*for check add page row*/
   public isAddRow: boolean = true;
@@ -31,9 +32,9 @@ export class AccountFormComponent implements OnInit {
   constructor(private formBuilder: FormBuilder,
               private router: Router,
               private activatedRoute: ActivatedRoute,
-              private http: Http,
               private userService: UserService,
-              private sha256: Sha256) {
+              private sha256: Sha256,
+              private adminApis: AdminApis) {
 
     this.activatedRoute.params.subscribe( (params) => {
       this.params = params;
@@ -70,7 +71,7 @@ export class AccountFormComponent implements OnInit {
         this.accountform.controls['usr_pw'].setValidators([]);
         this.accountform.controls['usr_pw_cf'].setValidators([]);
       } else {
-        this.loadCustomerGroupList();
+        this.loadCustomerList();
       }
     });
   }
@@ -88,10 +89,10 @@ export class AccountFormComponent implements OnInit {
 
       valueObject['usr_pw'] = this.sha256.get(valueObject['usr_pw']);
 
-      this.userService.postUser(valueObject)
+      this.userService.postUser(this.adminApis.postUser, valueObject)
         .toPromise()
         .then(() => {
-          alert('완료되었습니다.');
+          this.isShowMessage = true;
           location.replace('/manager/account');
         })
         .catch((error) => { console.log(error); });
@@ -101,23 +102,22 @@ export class AccountFormComponent implements OnInit {
           valueObject[item[0]] = item[1];
         }
       });
-      this.userService.updateData(valueObject)
+      this.userService.updateUser(this.adminApis.updateUser, valueObject)
         .toPromise()
         .then(() => {
-          alert('수정 완료되었습니다.');
-          window.location.reload();
+          this.isShowMessage = true;
         })
         .catch((error) => { console.log(error); });
     }
   }
 
-  goBack() {
+  goList() {
     this.router.navigate(['/manager', 'account']);
   }
 
-  loadCustomerGroupList() {
+  loadCustomerList() {
     let list;
-    this.userService.getLists('http://183.110.11.49/adm/common/list/customer')
+    this.userService.getLists(this.adminApis.loadCustomerNames)
       .toPromise()
       .then((params) => {
         list = JSON.parse(params["_body"]);
@@ -128,23 +128,19 @@ export class AccountFormComponent implements OnInit {
          });
         return list;
       })
-      .then((res: any[]) => {
-        res.forEach((customerItem) => {
-          this.userService.getLists('http://183.110.11.49/adm/common/list/group/' + customerItem.cus_seq)
-            .toPromise()
-            .then((params) => {
-              list = JSON.parse(params["_body"]);
-              list.forEach((groupItem) => {
-                groupItem.label = groupItem.grp_nm;
-                groupItem.value = groupItem.grp_seq;
-                this.grp_seq_options.push(groupItem);
-              });
-            })
-            .catch((error) => {
-              console.log(error);
-            })
-        });
+      .catch((error) => { console.log(error); });
+  }
 
+  loadGroupList() {
+    this.userService.getLists(this.adminApis.loadGroupNames + this.accountform.controls['usr_cus_seq'].value)
+      .toPromise()
+      .then((params) => {
+        let list = JSON.parse(params["_body"]);
+          list.forEach((groupItem) => {
+            groupItem.label = groupItem.grp_nm;
+            groupItem.value = groupItem.grp_seq;
+            this.grp_seq_options.push(groupItem);
+          });
       })
       .catch((error) => { console.log(error); });
   }
@@ -152,13 +148,15 @@ export class AccountFormComponent implements OnInit {
   confirmID() {
     this.showIdDupMsg = true;
     const inputId:string = this.accountform.value['usr_id'];
-    this.http.get('http://183.110.11.49/adm/common/check/userid/'+inputId).subscribe((cont) => {
-      this.ableID = cont["_body"] === 'true';
-    });
+    this.userService.getLists(this.adminApis.checkDupUserId + inputId)
+      .toPromise()
+      .then((cont) => {
+        this.ableID = cont["_body"] === 'true';
+      });
   }
 
   loadAccountList() {
-    this.userService.getLists('http://183.110.11.49/adm/user/' + this.params.index)
+    this.userService.getLists(this.adminApis.loadUser + this.params.index)
       .toPromise()
       .then((data) => {
           const getData:any[] = JSON.parse(data["_body"]);

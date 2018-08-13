@@ -533,3 +533,11 @@
     </div>
   </fieldset>
 </form>
+
+<p-dialog [(visible)]="isShowMessage" [width]="400" [modal]="true" [showHeader]="false">
+  <p class="txt-center margin-top-20 margin-bottom-25" *ngIf="isAddRow">완료 되었습니다.</p>
+  <p class="txt-center margin-top-20 margin-bottom-25" *ngIf="!isAddRow">수정 완료 되었습니다.</p>
+  <div class="txt-center">
+    <button type="button" class="btn white-btn" (click)="isShowMessage=false;" label="confirm"><i class="fas fa-check"></i> 확인</button>
+  </div>
+</p-dialog>

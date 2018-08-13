@@ -587,8 +587,16 @@
     <div class="ui-g-12 ui-g-nopad txt-center">
       <button pButton type="submit" label="등록" *ngIf="isAddRow" [disabled]="!customerform.valid || !ableCustomerName || !ableGroupName" class="margin-right-10"></button>
       <button pButton type="submit" label="수정" *ngIf="!isAddRow" [disabled]="!customerform.valid" class="margin-right-10"></button>
-      <button pButton type="reset" (click)="goBack()" *ngIf="isAddRow" label="취소"></button>
-      <button pButton type="reset" (click)="goBack()" *ngIf="!isAddRow" label="목록"></button>
+      <button pButton type="reset" (click)="goList()" *ngIf="isAddRow" label="취소"></button>
+      <button pButton type="reset" (click)="goList()" *ngIf="!isAddRow" label="목록"></button>
     </div>
   </fieldset>
 </form>
+
+<p-dialog [(visible)]="isShowMessage" [width]="400" [modal]="true" [showHeader]="false">
+  <p class="txt-center margin-top-20 margin-bottom-25" *ngIf="isAddRow">완료 되었습니다.</p>
+  <p class="txt-center margin-top-20 margin-bottom-25" *ngIf="!isAddRow">수정 완료 되었습니다.</p>
+  <div class="txt-center">
+    <button type="button" class="btn white-btn" (click)="isShowMessage=false;" label="confirm"><i class="fas fa-check"></i> 확인</button>
+  </div>
+</p-dialog>

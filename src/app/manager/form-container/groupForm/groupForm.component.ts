@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Validators, FormControl, FormGroup, FormBuilder, FormArray } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from "@angular/router";
-import { Http } from '@angular/http';
 import { GroupService } from "../../../services/apis/adm/group/group.service";
 import { AdminApis } from '../../../services/apis/apis';
 
@@ -19,6 +18,7 @@ export class GroupFormComponent implements OnInit {
   public customerList: any[]= [ ];
   public customerName: string;
   public submitted: boolean;
+  public isShowMessage: boolean = false;
 
   /*for check addpagebb row*/
   public isAddRow: boolean = true;
@@ -56,7 +56,6 @@ export class GroupFormComponent implements OnInit {
   constructor(private formBuilder: FormBuilder,
               private router: Router,
               private activatedRoute: ActivatedRoute,
-              private http: Http,
               private groupService: GroupService,
               private adminApis: AdminApis) {
     this.activatedRoute.params.subscribe( (params) => {
@@ -177,7 +176,16 @@ export class GroupFormComponent implements OnInit {
           })
         }
       });
-      this.groupService.postData(valueObject);
+      this.groupService.postGroup(valueObject)
+        .toPromise()
+        .then(() => {
+          this.isShowMessage = true;
+          this.router.navigate(['/manager', 'group'])
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+
     } else {
       Object.entries(formObject).forEach((item:any) => {
         if(item[0] === 'tcd') {
@@ -199,7 +207,14 @@ export class GroupFormComponent implements OnInit {
         }
       });
       delete valueObject['grp'].grp_cus_seq;
-      this.groupService.updateData(valueObject);
+      this.groupService.updateGroup(valueObject)
+        .toPromise()
+        .then(() => {
+          this.isShowMessage = true;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     }
   }
 

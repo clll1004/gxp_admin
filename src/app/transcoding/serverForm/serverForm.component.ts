@@ -13,11 +13,13 @@ import { AdminApis } from '../../services/apis/apis';
   styleUrls: ['../transcoding.component.scss'],
   providers: [ TranscodingService, AdminApis ]
 })
+
 export class ServerFormComponent implements OnInit {
   @Input() params: object;
 
   public serverform: FormGroup;
   public submitted: boolean;
+  public isShowMessage: boolean = false;
 
   public showIPDupMsg: boolean = false;
   public ableIP: boolean = false;
@@ -46,7 +48,7 @@ export class ServerFormComponent implements OnInit {
     this.load();
   }
 
-  goBack() {
+  goList() {
     this.router.navigate(['/transcoding', 'server']);
   }
 
@@ -63,18 +65,17 @@ export class ServerFormComponent implements OnInit {
       this.transcodingService.postData(this.adminApis.postServer, valueObject)
         .toPromise()
         .then(() => {
-          alert('완료되었습니다.');
+          this.isShowMessage = true;
           this.router.navigate(['/transcoding', 'server']);
         })
-        .catch((error) => { console.log(error);});
+        .catch((error) => { console.log(error); });
     } else {
       this.transcodingService.updateData(this.adminApis.updateServer, formObject)
         .toPromise()
         .then(() => {
-          alert('수정 완료되었습니다.');
-          window.location.reload();
+          this.isShowMessage = true;
         })
-        .catch((error) => { console.log(error);});
+        .catch((error) => { console.log(error); });
     }
   }
 
@@ -96,6 +97,7 @@ export class ServerFormComponent implements OnInit {
         this.serverform.get('ts_desc').setValue(getData.ts_desc);
       });
   }
+
   confirmIP() {
     this.showIPDupMsg = true;
     const inputIP:string = this.serverform.value['ts_ip'];

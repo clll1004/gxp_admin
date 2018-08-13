@@ -13,17 +13,17 @@ export class UserService {
     return this.http.get(listUrl);
   }
 
-  postUser(data) {
+  postUser(url:string, data) {
     let headers:Headers = new Headers();
     headers.append('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
 
-    return this.http.post('http://183.110.11.49/adm/user', data, { headers: headers });
+    return this.http.post(url, data, { headers: headers });
   }
 
-  updateData(newData) {
+  updateUser(url:string, newData) {
     let headers:Headers = new Headers();
     headers.append('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
 
-    return this.http.put('http://183.110.11.49/adm/user', newData, { headers: headers });
+    return this.http.put(url, newData, { headers: headers });
   }
 }

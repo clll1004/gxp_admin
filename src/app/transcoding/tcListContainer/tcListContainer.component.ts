@@ -5,12 +5,13 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from "@angular/router";
 import { TranscodingService } from '../../services/apis/adm/transcoding/transcoding.service';
 import { AdminApis } from '../../services/apis/apis';
+import { ConfirmationService } from 'primeng/components/common/api';
 
 @Component({
   selector: 'tcListContainer',
   templateUrl: './tcListContainer.component.html',
   styleUrls: ['../transcoding.component.scss'],
-  providers: [ TranscodingService, AdminApis ]
+  providers: [ TranscodingService, AdminApis, ConfirmationService ]
 })
 
 export class TcListContainerComponent implements OnInit {
@@ -24,7 +25,7 @@ export class TcListContainerComponent implements OnInit {
   public selectedIP: any[];
 
   /*for Table*/
-  public gettotalListLength: number = 0;
+  public getTotalListLength: number = 0;
   public tcMonitoringLists: any[];
   public filterTcMonitoringLists: any[];
   public subMonitoringLists: any[];
@@ -125,7 +126,8 @@ export class TcListContainerComponent implements OnInit {
 
   constructor(private activatedRoute: ActivatedRoute,
               private transcodingService: TranscodingService,
-              private adminApis: AdminApis) { }
+              private adminApis: AdminApis,
+              private confirmationService: ConfirmationService) { }
 
   ngOnInit() {
     this.activatedRoute.params.subscribe((params) => {
@@ -133,7 +135,7 @@ export class TcListContainerComponent implements OnInit {
 
       this.params = params;
       this.selectItems = [];
-      this.gettotalListLength = 0;
+      this.getTotalListLength = 0;
 
       this.tcMonitoringLists = [];
       if (this.params['id'] === 'server') {
@@ -150,7 +152,7 @@ export class TcListContainerComponent implements OnInit {
         this.url = this.adminApis.loadDelayList;
       } else if (this.params['id'] === 'fail') {
         this.url = this.adminApis.loadFailList;
-      } else if (this.params['id'] === 'tempDelete') {
+      } else if (this.params['id'] === 'temp-delete') {
         this.url = this.adminApis.loadTempDeleteList;
       }
 
@@ -161,10 +163,7 @@ export class TcListContainerComponent implements OnInit {
           this.filterTcMonitoringLists = this.tcMonitoringLists['list'];
           this.subMonitoringLists = this.tcMonitoringLists['trans'];
 
-          if(this.filterTcMonitoringLists) {
-            this.gettotalListLength = this.filterTcMonitoringLists.length;
-            this.setTableIndex();
-          }
+          this.tableInit();
         })
         .catch((error) => { console.log(error); });
     });
@@ -173,6 +172,14 @@ export class TcListContainerComponent implements OnInit {
   load() {
     this.params['id'] === 'server' ? this.loadIPList() : this.loadGroupList();
   }
+
+  tableInit() {
+    if(this.filterTcMonitoringLists) {
+      this.getTotalListLength = this.filterTcMonitoringLists.length;
+      this.setTableIndex();
+    }
+  }
+
   loadIPList() {
     this.selectedIPOptions = [];
     let list;
@@ -187,6 +194,7 @@ export class TcListContainerComponent implements OnInit {
         });
     });
   }
+
   loadGroupList() {
     this.selectedGroupOptions = [];
     this.selectedGroupOptions.push({label: '전체 그룹', value: 'allGroup'});
@@ -201,6 +209,7 @@ export class TcListContainerComponent implements OnInit {
         });
     });
   }
+
   reloadSubTable() {
     this.transcodingService.getLists(this.url)
       .toPromise()
@@ -228,11 +237,9 @@ export class TcListContainerComponent implements OnInit {
         this.filterTcMonitoringLists.push(item);
       }
     });
-    if(this.filterTcMonitoringLists) {
-      this.gettotalListLength = this.filterTcMonitoringLists.length;
-      this.setTableIndex();
-    }
+    this.tableInit();
   }
+
   filterIP() {
     if(!this.filterTcMonitoringLists || !this.selectedIP) {
       return false;
@@ -243,21 +250,17 @@ export class TcListContainerComponent implements OnInit {
         this.filterTcMonitoringLists.push(ipItem);
       }
     });
-    if(this.filterTcMonitoringLists) {
-      this.gettotalListLength = this.filterTcMonitoringLists.length;
-      this.setTableIndex();
-    }
+    this.tableInit();
   }
+
   filterListUseAll() {
     if(!this.filterTcMonitoringLists) {
       return false;
     }
     this.filterTcMonitoringLists = this.tcMonitoringLists['list'];
-    if(this.filterTcMonitoringLists) {
-      this.gettotalListLength = this.filterTcMonitoringLists.length;
-      this.setTableIndex();
-    }
+    this.tableInit();
   }
+
   filterListUse(data:string) {
     if(!this.filterTcMonitoringLists) {
       return false;
@@ -268,11 +271,9 @@ export class TcListContainerComponent implements OnInit {
         this.filterTcMonitoringLists.push(ipItem);
       }
     });
-    if(this.filterTcMonitoringLists) {
-      this.gettotalListLength = this.filterTcMonitoringLists.length;
-      this.setTableIndex();
-    }
+    this.tableInit();
   }
+
   refresh() {
     this.transcodingService.getLists(this.url)
       .toPromise()
@@ -281,66 +282,63 @@ export class TcListContainerComponent implements OnInit {
         this.filterTcMonitoringLists = this.tcMonitoringLists['list'];
         this.subMonitoringLists = this.tcMonitoringLists['trans'];
 
-        if(this.filterTcMonitoringLists) {
-          this.gettotalListLength = this.filterTcMonitoringLists.length;
-          this.setTableIndex();
-        }
+        this.tableInit();
       })
       .catch((error) => { console.log(error); });
   }
 
-  onRowSelect() {
-    
-  }
-  changeStatus() {
+  reStartSelectFiles() {
     if(this.selectItems.length) {
-      let isChangeStatus:boolean;
-      if (this.params['id'] === 'fail') {
-        isChangeStatus = confirm('파일을 임시삭제 하시겠습니까?')
-      } else {
-        isChangeStatus = confirm('변환을 재시작 하시겠습니까?')
-      }
+      this.confirmationService.confirm({
+        message: '변환을 재시작 하시겠습니까?',
+        accept: () => {
+          let newItemArray:any[] = [];
+          let itemObject:any = {};
+          this.selectItems.forEach((item) => {
+            itemObject = {};
+            itemObject.ft_seq = item.ft_seq;
+            itemObject.ft_status = item.ft_status;
+            newItemArray.push(itemObject);
+          });
 
-      if(isChangeStatus) {
-        let newItemArray:any[] = [];
-        let itemObject:any = {};
-        if(!this.selectItems.length) {
-          return false;
+          this.transcodingService.updateData(this.adminApis.reStartTranscoding, newItemArray)
+            .toPromise()
+            .then(() => {
+              this.selectItems = [];
+              this.refresh();
+            })
+            .catch((error) => { console.log(error); });
         }
-        this.selectItems.forEach((item) => {
-          itemObject = {};
-          itemObject.ft_seq = item.ft_seq;
-          itemObject.ft_status = item.ft_status;
-          newItemArray.push(itemObject);
-        });
-        this.updateTranscodingStatus(newItemArray);
-
-        if(this.filterTcMonitoringLists) {
-          this.gettotalListLength = this.filterTcMonitoringLists.length;
-          this.setTableIndex();
-        }
-      }
+      });
     }
   }
-  updateTranscodingStatus (newData) {
-    let statusUrl:string = '';
-    if(this.params['id'] === 'fail') {
-      statusUrl = this.adminApis.tempDeleteItem;
-    } else {
-      statusUrl = this.adminApis.reStartTranscoding;
-    }
 
-    this.transcodingService.updateData(statusUrl, newData)
-      .toPromise()
-      .then(() => {
-        if(this.params['id'] === 'fail') {
-          alert('임시 삭제 되었습니다.');
-        } else {
-          alert('파일이 재시작 됩니다.');
+  deleteSelectFiles() {
+    if(this.selectItems.length) {
+      this.confirmationService.confirm({
+        message: '삭제하시겠습니까?',
+        accept: () => {
+          let newItemArray: any[] = [];
+          let itemObject: any = {};
+          this.selectItems.forEach((item) => {
+            itemObject = {};
+            itemObject.ft_seq = item.ft_seq;
+            itemObject.ft_status = item.ft_status;
+            newItemArray.push(itemObject);
+          });
+
+          this.transcodingService.updateData(this.adminApis.tempDeleteItem, newItemArray)
+            .toPromise()
+            .then(() => {
+              this.selectItems = [];
+              this.refresh();
+            })
+            .catch((error) => {
+              console.log(error);
+            });
         }
-        this.refresh();
-      })
-      .catch((error) => { console.log(error); });
+      });
+    }
   }
 
   setTableIndex() {

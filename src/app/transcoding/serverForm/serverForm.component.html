@@ -59,9 +59,17 @@
       <div class="ui-g-12 ui-g-nopad txt-center">
         <button pButton type="submit" label="등록" *ngIf="isAddPage" [disabled]="!serverform.valid || !ableIP" class="margin-right-10"></button>
         <button pButton type="submit" label="수정" *ngIf="!isAddPage" [disabled]="!serverform.valid" class="margin-right-10"></button>
-        <button pButton type="reset" label="취소" *ngIf="isAddPage" (click)="goBack()"></button>
-        <button pButton type="reset" label="목록" *ngIf="!isAddPage" (click)="goBack()"></button>
+        <button pButton type="reset" label="취소" *ngIf="isAddPage" (click)="goList()"></button>
+        <button pButton type="reset" label="목록" *ngIf="!isAddPage" (click)="goList()"></button>
       </div>
     </fieldset>
   </form>
 </div>
+
+<p-dialog [(visible)]="isShowMessage" [width]="400" [modal]="true" [showHeader]="false">
+  <p class="txt-center margin-top-20 margin-bottom-25" *ngIf="isAddPage">완료 되었습니다.</p>
+  <p class="txt-center margin-top-20 margin-bottom-25" *ngIf="!isAddPage">수정 완료 되었습니다.</p>
+  <div class="txt-center">
+    <button type="button" class="btn white-btn" (click)="isShowMessage=false;" label="confirm"><i class="fas fa-check"></i> 확인</button>
+  </div>
+</p-dialog>

@@ -23,13 +23,13 @@
     <a routerLink="/transcoding/server/add"><button class="btn white-btn">트랜스코딩 서버 추가</button></a>
   </div>
   <div class="ui-g-12 ui-g-nopad btn-sec margin-bottom-30" *ngIf="params['id'] !== 'server'">
-    <button class="btn white-btn margin-right-5" (click)="changeStatus()" *ngIf="params['id'] === 'complete' || params['id'] === 'delay' || params['id'] === 'fail' || params['id'] === 'tempDelete'">선택 파일 변환 재시작</button>
-    <button class="btn white-btn margin-right-5" *ngIf="params['id'] === 'fail'" (click)="changeStatus()">선택 파일 임시 삭제</button>
+    <button class="btn white-btn margin-right-5" (click)="reStartSelectFiles()" *ngIf="params['id'] === 'complete' || params['id'] === 'delay' || params['id'] === 'fail' || params['id'] === 'temp-delete'">선택 파일 변환 재시작</button>
+    <button class="btn white-btn margin-right-5" *ngIf="params['id'] === 'fail'" (click)="deleteSelectFiles()">선택 파일 임시 삭제</button>
     <button class="btn white-btn margin-right-5" (click)="refresh()">새로고침</button>
   </div>
 
   <div class="ui-g-12 ui-g-nopad row-info-sec margin-bottom-20">
-    ㆍTotal <span class="total-row">{{ gettotalListLength }}</span>건 <!--(<span class="now-page">{{ currentIndex }}</span>Page / <span class="total-page">{{ totalIndex }}</span>Page)-->
+    ㆍTotal <span class="total-row">{{ getTotalListLength }}</span>건 <!--(<span class="now-page">{{ currentIndex }}</span>Page / <span class="total-page">{{ totalIndex }}</span>Page)-->
   </div>
 
   <div class="ui-g-12 ui-g-nopad" *ngIf="params['id'] === 'server'">
@@ -112,7 +112,7 @@
     </p-table>
   </div>
   <div class="ui-g-12 ui-g-nopad" *ngIf="params['id'] === 'standby'">
-    <p-table class="ui-g-12 ui-g-nopad margin-bottom-50" [value]="filterTcMonitoringLists" [paginator]="true" [rows]="10" [rowsPerPageOptions]="[10,30,50,100]" [resizableColumns]="true" [(selection)]="selectItems" (onRowSelect)="onRowSelect()">
+    <p-table class="ui-g-12 ui-g-nopad margin-bottom-50" [value]="filterTcMonitoringLists" [paginator]="true" [rows]="10" [rowsPerPageOptions]="[10,30,50,100]" [resizableColumns]="true" [(selection)]="selectItems">
       <ng-template pTemplate="colgroup" let-columns>
         <colgroup>
           <col *ngFor="let col of tcStandByCols" [style.width]="col.width">
@@ -145,7 +145,7 @@
     </p-table>
   </div>
   <div class="ui-g-12 ui-g-nopad" *ngIf="params['id'] === 'request'">
-    <p-table class="ui-g-12 ui-g-nopad margin-bottom-50" [value]="filterTcMonitoringLists" [paginator]="true" [rows]="10" [rowsPerPageOptions]="[10,30,50,100]" [resizableColumns]="true" [(selection)]="selectItems" (onRowSelect)="onRowSelect()">
+    <p-table class="ui-g-12 ui-g-nopad margin-bottom-50" [value]="filterTcMonitoringLists" [paginator]="true" [rows]="10" [rowsPerPageOptions]="[10,30,50,100]" [resizableColumns]="true" [(selection)]="selectItems">
       <ng-template pTemplate="colgroup" let-columns>
         <colgroup>
           <col *ngFor="let col of tcRequestCols" [style.width]="col.width">
@@ -178,7 +178,7 @@
     </p-table>
   </div>
   <div class="ui-g-12 ui-g-nopad" *ngIf="params['id'] === 'progress'">
-    <p-table class="ui-g-12 ui-g-nopad margin-bottom-50" [value]="filterTcMonitoringLists" [paginator]="true" [rows]="10" [rowsPerPageOptions]="[10,30,50,100]" [resizableColumns]="true" [(selection)]="selectItems" (onRowSelect)="onRowSelect()">
+    <p-table class="ui-g-12 ui-g-nopad margin-bottom-50" [value]="filterTcMonitoringLists" [paginator]="true" [rows]="10" [rowsPerPageOptions]="[10,30,50,100]" [resizableColumns]="true" [(selection)]="selectItems">
       <ng-template pTemplate="colgroup" let-columns>
         <colgroup>
           <col *ngFor="let col of tcProgressCols" [style.width]="col.width">
@@ -216,7 +216,7 @@
     </p-table>
   </div>
   <div class="ui-g-12 ui-g-nopad" *ngIf="params['id'] === 'complete'">
-    <p-table class="ui-g-12 ui-g-nopad margin-bottom-50" [value]="filterTcMonitoringLists" [paginator]="true" [rows]="10" [rowsPerPageOptions]="[10,30,50,100]" [resizableColumns]="true" [(selection)]="selectItems" (onRowSelect)="onRowSelect()">
+    <p-table class="ui-g-12 ui-g-nopad margin-bottom-50" [value]="filterTcMonitoringLists" [paginator]="true" [rows]="10" [rowsPerPageOptions]="[10,30,50,100]" [resizableColumns]="true" [(selection)]="selectItems">
       <ng-template pTemplate="colgroup" let-columns>
         <colgroup>
           <col *ngFor="let col of tcCompleteCols" [style.width]="col.width">
@@ -252,7 +252,7 @@
     </p-table>
   </div>
   <div class="ui-g-12 ui-g-nopad" *ngIf="params['id'] === 'delay'">
-    <p-table class="ui-g-12 ui-g-nopad margin-bottom-50" [value]="filterTcMonitoringLists" [paginator]="true" [rows]="10" [rowsPerPageOptions]="[10,30,50,100]" [resizableColumns]="true" [(selection)]="selectItems" (onRowSelect)="onRowSelect()">
+    <p-table class="ui-g-12 ui-g-nopad margin-bottom-50" [value]="filterTcMonitoringLists" [paginator]="true" [rows]="10" [rowsPerPageOptions]="[10,30,50,100]" [resizableColumns]="true" [(selection)]="selectItems">
       <ng-template pTemplate="colgroup" let-columns>
         <colgroup>
           <col *ngFor="let col of tcDelayCols" [style.width]="col.width">
@@ -286,7 +286,7 @@
     </p-table>
   </div>
   <div class="ui-g-12 ui-g-nopad" *ngIf="params['id'] === 'fail'">
-    <p-table class="ui-g-12 ui-g-nopad margin-bottom-50" [value]="filterTcMonitoringLists" [paginator]="true" [rows]="10" [rowsPerPageOptions]="[10,30,50,100]" [resizableColumns]="true" [(selection)]="selectItems" (onRowSelect)="onRowSelect()">
+    <p-table class="ui-g-12 ui-g-nopad margin-bottom-50" [value]="filterTcMonitoringLists" [paginator]="true" [rows]="10" [rowsPerPageOptions]="[10,30,50,100]" [resizableColumns]="true" [(selection)]="selectItems">
       <ng-template pTemplate="colgroup" let-columns>
         <colgroup>
           <col *ngFor="let col of tcFailCols" [style.width]="col.width">
@@ -321,8 +321,8 @@
       </ng-template>
     </p-table>
   </div>
-  <div class="ui-g-12 ui-g-nopad" *ngIf="params['id'] === 'tempDelete'">
-    <p-table class="ui-g-12 ui-g-nopad margin-bottom-50" [value]="filterTcMonitoringLists" [paginator]="true" [rows]="10" [rowsPerPageOptions]="[10,30,50,100]" [resizableColumns]="true" [(selection)]="selectItems" (onRowSelect)="onRowSelect()">
+  <div class="ui-g-12 ui-g-nopad" *ngIf="params['id'] === 'temp-delete'">
+    <p-table class="ui-g-12 ui-g-nopad margin-bottom-50" [value]="filterTcMonitoringLists" [paginator]="true" [rows]="10" [rowsPerPageOptions]="[10,30,50,100]" [resizableColumns]="true" [(selection)]="selectItems">
       <ng-template pTemplate="colgroup" let-columns>
         <colgroup>
           <col *ngFor="let col of tempDeleteCols" [style.width]="col.width">
@@ -357,3 +357,10 @@
     </p-table>
   </div>
 </div>
+
+<p-confirmDialog width="500" #confirm>
+  <p-footer>
+    <button type="button" class="btn white-btn margin-right-10" (click)="confirm.accept()"><i class="fas fa-check"></i> 확인</button>
+    <button type="button" class="btn white-btn" (click)="confirm.reject()"><i class="fas fa-times"></i> 취소</button>
+  </p-footer>
+</p-confirmDialog>

@@ -16,6 +16,7 @@ export class CustomerFormComponent implements OnInit {
 
   public customerform: FormGroup;
   public submitted: boolean;
+  public isShowMessage: boolean = false;
 
   /*for check addpagebb row*/
   public isAddRow: boolean = true;
@@ -198,13 +199,28 @@ export class CustomerFormComponent implements OnInit {
           })
         }
       });
-      this.customerService.postCustomer(valueObject);
+      this.customerService.postCustomer(valueObject)
+        .toPromise()
+        .then(() => {
+          this.isShowMessage = true;
+          this.router.navigate(['/manager', 'customer']);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     } else {
-      this.customerService.updateCustomer(formObject.cus);
+      this.customerService.updateCustomer(formObject.cus)
+        .toPromise()
+        .then(() => {
+          this.isShowMessage = true;
+        })
+        .catch((error) => {
+          console.log(error);
+        })
     }
   }
 
-  goBack() {
+  goList() {
     this.router.navigate(['/manager', 'customer']);
   }
 
