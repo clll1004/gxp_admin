@@ -2,13 +2,13 @@
  * Created by GRE511 on 2018-07-12.
  */
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Params } from "@angular/router";
+import { ActivatedRoute, Params } from '@angular/router';
 
 @Component({
   selector: 'transcoding',
   templateUrl: './transcoding.component.html',
-  styleUrls: ['./transcoding.component.scss']
-})
+  styleUrls: ['./transcoding.component.scss']})
+
 export class TransCodingComponent implements OnInit {
   public params:Params;
   public isShow:boolean = true;

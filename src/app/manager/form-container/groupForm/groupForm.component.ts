@@ -1,15 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { Validators, FormControl, FormGroup, FormBuilder, FormArray } from '@angular/forms';
-import { ActivatedRoute, Params, Router } from "@angular/router";
-import { GroupService } from "../../../services/apis/adm/group/group.service";
+import { ActivatedRoute, Params, Router } from '@angular/router';
+import { GroupService } from '../../../services/apis/adm/group/group.service';
 import { AdminApis } from '../../../services/apis/apis';
 
 @Component({
   selector: 'groupForm',
   templateUrl: './groupForm.component.html',
   styleUrls: ['../form-container.component.scss'],
-  providers: [ GroupService, AdminApis ]
-})
+  providers: [GroupService, AdminApis]})
 
 export class GroupFormComponent implements OnInit {
   params: Params;
@@ -57,7 +56,7 @@ export class GroupFormComponent implements OnInit {
               private router: Router,
               private activatedRoute: ActivatedRoute,
               private groupService: GroupService,
-              private adminApis: AdminApis) {
+              private adminApi: AdminApis) {
     this.activatedRoute.params.subscribe( (params) => {
       this.params = params;
     });
@@ -229,9 +228,10 @@ export class GroupFormComponent implements OnInit {
       this.loadGroupList();
     }
   }
+
   loadCustomerList() {
     let list;
-    this.groupService.getLists(this.adminApis.loadCustomerNames)
+    this.groupService.getLists(this.adminApi.loadCustomerNames)
       .toPromise()
       .then((params)=>{
         list = JSON.parse(params._body);
@@ -242,8 +242,9 @@ export class GroupFormComponent implements OnInit {
         });
     });
   }
+
   loadGroupList() {
-    this.groupService.getLists(this.adminApis.loadGroup + this.params.index)
+    this.groupService.getLists(this.adminApi.loadGroup + this.params.index)
       .toPromise()
       .then((data) => {
         const getData = JSON.parse((<any>data)._body);
@@ -356,12 +357,13 @@ export class GroupFormComponent implements OnInit {
   confirmGroupName() {
     this.showGroupDupMsg = true;
     const inputname:string = this.groupform.get('grp').value['grp_nm'];
-    this.groupService.getLists(this.adminApis.checkDupGroupName + inputname)
+    this.groupService.getLists(this.adminApi.checkDupGroupName + inputname)
       .toPromise()
       .then((cont) => {
         this.ableGroupName = cont._body === 'true';
       });
   }
+
   /*썸네일서버 - 추가, 삭제*/
   addThumbnailServer() {
     (<FormArray>this.groupform.get('thm')).push(
@@ -374,10 +376,12 @@ export class GroupFormComponent implements OnInit {
       })
     );
   }
+
   removeThumbnailServer(index) {
     const thmList = <FormArray>this.groupform.get('thm');
     thmList.removeAt(index);
   }
+
   /*트랜스코딩 변환옵션 - 추가, 삭제*/
   addTranscodingOption() {
     (<FormArray>this.groupform.get('tcd')).push(
@@ -443,11 +447,13 @@ export class GroupFormComponent implements OnInit {
   }
 
   get thmData() { return <FormArray>this.groupform.get('thm'); }
+
   get tcdData() { return <FormArray>this.groupform.get('tcd'); }
 
   changeStaticEncodeStatus(item) {
     item.get('opt').get('gto_static_use').value === 'X' ? item.get('opt').get('gto_static_encode').enable() : item.get('opt').get('gto_static_encode').disable();
   }
+
   changeDrmEncodeStatus(item) {
     item.get('opt').get('gto_drm').value === 'X' ? item.get('opt').get('gto_drm_encode').enable() : item.get('opt').get('gto_drm_encode').disable();
   }

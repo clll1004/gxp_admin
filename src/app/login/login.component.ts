@@ -1,16 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { LoginService } from "./login.service";
+import { LoginService } from './login.service';
 import { Validators, FormControl, FormGroup, FormBuilder } from '@angular/forms';
-import { Sha256 } from "../services/library/hash/sha256";
+import { Sha256 } from '../services/library/hash/sha256';
 import { AdminApis } from '../services/apis/apis';
-import { Router } from "@angular/router";
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
-  providers: [ Sha256, AdminApis ]
-})
+  providers: [Sha256, AdminApis]})
 
 export class LoginComponent implements OnInit {
   public userData: any = {
@@ -25,7 +24,7 @@ export class LoginComponent implements OnInit {
   constructor(private formBuilder: FormBuilder,
               private loginService: LoginService,
               private sha256: Sha256,
-              private adminApis: AdminApis,
+              private adminApi: AdminApis,
               private router: Router) { }
 
   ngOnInit() {
@@ -41,7 +40,7 @@ export class LoginComponent implements OnInit {
     this.userData.userId = value.user_id;
     this.userData.userPassword = this.sha256.get(value.user_password);
 
-    this.loginService.login(this.adminApis.login, this.userData.userId, this.userData.userPassword)
+    this.loginService.login(this.adminApi.login, this.userData.userId, this.userData.userPassword)
       .toPromise()
       .then((data) => {
         this.loginService.setLogin();

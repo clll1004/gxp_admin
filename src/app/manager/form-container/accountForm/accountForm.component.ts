@@ -2,16 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import { Validators,FormControl,FormGroup,FormBuilder  } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from "@angular/router";
 import { AccountFormValidator } from './passwordValidator';
-import { UserService } from "../../../services/apis/adm/user/user.service";
-import { Sha256 } from "../../../services/library/hash/sha256";
+import { UserService } from '../../../services/apis/adm/user/user.service';
+import { Sha256 } from '../../../services/library/hash/sha256';
 import { AdminApis } from '../../../services/apis/apis';
 
 @Component({
   selector: 'accountForm',
   templateUrl: './accountForm.component.html',
   styleUrls: ['../form-container.component.scss'],
-  providers: [ UserService, Sha256, AdminApis ]
-})
+  providers: [UserService, Sha256, AdminApis]})
 
 export class AccountFormComponent implements OnInit {
   params: Params;

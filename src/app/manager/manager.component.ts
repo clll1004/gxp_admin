@@ -1,10 +1,9 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute, Params } from "@angular/router";
+import { ActivatedRoute, Params } from '@angular/router';
 
 @Component({
   selector: 'manager',
-  templateUrl: './manager.component.html',
-})
+  templateUrl: './manager.component.html'})
 
 export class ManagerComponent {
   public params:Params;

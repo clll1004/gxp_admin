@@ -1,14 +1,13 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Http } from "@angular/http";
-import { ActivatedRoute } from "@angular/router";
+import { Http } from '@angular/http';
+import { ActivatedRoute } from '@angular/router';
 import { AdminApis } from '../../services/apis/apis';
 
 @Component({
   selector: 'list-container',
   templateUrl: './list-container.component.html',
   styleUrls: ['./list-container.component.scss'],
-  providers: [ AdminApis ]
-})
+  providers: [AdminApis]})
 
 export class ListContainerComponent implements OnInit {
   @Input() params: object;
@@ -52,18 +51,18 @@ export class ListContainerComponent implements OnInit {
   public totalCustomerList: number = 0;
   public searchKey: string = '';
 
-  constructor(private http: Http, private activatedRoute: ActivatedRoute, private adminApis: AdminApis) {}
+  constructor(private http: Http, private activatedRoute: ActivatedRoute, private adminApi: AdminApis) {}
 
   ngOnInit() {
     this.activatedRoute.url.subscribe((urlItem) => {
       this.customerLists = [];
       let url: string = '';
       if(urlItem[1]['path'] == 'customer') {
-        url = this.adminApis.loadCustomerList;
+        url = this.adminApi.loadCustomerList;
       } else if (urlItem[1]['path'] == 'group') {
-        url = this.adminApis.loadGroupList;
+        url = this.adminApi.loadGroupList;
       } else if (urlItem[1]['path'] == 'account') {
-        url = this.adminApis.loadUserList;
+        url = this.adminApi.loadUserList;
       }
       this.http.get(url)
         .toPromise()
@@ -84,6 +83,7 @@ export class ListContainerComponent implements OnInit {
 
     this.setTableIndex();
   }
+
   filterListUse(data:string) {
     this.filterCustomerLists = this.customerLists.filter((customerItem) => {
       if(this.params['listId'] === 'customer') {
@@ -97,6 +97,7 @@ export class ListContainerComponent implements OnInit {
     this.totalCustomerList = this.filterCustomerLists.length;
     this.setTableIndex();
   }
+
   /*고객명 검색*/
   filterCustomerName() {
     if(this.searchKey != '') {

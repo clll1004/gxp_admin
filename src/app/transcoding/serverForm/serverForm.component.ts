@@ -2,7 +2,7 @@
  * Created by GRE511 on 2018-07-13.
  */
 import { Component, Input, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from "@angular/router";
+import { ActivatedRoute, Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { TranscodingService } from '../../services/apis/adm/transcoding/transcoding.service';
 import { AdminApis } from '../../services/apis/apis';
@@ -11,8 +11,7 @@ import { AdminApis } from '../../services/apis/apis';
   selector: 'serverForm',
   templateUrl: './serverForm.component.html',
   styleUrls: ['../transcoding.component.scss'],
-  providers: [ TranscodingService, AdminApis ]
-})
+  providers: [TranscodingService, AdminApis]})
 
 export class ServerFormComponent implements OnInit {
   @Input() params: object;

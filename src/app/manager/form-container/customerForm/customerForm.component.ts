@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Validators,FormControl,FormGroup,FormBuilder,FormArray } from '@angular/forms';
-import { ActivatedRoute, Params, Router } from "@angular/router";
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { CustomerService } from '../../../services/apis/adm/customer/customer.service';
 import { AdminApis } from '../../../services/apis/apis';
 
@@ -8,8 +8,7 @@ import { AdminApis } from '../../../services/apis/apis';
   selector: 'customerForm',
   templateUrl: './customerForm.component.html',
   styleUrls: ['../form-container.component.scss'],
-  providers: [ CustomerService, AdminApis ]
-})
+  providers: [CustomerService, AdminApis]})
 
 export class CustomerFormComponent implements OnInit {
   params: Params;
@@ -255,10 +254,12 @@ export class CustomerFormComponent implements OnInit {
       })
     );
   }
+
   removeThumbnailServer(index) {
     const thmList = <FormArray>this.customerform.get('thm');
     thmList.removeAt(index);
   }
+
   /*트랜스코딩 변환옵션 - 추가, 삭제*/
   addTranscodingOption() {
     (<FormArray>this.customerform.get('tcd')).push(
@@ -302,10 +303,12 @@ export class CustomerFormComponent implements OnInit {
       })
     );
   }
+
   removeTranscodingOption(index) {
     const tcdList = <FormArray>this.customerform.get('tcd');
     tcdList.removeAt(index);
   }
+
   /*서비스서버 - 추가, 삭제*/
   addServiceServer(index) {
     (<FormArray>index.get('svc')).push(
@@ -318,6 +321,7 @@ export class CustomerFormComponent implements OnInit {
       })
     );
   }
+
   removeServiceServer(tcdIndex, svcIndex) {
     const svcList = <FormArray>this.customerform.get('tcd').get([tcdIndex]).get('svc');
     svcList.removeAt(svcIndex);
@@ -341,6 +345,7 @@ export class CustomerFormComponent implements OnInit {
   changeStaticEncodeStatus(item) {
     item.get('opt').get('gto_static_use').value === 'X' ? item.get('opt').get('gto_static_encode').enable() : item.get('opt').get('gto_static_encode').disable();
   }
+
   changeDrmEncodeStatus(item) {
     item.get('opt').get('gto_drm').value === 'X' ? item.get('opt').get('gto_drm_encode').enable() : item.get('opt').get('gto_drm_encode').disable();
   }
