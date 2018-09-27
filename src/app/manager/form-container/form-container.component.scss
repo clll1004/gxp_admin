@@ -114,3 +114,75 @@ form {
     margin-right: 5px;
   }
 }
+
+.button-area label {
+  display: inline-block;
+  width: 100%; height: 50px;
+  line-height: 50px;
+  margin-bottom: 10px;
+  border: none;
+  border-radius: 5px;
+  background: #ddd;
+  text-align: center;
+  font-size: 14px;
+  cursor: pointer;
+}
+.button-area label:hover {
+  background: #ccc;
+}
+.button-area label.on {
+  background: #ff6400;
+  color: #fff;
+}
+
+.player-view-area {
+  position: relative;
+  padding: 0 10px;
+}
+.player-view-area img#defaultImg {
+  display: block;
+  width: 100%;
+}
+
+.player-view-area .overlay-area img {
+  display: none;
+  position: absolute;
+}
+.player-view-area .overlay-area input[type='checkbox'] {
+  display: none;
+}
+.player-view-area .overlay-area input[type='checkbox']:checked + img {
+  display: block;
+}
+.player-view-area .overlay-area img#bookmarkImg {
+  top: 2%; right: 7%;
+  width: 4%;
+}
+.player-view-area .overlay-area img#settingImg {
+  top: 2%; right: 3%;
+  width: 4%;
+}
+.player-view-area .overlay-area img#nextVideoImg {
+  bottom: 0; left: 7.8%;
+  width: 4%;
+}
+.player-view-area .overlay-area img#playbackRateImg {
+  top: 27%; left: 10%;
+  width: 7%;
+}
+.player-view-area .overlay-area img#loopPortionImg {
+  bottom: 0; right: 16%;
+  width: 4%;
+}
+.player-view-area .overlay-area img#qualityImg {
+  bottom: 0; right: 12%;
+  width: 4%;
+}
+.player-view-area img#cinemaModeImg {
+  bottom: 0; right: 8%;
+  width: 4%;
+}
+.player-view-area img#fullscreenImg {
+  bottom: 0; right: 4%;
+  width: 4%;
+}

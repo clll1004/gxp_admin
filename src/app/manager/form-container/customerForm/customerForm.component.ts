@@ -349,4 +349,9 @@ export class CustomerFormComponent implements OnInit {
   changeDrmEncodeStatus(item) {
     item.get('opt').get('gto_drm').value === 'X' ? item.get('opt').get('gto_drm_encode').enable() : item.get('opt').get('gto_drm_encode').disable();
   }
+
+  setPlayerPreset(e) {
+    const target = e.currentTarget;
+    target.getAttribute('class') === 'on' ? target.setAttribute('class', '') : target.setAttribute('class', 'on');
+  }
 }
