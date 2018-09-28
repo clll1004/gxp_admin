@@ -38,7 +38,7 @@ import { RadioButtonModule } from 'primeng/radiobutton';
 import { KeyFilterModule } from 'primeng/keyfilter';
 import { DropdownModule } from 'primeng/dropdown';
 import { DialogModule } from "primeng/primeng";
-import { ConfirmDialogModule } from 'primeng/primeng';
+import { ConfirmDialogModule, CalendarModule } from 'primeng/primeng';
 
 import { LoginService } from './login/login.service';
 
@@ -86,6 +86,7 @@ import { LoginService } from './login/login.service';
     DropdownModule,
     DialogModule,
     ConfirmDialogModule,
+    CalendarModule,
 
     AppRoutingModule
   ],

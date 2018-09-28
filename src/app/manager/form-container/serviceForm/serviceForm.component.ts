@@ -19,6 +19,17 @@ export class ServiceFormComponent implements OnInit {
   public submitted: boolean;
   public isShowMessage: boolean = false;
 
+  public yearRange: string = `${new Date().getFullYear()}:${new Date().getFullYear() + 10}`;
+  public localeObject: object = {
+    firstDayOfWeek: 0,
+    dayNamesMin: ['일','월','화','수','목','금','토'],
+    monthNames: ['01','02','03','04','05','06','07','08','09','10','11','12'],
+    today: 'Today',
+    clear: 'Clear',
+  };
+  public minDate: Date = new Date();
+
+
   /*for check addpagebb row*/
   public isAddRow: boolean = true;
   public ableGroupName: boolean = false;
@@ -70,6 +81,12 @@ export class ServiceFormComponent implements OnInit {
     });
 
     this.serviceform = this.formBuilder.group({
+      authkey: this.formBuilder.group({
+        'authkey_nm': new FormControl(null),
+        'url': new FormControl(null),
+        'issue_dtm': new FormControl(new Date()),
+        'expiration_dtm': new FormControl(new Date()),
+      }),
       grp: this.formBuilder.group({
         /*트랜스코딩 정보*/
         'grp_seq': new FormControl(null),
@@ -456,5 +473,10 @@ export class ServiceFormComponent implements OnInit {
 
   changeDrmEncodeStatus(item) {
     item.get('opt').get('gto_drm').value === 'X' ? item.get('opt').get('gto_drm_encode').enable() : item.get('opt').get('gto_drm_encode').disable();
+  }
+
+  setPlayerPreset(e) {
+    const target = e.currentTarget;
+    target.getAttribute('class') === 'on' ? target.setAttribute('class', '') : target.setAttribute('class', 'on');
   }
 }

@@ -461,3 +461,13 @@ td {
     text-align: center;
   }
 }
+
+.ui-calendar td {
+  padding: .125em !important;
+}
+.ui-calendar td a {
+  padding: 0.4em !important;
+}
+.ui-datepicker select.ui-datepicker-month, .ui-datepicker select.ui-datepicker-year {
+  width: auto;
+}
