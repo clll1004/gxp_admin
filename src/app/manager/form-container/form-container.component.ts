@@ -13,14 +13,14 @@ export class FormContainerComponent implements OnInit {
   constructor() {}
 
   ngOnInit() {
-    if (this.params.listId === 'customer') {
+    if (this.params['listId'] === 'customer') {
       this.pathName = '고객관리'
-    } else if (this.params.listId === 'group') {
+    } else if (this.params['listId'] === 'service') {
       this.pathName = '서비스관리'
     } else {
       this.pathName = 'CMS 계정관리'
     }
-    if (this.params.subId === 'add') {
+    if (this.params['subId'] === 'add') {
       this.subPathName = '등록'
     } else {
       this.subPathName = '상세'

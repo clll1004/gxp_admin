@@ -28,11 +28,11 @@ export class ListContainerComponent implements OnInit {
     { field: 'cus_reg_dtm', header: '등록일', width: '16%' },
     { field: '', header: '관리', width: '10%' }
   ];
-  public groupCols: any[] = [
+  public serviceCols: any[] = [
     { field: 'grp_seq', header: 'No.', width: '5%' },
-    { field: 'grp_nm', header: '그룹명', width: '25%' },
+    { field: 'grp_nm', header: '서비스명', width: '25%' },
     { field: 'cus_nm_ko', header: '고객명(한글)', width: '15%' },
-    { field: 'grp_basic_yn', header: '기본그룹 사용여부', width: '10%' },
+    { field: 'grp_basic_yn', header: '기본서비스 사용여부', width: '10%' },
     { field: 'grp_use_yn', header: '사용여부', width: '10%' },
     { field: 'grp_reg_dtm', header: '등록일', width: '8%' },
     { field: 'grp_upd_dtm', header: '수정일', width: '8%' },
@@ -61,9 +61,9 @@ export class ListContainerComponent implements OnInit {
       if(urlItem[1]['path'] == 'customer') {
         this.pathName = '고객관리';
         url = this.adminApi.loadCustomerList;
-      } else if (urlItem[1]['path'] == 'group') {
+      } else if (urlItem[1]['path'] == 'service') {
         this.pathName = '서비스관리';
-        url = this.adminApi.loadGroupList;
+        url = this.adminApi.loadServiceList;
       } else if (urlItem[1]['path'] == 'account') {
         this.pathName = 'CMS 계정관리';
         url = this.adminApi.loadUserList;
@@ -92,7 +92,7 @@ export class ListContainerComponent implements OnInit {
     this.filterCustomerLists = this.customerLists.filter((customerItem) => {
       if(this.params['listId'] === 'customer') {
         return customerItem.cus_use_yn === data;
-      } else if(this.params['listId'] === 'group') {
+      } else if(this.params['listId'] === 'service') {
         return customerItem.grp_use_yn === data;
       } else if(this.params['listId'] === 'account') {
         return customerItem.usr_use_yn === data;

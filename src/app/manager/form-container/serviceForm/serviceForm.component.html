@@ -1,6 +1,6 @@
-<form [formGroup]="groupform" (ngSubmit)="onSubmit(groupform.value)" class="ui-g-12 ui-g-nopad margin-bottom-50">
+<form [formGroup]="serviceform" (ngSubmit)="onSubmit(serviceform.value)" class="ui-g-12 ui-g-nopad margin-bottom-50">
   <fieldset>
-    <legend class="padding-left-10 padding-right-10"> GROUP </legend>
+    <legend class="padding-left-10 padding-right-10"> SERVICE </legend>
     <!--트랜스코딩 정보-->
     <div class="ui-g-12 ui-g-nopad margin-bottom-40 form-container" formGroupName="grp">
       <h3 class="form-title">트랜스코딩정보</h3>
@@ -11,9 +11,9 @@
           <col style="width: auto;" />
         </colgroup>
         <tr *ngIf="!isAddRow">
-          <th>그룹명 <span class="color-red">*</span></th>
+          <th>서비스명 <span class="color-red">*</span></th>
           <td>
-            {{ groupform.get('grp').get('grp_nm').value }}
+            {{ serviceform.get('grp').get('grp_nm').value }}
           </td>
         </tr>
         <tr *ngIf="!isAddRow">
@@ -23,13 +23,13 @@
           </td>
         </tr>
         <tr *ngIf="!isAddRow">
-          <th>기본그룹 사용여부 <span class="color-red">*</span></th>
+          <th>기본서비스 사용여부 <span class="color-red">*</span></th>
           <td>
-            {{ groupform.get('grp').get('grp_basic_yn').value }}
+            {{ serviceform.get('grp').get('grp_basic_yn').value }}
           </td>
         </tr>
         <tr *ngIf="!isAddRow">
-          <th>그룹 사용여부 <span class="color-red">*</span></th>
+          <th>서비스 사용여부 <span class="color-red">*</span></th>
           <td>
             <p-radioButton formControlName="grp_use_yn" name="grp_use_yn" value="Y" label="사용" class="margin-right-30"></p-radioButton>
             <p-radioButton formControlName="grp_use_yn" name="grp_use_yn" value="N" label="사용 안 함"></p-radioButton>
@@ -39,8 +39,8 @@
           <th><label for="grp_cus_seq">고객 선택</label> <span class="color-red">*</span></th>
           <td>
             <p-dropdown id="grp_cus_seq" [options]="cus_seq_options" formControlName="grp_cus_seq" placeholder="선택하세요"></p-dropdown>
-            <div *ngIf="!groupform.get('grp').get(['grp_cus_seq']).valid && groupform.get('grp').get(['grp_cus_seq']).dirty">
-              <p class="color-red info-txt margin-top-10" *ngIf="groupform.get('grp').get(['grp_cus_seq']).errors['required']">필수 선택 사항입니다.</p>
+            <div *ngIf="!serviceform.get('grp').get(['grp_cus_seq']).valid && serviceform.get('grp').get(['grp_cus_seq']).dirty">
+              <p class="color-red info-txt margin-top-10" *ngIf="serviceform.get('grp').get(['grp_cus_seq']).errors['required']">필수 선택 사항입니다.</p>
             </div>
           </td>
         </tr>
@@ -48,24 +48,24 @@
           <th><label for="grp_tcd_desc">트랜스코딩 설명 </label> <span class="color-red">*</span></th>
           <td>
             <input pInputText type="text" id="grp_tcd_desc" formControlName="grp_tcd_desc" title="트랜스코딩 설명 입력" autocomplete="off" maxlength="51" />
-            <div *ngIf="!groupform.get('grp').get(['grp_tcd_desc']).valid && groupform.get('grp').get(['grp_tcd_desc']).dirty">
-              <p class="color-red info-txt margin-top-10" *ngIf="groupform.get('grp').get(['grp_tcd_desc']).errors['required']">필수입력 사항 입니다</p>
-              <p class="color-red info-txt margin-top-10" *ngIf="groupform.get('grp').get(['grp_tcd_desc']).errors['maxlength']"> 50자 이내로 입력해주세요</p>
+            <div *ngIf="!serviceform.get('grp').get(['grp_tcd_desc']).valid && serviceform.get('grp').get(['grp_tcd_desc']).dirty">
+              <p class="color-red info-txt margin-top-10" *ngIf="serviceform.get('grp').get(['grp_tcd_desc']).errors['required']">필수입력 사항 입니다</p>
+              <p class="color-red info-txt margin-top-10" *ngIf="serviceform.get('grp').get(['grp_tcd_desc']).errors['maxlength']"> 50자 이내로 입력해주세요</p>
             </div>
           </td>
         </tr>
         <tr *ngIf="isAddRow">
-          <th><label for="grp_nm">그룹명 </label> <span class="color-red">*</span></th>
+          <th><label for="grp_nm">서비스명 </label> <span class="color-red">*</span></th>
           <td>
-            <input pInputText type="text" id="grp_nm" formControlName="grp_nm" pKeyFilter="alpha" class="margin-right-10" title="그룹명/타입 입력" autocomplete="off" maxlength="21" />
+            <input pInputText type="text" id="grp_nm" formControlName="grp_nm" pKeyFilter="alpha" class="margin-right-10" title="서비스명/타입 입력" autocomplete="off" maxlength="21" />
             <button type="button" class="btn white-btn square-btn" (click)="confirmGroupName()">중복 확인</button>
-            <div *ngIf="!groupform.get('grp').get(['grp_nm']).valid && groupform.get('grp').get(['grp_nm']).dirty">
-              <p class="color-red info-txt margin-top-10" *ngIf="groupform.get('grp').get(['grp_nm']).errors['required']">필수입력 사항 입니다</p>
-              <p class="color-red info-txt margin-top-10" *ngIf="groupform.get('grp').get(['grp_nm']).errors['maxlength']"> 20자 이내로 입력해주세요</p>
+            <div *ngIf="!serviceform.get('grp').get(['grp_nm']).valid && serviceform.get('grp').get(['grp_nm']).dirty">
+              <p class="color-red info-txt margin-top-10" *ngIf="serviceform.get('grp').get(['grp_nm']).errors['required']">필수입력 사항 입니다</p>
+              <p class="color-red info-txt margin-top-10" *ngIf="serviceform.get('grp').get(['grp_nm']).errors['maxlength']"> 20자 이내로 입력해주세요</p>
             </div>
             <div *ngIf="showGroupDupMsg">
-              <p class="color-blue info-txt margin-top-10" *ngIf="ableGroupName">사용가능한 그룹명입니다.</p>
-              <p class="color-red info-txt margin-top-10" *ngIf="!ableGroupName">사용중인 그룹명입니다.</p>
+              <p class="color-blue info-txt margin-top-10" *ngIf="ableGroupName">사용가능한 서비스명입니다.</p>
+              <p class="color-red info-txt margin-top-10" *ngIf="!ableGroupName">사용중인 서비스명입니다.</p>
             </div>
           </td>
         </tr>
@@ -74,9 +74,9 @@
           <td>
             <input pInputText type="text" id="grp_svc_domain" formControlName="grp_svc_domain" title="서비스도메인 입력" autocomplete="off" maxlength="51" />
             <p class="color-grey info-txt margin-top-10">* 해당 고객이 사용할 도메인명: 미리보기, 실제 서비스 도메인 확인용</p>
-            <div *ngIf="!groupform.get('grp').get(['grp_svc_domain']).valid && groupform.get('grp').get(['grp_svc_domain']).dirty">
-              <p class="color-red info-txt margin-top-10" *ngIf="groupform.get('grp').get(['grp_svc_domain']).errors['required']">필수입력 사항 입니다</p>
-              <p class="color-red info-txt margin-top-10" *ngIf="groupform.get('grp').get(['grp_svc_domain']).errors['maxlength']"> 50자 이내로 입력해주세요</p>
+            <div *ngIf="!serviceform.get('grp').get(['grp_svc_domain']).valid && serviceform.get('grp').get(['grp_svc_domain']).dirty">
+              <p class="color-red info-txt margin-top-10" *ngIf="serviceform.get('grp').get(['grp_svc_domain']).errors['required']">필수입력 사항 입니다</p>
+              <p class="color-red info-txt margin-top-10" *ngIf="serviceform.get('grp').get(['grp_svc_domain']).errors['maxlength']"> 50자 이내로 입력해주세요</p>
             </div>
           </td>
         </tr>
@@ -86,8 +86,8 @@
             <input pInputText type="text" id="grp_svc_sub_url" formControlName="grp_svc_sub_url" title="서브 URL 입력" value="" autocomplete="off" maxlength="51" />
             <p class="color-grey info-txt margin-top-10">* 서비스도메인 이후 sub path 정보</p>
             <p class="color-grey info-txt margin-top-10">* gxp경우 sub url 구분(mp4 : gxmp4 / 다운로드 : gxdwn / hls : gxhls / dash : gxdsh )</p>
-            <div *ngIf="!groupform.get('grp').get(['grp_svc_sub_url']).valid && groupform.get('grp').get(['grp_svc_sub_url']).dirty">
-              <p class="color-red info-txt margin-top-10" *ngIf="groupform.get('grp').get(['grp_svc_sub_url']).errors['maxlength']"> 50자 이내로 입력해주세요</p>
+            <div *ngIf="!serviceform.get('grp').get(['grp_svc_sub_url']).valid && serviceform.get('grp').get(['grp_svc_sub_url']).dirty">
+              <p class="color-red info-txt margin-top-10" *ngIf="serviceform.get('grp').get(['grp_svc_sub_url']).errors['maxlength']"> 50자 이내로 입력해주세요</p>
             </div>
           </td>
         </tr>
@@ -96,8 +96,8 @@
           <td>
             <input pInputText type="text" id="grp_callback_url" formControlName="grp_callback_url" title="고객 콜백 URL 입력" autocomplete="off" maxlength="201" />
             <p class="color-grey info-txt margin-top-10">* 변환 완료 후 결과전송 URL. 파라메터는 연동 규격서 참고 후 설정</p>
-            <div *ngIf="!groupform.get('grp').get(['grp_callback_url']).valid && groupform.get('grp').get(['grp_callback_url']).dirty">
-              <p class="color-red info-txt margin-top-10" *ngIf="groupform.get('grp').get(['grp_callback_url']).errors['maxlength']"> 200자 이내로 입력해주세요</p>
+            <div *ngIf="!serviceform.get('grp').get(['grp_callback_url']).valid && serviceform.get('grp').get(['grp_callback_url']).dirty">
+              <p class="color-red info-txt margin-top-10" *ngIf="serviceform.get('grp').get(['grp_callback_url']).errors['maxlength']"> 200자 이내로 입력해주세요</p>
             </div>
           </td>
         </tr>
@@ -138,9 +138,9 @@
             <input pInputText type="text" id="grp_thm_domain" formControlName="grp_thm_domain" title="썸네일도메인 입력" autocomplete="off" maxlength="51" />
             <p class="color-grey info-txt margin-top-10">* 썸네일 서비스 도메인 ex) &#123;도메인&#125;/suburl/gid/path/filename/filename000N.jpg</p>
             <p class="color-grey info-txt margin-top-10">* gxp사용일 경우 str.gomgxp.com/gxthm/ 입력, url 유형 ex) str.gomgxp.com/gxthm/gid/path/filename.mp4/thumb-&#123;offset&#125;-w&#123;width&#125;-h&#123;height&#125;.jpg</p>
-            <div *ngIf="!groupform.get('grp').get(['grp_thm_domain']).valid && groupform.get('grp').get(['grp_thm_domain']).dirty">
-              <p class="color-red info-txt margin-top-10" *ngIf="groupform.get('grp').get(['grp_thm_domain']).errors['required']">필수입력 사항 입니다</p>
-              <p class="color-red info-txt margin-top-10" *ngIf="groupform.get('grp').get(['grp_thm_domain']).errors['maxlength']"> 50자 이내로 입력해주세요</p>
+            <div *ngIf="!serviceform.get('grp').get(['grp_thm_domain']).valid && serviceform.get('grp').get(['grp_thm_domain']).dirty">
+              <p class="color-red info-txt margin-top-10" *ngIf="serviceform.get('grp').get(['grp_thm_domain']).errors['required']">필수입력 사항 입니다</p>
+              <p class="color-red info-txt margin-top-10" *ngIf="serviceform.get('grp').get(['grp_thm_domain']).errors['maxlength']"> 50자 이내로 입력해주세요</p>
             </div>
           </td>
         </tr>
@@ -149,9 +149,9 @@
           <td>
             <input pInputText type="text" title="썸네일 추출간격 입력" id="grp_thm_interval" formControlName="grp_thm_interval" pKeyFilter="num" autocomplete="off"  maxlength="3"/>
             <p class="color-grey info-txt margin-top-10">* sec 단위</p>
-            <div *ngIf="!groupform.get('grp').get(['grp_thm_interval']).valid && groupform.get('grp').get(['grp_thm_interval']).dirty">
-              <p class="color-red info-txt margin-top-10" *ngIf="groupform.get('grp').get(['grp_thm_interval']).errors['required']">필수입력 사항 입니다</p>
-              <p class="color-red info-txt margin-top-10" *ngIf="groupform.get('grp').get(['grp_thm_interval']).errors['maxlength']"> 2자 이내로 입력해주세요</p>
+            <div *ngIf="!serviceform.get('grp').get(['grp_thm_interval']).valid && serviceform.get('grp').get(['grp_thm_interval']).dirty">
+              <p class="color-red info-txt margin-top-10" *ngIf="serviceform.get('grp').get(['grp_thm_interval']).errors['required']">필수입력 사항 입니다</p>
+              <p class="color-red info-txt margin-top-10" *ngIf="serviceform.get('grp').get(['grp_thm_interval']).errors['maxlength']"> 2자 이내로 입력해주세요</p>
             </div>
           </td>
         </tr>
@@ -167,28 +167,28 @@
           <td>
             <div class="ui-g-12 ui-g-nopad server-group">
               <label for="grp_ftp_ip" class="w-70px margin-bottom-10">IP</label> <input pInputText type="text" id="grp_ftp_ip" formControlName="grp_ftp_ip" title="썸네일서버 IP 입력" autocomplete="off" maxlength="16" /><br>
-              <div *ngIf="!groupform.get('grp').get(['grp_ftp_ip']).valid && groupform.get('grp').get(['grp_ftp_ip']).dirty" class="padding-left-70">
-                <p class="color-red info-txt margin-bottom-10" *ngIf="groupform.get('grp').get(['grp_ftp_ip']).errors['required']">필수입력 사항 입니다</p>
-                <p class="color-red info-txt margin-bottom-10" *ngIf="groupform.get('grp').get(['grp_ftp_ip']).errors['maxlength']"> 15자 이내로 입력해주세요</p>
+              <div *ngIf="!serviceform.get('grp').get(['grp_ftp_ip']).valid && serviceform.get('grp').get(['grp_ftp_ip']).dirty" class="padding-left-70">
+                <p class="color-red info-txt margin-bottom-10" *ngIf="serviceform.get('grp').get(['grp_ftp_ip']).errors['required']">필수입력 사항 입니다</p>
+                <p class="color-red info-txt margin-bottom-10" *ngIf="serviceform.get('grp').get(['grp_ftp_ip']).errors['maxlength']"> 15자 이내로 입력해주세요</p>
               </div>
               <label for="grp_ftp_port" class="w-70px margin-bottom-10">Port</label> <input pInputText type="text" id="grp_ftp_port" formControlName="grp_ftp_port" title="썸네일서버 Port 입력" autocomplete="off" maxlength="6" /><br>
-              <div *ngIf="!groupform.get('grp').get(['grp_ftp_port']).valid && groupform.get('grp').get(['grp_ftp_port']).dirty" class="padding-left-70">
-                <p class="color-red info-txt margin-bottom-10" *ngIf="groupform.get('grp').get(['grp_ftp_port']).errors['required']">필수입력 사항 입니다</p>
-                <p class="color-red info-txt margin-bottom-10" *ngIf="groupform.get('grp').get(['grp_ftp_port']).errors['maxlength']"> 5자 이내로 입력해주세요</p>
+              <div *ngIf="!serviceform.get('grp').get(['grp_ftp_port']).valid && serviceform.get('grp').get(['grp_ftp_port']).dirty" class="padding-left-70">
+                <p class="color-red info-txt margin-bottom-10" *ngIf="serviceform.get('grp').get(['grp_ftp_port']).errors['required']">필수입력 사항 입니다</p>
+                <p class="color-red info-txt margin-bottom-10" *ngIf="serviceform.get('grp').get(['grp_ftp_port']).errors['maxlength']"> 5자 이내로 입력해주세요</p>
               </div>
               <label for="grp_ftp_id" class="w-70px margin-bottom-10">UserId</label> <input pInputText type="text" id="grp_ftp_id" formControlName="grp_ftp_id" title="썸네일서버 UserID 입력" autocomplete="off" maxlength="21" /><br>
-              <div *ngIf="!groupform.get('grp').get(['grp_ftp_id']).valid && groupform.get('grp').get(['grp_ftp_id']).dirty" class="padding-left-70">
-                <p class="color-red info-txt margin-bottom-10" *ngIf="groupform.get('grp').get(['grp_ftp_id']).errors['required']">필수입력 사항 입니다</p>
-                <p class="color-red info-txt margin-bottom-10" *ngIf="groupform.get('grp').get(['grp_ftp_id']).errors['maxlength']"> 20자 이내로 입력해주세요</p>
+              <div *ngIf="!serviceform.get('grp').get(['grp_ftp_id']).valid && serviceform.get('grp').get(['grp_ftp_id']).dirty" class="padding-left-70">
+                <p class="color-red info-txt margin-bottom-10" *ngIf="serviceform.get('grp').get(['grp_ftp_id']).errors['required']">필수입력 사항 입니다</p>
+                <p class="color-red info-txt margin-bottom-10" *ngIf="serviceform.get('grp').get(['grp_ftp_id']).errors['maxlength']"> 20자 이내로 입력해주세요</p>
               </div>
               <label for="grp_ftp_pw" class="w-70px margin-bottom-10">UserPw</label> <input pInputText type="text" id="grp_ftp_pw" formControlName="grp_ftp_pw" title="썸네일서버 UserPW 입력" autocomplete="off" maxlength="21" /><br>
-              <div *ngIf="!groupform.get('grp').get(['grp_ftp_pw']).valid && groupform.get('grp').get(['grp_ftp_pw']).dirty" class="padding-left-70">
-                <p class="color-red info-txt margin-bottom-10" *ngIf="groupform.get('grp').get(['grp_ftp_pw']).errors['required']">필수입력 사항 입니다</p>
-                <p class="color-red info-txt margin-bottom-10" *ngIf="groupform.get('grp').get(['grp_ftp_pw']).errors['maxlength']"> 20자 이내로 입력해주세요</p>
+              <div *ngIf="!serviceform.get('grp').get(['grp_ftp_pw']).valid && serviceform.get('grp').get(['grp_ftp_pw']).dirty" class="padding-left-70">
+                <p class="color-red info-txt margin-bottom-10" *ngIf="serviceform.get('grp').get(['grp_ftp_pw']).errors['required']">필수입력 사항 입니다</p>
+                <p class="color-red info-txt margin-bottom-10" *ngIf="serviceform.get('grp').get(['grp_ftp_pw']).errors['maxlength']"> 20자 이내로 입력해주세요</p>
               </div>
               <label for="grp_ftp_mode" class="w-70px margin-bottom-10">Mode</label> <p-dropdown id="grp_ftp_mode" [options]="server_mode_options" formControlName="grp_ftp_mode"></p-dropdown>
-              <div *ngIf="!groupform.get('grp').get(['grp_ftp_mode']).valid && groupform.get('grp').get(['grp_ftp_mode']).dirty" class="padding-left-70">
-                <p class="color-red info-txt margin-bottom-10" *ngIf="groupform.get('grp').get(['grp_ftp_mode']).errors['required']">필수입력 사항 입니다</p>
+              <div *ngIf="!serviceform.get('grp').get(['grp_ftp_mode']).valid && serviceform.get('grp').get(['grp_ftp_mode']).dirty" class="padding-left-70">
+                <p class="color-red info-txt margin-bottom-10" *ngIf="serviceform.get('grp').get(['grp_ftp_mode']).errors['required']">필수입력 사항 입니다</p>
               </div>
               <p class="color-grey info-txt margin-top-10">* 원본 콘텐츠가 있는 서버 IP </p>
             </div>
@@ -200,8 +200,8 @@
             <div class="thbsv_add_sec">
               <input pInputText type="text" id="grp_ftp_bak_ip" formControlName="grp_ftp_bak_ip" title="썸네일서버 IP 입력" autocomplete="off" maxlength="16" />
               <p class="color-grey info-txt margin-top-10">* 원본 백업 서버 IP </p>
-              <div *ngIf="!groupform.get('grp').get(['grp_ftp_bak_ip']).valid && groupform.get('grp').get(['grp_ftp_bak_ip']).dirty">
-                <p class="color-red info-txt margin-top-10" *ngIf="groupform.get('grp').get(['grp_ftp_bak_ip']).errors['maxlength']"> 15자 이내로 입력해주세요</p>
+              <div *ngIf="!serviceform.get('grp').get(['grp_ftp_bak_ip']).valid && serviceform.get('grp').get(['grp_ftp_bak_ip']).dirty">
+                <p class="color-red info-txt margin-top-10" *ngIf="serviceform.get('grp').get(['grp_ftp_bak_ip']).errors['maxlength']"> 15자 이내로 입력해주세요</p>
               </div>
             </div>
           </td>
@@ -210,8 +210,8 @@
           <th><label for="grp_stream_svr_type">Stream Server 타입 </label> <span class="color-red">*</span></th>
           <td>
             <p-dropdown id="grp_stream_svr_type" [options]="grp_stream_svr_type_options" formControlName="grp_stream_svr_type"></p-dropdown>
-            <div *ngIf="!groupform.get('grp').get(['grp_stream_svr_type']).valid && groupform.get('grp').get(['grp_stream_svr_type']).dirty">
-              <p class="color-red info-txt margin-top-10" *ngIf="groupform.get('grp').get(['grp_stream_svr_type']).errors['required']">필수입력 사항 입니다</p>
+            <div *ngIf="!serviceform.get('grp').get(['grp_stream_svr_type']).valid && serviceform.get('grp').get(['grp_stream_svr_type']).dirty">
+              <p class="color-red info-txt margin-top-10" *ngIf="serviceform.get('grp').get(['grp_stream_svr_type']).errors['required']">필수입력 사항 입니다</p>
             </div>
           </td>
         </tr>
@@ -526,8 +526,8 @@
     </div>
 
     <div class="ui-g-12 ui-g-nopad txt-center">
-      <button pButton type="submit" label="등록" *ngIf="isAddRow" [disabled]="!groupform.valid || !ableGroupName" class="margin-right-10"></button>
-      <button pButton type="submit" label="수정" *ngIf="!isAddRow" [disabled]="!groupform.valid" class="margin-right-10"></button>
+      <button pButton type="submit" label="등록" *ngIf="isAddRow" [disabled]="!serviceform.valid || !ableGroupName" class="margin-right-10"></button>
+      <button pButton type="submit" label="수정" *ngIf="!isAddRow" [disabled]="!serviceform.valid" class="margin-right-10"></button>
       <button pButton type="reset" (click)="goList()" *ngIf="isAddRow" label="취소"></button>
       <button pButton type="reset" (click)="goList()" *ngIf="!isAddRow" label="목록"></button>
     </div>

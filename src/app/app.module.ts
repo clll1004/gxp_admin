@@ -15,7 +15,7 @@ import { ManagerComponent } from "./manager/manager.component";
 import { ListContainerComponent } from "./manager/list-container/list-container.component";
 import { FormContainerComponent } from "./manager/form-container/form-container.component";
 import { CustomerFormComponent } from "./manager/form-container/customerForm/customerForm.component";
-import { GroupFormComponent } from "./manager/form-container/groupForm/groupForm.component";
+import { ServiceFormComponent } from "./manager/form-container/serviceForm/serviceForm.component";
 import { AccountFormComponent } from "./manager/form-container/accountForm/accountForm.component";
 import { TransCodingComponent } from "./transcoding/transcoding.component";
 import { TcListContainerComponent } from "./transcoding/tcListContainer/tcListContainer.component";
@@ -53,7 +53,7 @@ import { LoginService } from './login/login.service';
     ListContainerComponent,
     FormContainerComponent,
     CustomerFormComponent,
-    GroupFormComponent,
+    ServiceFormComponent,
     AccountFormComponent,
     TransCodingComponent,
     TcListContainerComponent,

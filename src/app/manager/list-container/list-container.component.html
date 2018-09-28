@@ -14,7 +14,7 @@
     <button class="btn white-btn" (click)="filterListUseAll()">전체</button>
     <button class="btn white-btn" (click)="filterListUse('Y')">사용</button>
     <button class="btn white-btn" (click)="filterListUse('N')">미사용</button>
-    <a routerLink="/manager/group/add"><button class="btn white-btn" *ngIf="params['listId'] === 'group'">그룹 추가</button></a>
+    <a routerLink="/manager/service/add"><button class="btn white-btn" *ngIf="params['listId'] === 'service'">서비스 추가</button></a>
     <a routerLink="/manager/account/add"><button class="btn white-btn" *ngIf="params['listId'] === 'account'">계정 추가</button></a>
   </div>
 
@@ -57,16 +57,16 @@
     </p-table>
   </div>
 
-  <div *ngIf="params['listId'] === 'group'">
+  <div *ngIf="params['listId'] === 'service'">
     <p-table class="ui-g-12 ui-g-nopad" [value]="filterCustomerLists" [paginator]="true" [rows]="10" [resizableColumns]="true">
       <ng-template pTemplate="colgroup" let-columns>
         <colgroup>
-          <col *ngFor="let col of groupCols" [style.width]="col.width">
+          <col *ngFor="let col of serviceCols" [style.width]="col.width">
         </colgroup>
       </ng-template>
       <ng-template pTemplate="header">
         <tr>
-          <th *ngFor="let col of groupCols" pResizableColumn>
+          <th *ngFor="let col of serviceCols" pResizableColumn>
             {{ col.header }}
           </th>
         </tr>
@@ -74,14 +74,14 @@
       <ng-template pTemplate="body" let-customerList>
         <tr>
           <td>{{ customerList.index }}</td>
-          <td><a routerLink="/manager/group/modify/{{customerList.grp_seq}}">{{ customerList.grp_nm }}</a></td>
+          <td><a routerLink="/manager/service/modify/{{customerList.grp_seq}}">{{ customerList.grp_nm }}</a></td>
           <td>{{ customerList.cus_nm_ko }}</td>
           <td>{{ customerList.grp_basic_yn }}</td>
           <td>{{ customerList.grp_use_yn }}</td>
           <td>{{ customerList.grp_reg_dtm }}</td>
           <td>{{ customerList.grp_upd_dtm }}</td>
           <td>
-            <a routerLink="/manager/group/modify/{{customerList.grp_seq}}"><button class="btn white-btn" label="수정">수정</button></a>
+            <a routerLink="/manager/service/modify/{{customerList.grp_seq}}"><button class="btn white-btn" label="수정">수정</button></a>
             <button class="btn grey-btn" label="INI파일 조회">INI파일 조회</button>
           </td>
         </tr>

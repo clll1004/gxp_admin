@@ -1,19 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { Validators, FormControl, FormGroup, FormBuilder, FormArray } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { GroupService } from '../../../services/apis/adm/group/group.service';
+import { ServiceService } from '../../../services/apis/adm/service/service.service';
 import { AdminApis } from '../../../services/apis/apis';
 
 @Component({
-  selector: 'groupForm',
-  templateUrl: './groupForm.component.html',
+  selector: 'serviceForm',
+  templateUrl: './serviceForm.component.html',
   styleUrls: ['../form-container.component.scss'],
-  providers: [GroupService, AdminApis]})
+  providers: [ServiceService, AdminApis]})
 
-export class GroupFormComponent implements OnInit {
+export class ServiceFormComponent implements OnInit {
   params: Params;
 
-  public groupform: FormGroup;
+  public serviceform: FormGroup;
   public customerList: any[]= [ ];
   public customerName: string;
   public submitted: boolean;
@@ -55,7 +55,7 @@ export class GroupFormComponent implements OnInit {
   constructor(private formBuilder: FormBuilder,
               private router: Router,
               private activatedRoute: ActivatedRoute,
-              private groupService: GroupService,
+              private serviceService: ServiceService,
               private adminApi: AdminApis) {
     this.activatedRoute.params.subscribe( (params) => {
       this.params = params;
@@ -69,7 +69,7 @@ export class GroupFormComponent implements OnInit {
       this.load();
     });
 
-    this.groupform = this.formBuilder.group({
+    this.serviceform = this.formBuilder.group({
       grp: this.formBuilder.group({
         /*트랜스코딩 정보*/
         'grp_seq': new FormControl(null),
@@ -175,7 +175,7 @@ export class GroupFormComponent implements OnInit {
           })
         }
       });
-      this.groupService.postGroup(valueObject)
+      this.serviceService.postService(valueObject)
         .toPromise()
         .then(() => {
           this.isShowMessage = true;
@@ -206,7 +206,7 @@ export class GroupFormComponent implements OnInit {
         }
       });
       delete valueObject['grp'].grp_cus_seq;
-      this.groupService.updateGroup(valueObject)
+      this.serviceService.updateService(valueObject)
         .toPromise()
         .then(() => {
           this.isShowMessage = true;
@@ -218,20 +218,20 @@ export class GroupFormComponent implements OnInit {
   }
 
   goList() {
-    this.router.navigate(['/manager', 'group']);
+    this.router.navigate(['/manager', 'service']);
   }
 
   load() {
     if(this.isAddRow) {
       this.loadCustomerList();
     } else {
-      this.loadGroupList();
+      this.loadServiceList();
     }
   }
 
   loadCustomerList() {
     let list;
-    this.groupService.getLists(this.adminApi.loadCustomerNames)
+    this.serviceService.getLists(this.adminApi.loadCustomerNames)
       .toPromise()
       .then((params)=>{
         list = JSON.parse(params._body);
@@ -243,39 +243,39 @@ export class GroupFormComponent implements OnInit {
     });
   }
 
-  loadGroupList() {
-    this.groupService.getLists(this.adminApi.loadGroup + this.params.index)
+  loadServiceList() {
+    this.serviceService.getLists(this.adminApi.loadService + this.params.index)
       .toPromise()
       .then((data) => {
         const getData = JSON.parse((<any>data)._body);
 
-        /*load groupform grp*/
+        /*load serviceform grp*/
         this.customerName = getData.grp['cus_nm_ko'];
-        this.groupform.get('grp').get('grp_nm').setValue(getData.grp['grp_nm']);
-        this.groupform.get('grp').get('grp_seq').setValue(getData.grp['grp_seq']);
-        this.groupform.get('grp').get('grp_tcd_desc').setValue(getData.grp['grp_tcd_desc']);
-        this.groupform.get('grp').get('grp_basic_yn').setValue(getData.grp['grp_basic_yn']);
-        this.groupform.get('grp').get('grp_use_yn').setValue(getData.grp['grp_use_yn']);
-        this.groupform.get('grp').get('grp_svc_domain').setValue(getData.grp['grp_svc_domain']);
-        this.groupform.get('grp').get('grp_svc_sub_url').setValue(getData.grp['grp_svc_sub_url']);
-        this.groupform.get('grp').get('grp_callback_url').setValue(getData.grp['grp_callback_url']);
-        this.groupform.get('grp').get('grp_smil_use_yn').setValue(getData.grp['grp_smil_use_yn']);
-        this.groupform.get('grp').get('grp_autoresol_use_yn').setValue(getData.grp['grp_autoresol_use_yn']);
-        this.groupform.get('grp').get('grp_file_suffix_use').setValue(getData.grp['grp_file_suffix_use']);
-        this.groupform.get('grp').get('grp_thm_make_yn').setValue(getData.grp['grp_thm_make_yn']);
-        this.groupform.get('grp').get('grp_thm_domain').setValue(getData.grp['grp_thm_domain']);
-        this.groupform.get('grp').get('grp_thm_interval').setValue(getData.grp['grp_thm_interval']);
-        this.groupform.get('grp').get('grp_security_type').setValue(getData.grp['grp_security_type']);
-        this.groupform.get('grp').get('grp_ftp_ip').setValue(getData.grp['grp_ftp_ip']);
-        this.groupform.get('grp').get('grp_ftp_port').setValue(getData.grp['grp_ftp_port']);
-        this.groupform.get('grp').get('grp_ftp_id').setValue(getData.grp['grp_ftp_id']);
-        this.groupform.get('grp').get('grp_ftp_pw').setValue(getData.grp['grp_ftp_pw']);
-        this.groupform.get('grp').get('grp_ftp_mode').setValue(getData.grp['grp_ftp_mode']);
-        this.groupform.get('grp').get('grp_ftp_bak_ip').setValue(getData.grp['grp_ftp_bak_ip']);
-        this.groupform.get('grp').get('grp_stream_svr_type').setValue(getData.grp['grp_stream_svr_type']);
-        /*load groupform thm*/
+        this.serviceform.get('grp').get('grp_nm').setValue(getData.grp['grp_nm']);
+        this.serviceform.get('grp').get('grp_seq').setValue(getData.grp['grp_seq']);
+        this.serviceform.get('grp').get('grp_tcd_desc').setValue(getData.grp['grp_tcd_desc']);
+        this.serviceform.get('grp').get('grp_basic_yn').setValue(getData.grp['grp_basic_yn']);
+        this.serviceform.get('grp').get('grp_use_yn').setValue(getData.grp['grp_use_yn']);
+        this.serviceform.get('grp').get('grp_svc_domain').setValue(getData.grp['grp_svc_domain']);
+        this.serviceform.get('grp').get('grp_svc_sub_url').setValue(getData.grp['grp_svc_sub_url']);
+        this.serviceform.get('grp').get('grp_callback_url').setValue(getData.grp['grp_callback_url']);
+        this.serviceform.get('grp').get('grp_smil_use_yn').setValue(getData.grp['grp_smil_use_yn']);
+        this.serviceform.get('grp').get('grp_autoresol_use_yn').setValue(getData.grp['grp_autoresol_use_yn']);
+        this.serviceform.get('grp').get('grp_file_suffix_use').setValue(getData.grp['grp_file_suffix_use']);
+        this.serviceform.get('grp').get('grp_thm_make_yn').setValue(getData.grp['grp_thm_make_yn']);
+        this.serviceform.get('grp').get('grp_thm_domain').setValue(getData.grp['grp_thm_domain']);
+        this.serviceform.get('grp').get('grp_thm_interval').setValue(getData.grp['grp_thm_interval']);
+        this.serviceform.get('grp').get('grp_security_type').setValue(getData.grp['grp_security_type']);
+        this.serviceform.get('grp').get('grp_ftp_ip').setValue(getData.grp['grp_ftp_ip']);
+        this.serviceform.get('grp').get('grp_ftp_port').setValue(getData.grp['grp_ftp_port']);
+        this.serviceform.get('grp').get('grp_ftp_id').setValue(getData.grp['grp_ftp_id']);
+        this.serviceform.get('grp').get('grp_ftp_pw').setValue(getData.grp['grp_ftp_pw']);
+        this.serviceform.get('grp').get('grp_ftp_mode').setValue(getData.grp['grp_ftp_mode']);
+        this.serviceform.get('grp').get('grp_ftp_bak_ip').setValue(getData.grp['grp_ftp_bak_ip']);
+        this.serviceform.get('grp').get('grp_stream_svr_type').setValue(getData.grp['grp_stream_svr_type']);
+        /*load serviceform thm*/
         getData.thm.forEach((item) => {
-          (<FormArray>this.groupform.get('thm')).push(
+          (<FormArray>this.serviceform.get('thm')).push(
             this.formBuilder.group({
               'gts_seq': new FormControl(item.gts_seq),
               'gts_ftp_ip': new FormControl(item.gts_ftp_ip, Validators.compose([Validators.required, Validators.maxLength(15)])),
@@ -286,8 +286,8 @@ export class GroupFormComponent implements OnInit {
             })
           )
         });
-        (<FormArray>this.groupform.get('thm')).removeAt(0);
-        /*load groupform tcd*/
+        (<FormArray>this.serviceform.get('thm')).removeAt(0);
+        /*load serviceform tcd*/
         getData.tcd.forEach((tcdItem) => {
           const optFormBuilderItem = this.formBuilder.group({
             /*트랜스코딩 변환옵션*/
@@ -347,17 +347,17 @@ export class GroupFormComponent implements OnInit {
             svc: svcFormBuilderItem
           });
 
-          (<FormArray>this.groupform.get('tcd')).push(item);
+          (<FormArray>this.serviceform.get('tcd')).push(item);
         });
-        (<FormArray>this.groupform.get('tcd')).removeAt(0);
+        (<FormArray>this.serviceform.get('tcd')).removeAt(0);
       });
   }
 
   /*중복확인 - 그룹명*/
   confirmGroupName() {
     this.showGroupDupMsg = true;
-    const inputname:string = this.groupform.get('grp').value['grp_nm'];
-    this.groupService.getLists(this.adminApi.checkDupGroupName + inputname)
+    const inputname:string = this.serviceform.get('grp').value['grp_nm'];
+    this.serviceService.getLists(this.adminApi.checkDupGroupName + inputname)
       .toPromise()
       .then((cont) => {
         this.ableGroupName = cont._body === 'true';
@@ -366,7 +366,7 @@ export class GroupFormComponent implements OnInit {
 
   /*썸네일서버 - 추가, 삭제*/
   addThumbnailServer() {
-    (<FormArray>this.groupform.get('thm')).push(
+    (<FormArray>this.serviceform.get('thm')).push(
       this.formBuilder.group({
         'gts_ftp_ip': new FormControl(null, Validators.compose([Validators.required, Validators.maxLength(15)])),
         'gts_ftp_port': new FormControl(null, Validators.compose([Validators.required, Validators.maxLength(5)])),
@@ -378,13 +378,13 @@ export class GroupFormComponent implements OnInit {
   }
 
   removeThumbnailServer(index) {
-    const thmList = <FormArray>this.groupform.get('thm');
+    const thmList = <FormArray>this.serviceform.get('thm');
     thmList.removeAt(index);
   }
 
   /*트랜스코딩 변환옵션 - 추가, 삭제*/
   addTranscodingOption() {
-    (<FormArray>this.groupform.get('tcd')).push(
+    (<FormArray>this.serviceform.get('tcd')).push(
       this.formBuilder.group({
         opt: this.formBuilder.group({
           /*트랜스코딩 변환옵션*/
@@ -426,7 +426,7 @@ export class GroupFormComponent implements OnInit {
     );
   }
   removeTranscodingOption(index) {
-    const tcdList = <FormArray>this.groupform.get('tcd');
+    const tcdList = <FormArray>this.serviceform.get('tcd');
     tcdList.removeAt(index);
   }
   /*서비스서버 - 추가, 삭제*/
@@ -442,13 +442,13 @@ export class GroupFormComponent implements OnInit {
     );
   }
   removeServiceServer(tcdIndex, svcIndex) {
-    const svcList = <FormArray>this.groupform.get('tcd').get([tcdIndex]).get('svc');
+    const svcList = <FormArray>this.serviceform.get('tcd').get([tcdIndex]).get('svc');
     svcList.removeAt(svcIndex);
   }
 
-  get thmData() { return <FormArray>this.groupform.get('thm'); }
+  get thmData() { return <FormArray>this.serviceform.get('thm'); }
 
-  get tcdData() { return <FormArray>this.groupform.get('tcd'); }
+  get tcdData() { return <FormArray>this.serviceform.get('tcd'); }
 
   changeStaticEncodeStatus(item) {
     item.get('opt').get('gto_static_use').value === 'X' ? item.get('opt').get('gto_static_encode').enable() : item.get('opt').get('gto_static_encode').disable();
