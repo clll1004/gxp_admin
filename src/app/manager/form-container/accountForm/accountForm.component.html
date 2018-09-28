@@ -14,6 +14,10 @@
           <td>{{ accountform.value['cus_nm_ko'] }}</td>
         </tr>
         <tr *ngIf="!isAddRow">
+          <th>서비스명</th>
+          <td>&nbsp;</td>
+        </tr>
+        <tr *ngIf="!isAddRow">
           <th>아이디</th>
           <td>{{ accountform.value['usr_id'] }}</td>
         </tr>
@@ -27,7 +31,7 @@
           </td>
         </tr>
         <tr *ngIf="isAddRow">
-          <th><label for="grp_seq">그룹선택</label> <span class="color-red">*</span></th>
+          <th><label for="grp_seq">서비스선택</label> <span class="color-red">*</span></th>
           <td>
             <p-dropdown id="grp_seq" [options]="grp_seq_options" formControlName="usr_grp_seq" placeholder="선택하세요"></p-dropdown>
             <div *ngIf="!accountform.controls['usr_grp_seq'].valid && accountform.controls['usr_grp_seq'].dirty">

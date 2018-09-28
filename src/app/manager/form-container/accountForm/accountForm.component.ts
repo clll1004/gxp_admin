@@ -131,6 +131,7 @@ export class AccountFormComponent implements OnInit {
   }
 
   loadGroupList() {
+    this.grp_seq_options = [];
     this.userService.getLists(this.adminApis.loadGroupNames + this.accountform.controls['usr_cus_seq'].value)
       .toPromise()
       .then((params) => {
