@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Validators,FormControl,FormGroup,FormBuilder,FormArray } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
+import { Location } from '@angular/common';
 import { CustomerService } from '../../../services/apis/adm/customer/customer.service';
 import { AdminApis } from '../../../services/apis/apis';
 
@@ -51,6 +52,7 @@ export class CustomerFormComponent implements OnInit {
   ];
 
   constructor(private formBuilder: FormBuilder,
+                private location: Location,
                 private router: Router,
                 private activatedRoute: ActivatedRoute,
                 private customerService: CustomerService,
@@ -220,7 +222,7 @@ export class CustomerFormComponent implements OnInit {
   }
 
   goList() {
-    this.router.navigate(['/manager', 'customer']);
+    this.location.back();
   }
 
   /*중복확인 - 고객명(영문), 그룹명*/

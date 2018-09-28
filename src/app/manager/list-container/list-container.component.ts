@@ -47,6 +47,16 @@ export class ListContainerComponent implements OnInit {
     { field: 'usr_upd_dtm', header: '수정일', width: '17%' },
     { field: '', header: '관리', width: '10%' }
   ];
+  public authkeyCols: any[] = [
+    { field: 'cus_seq', header: 'No.', width: '5%' },
+    { field: 'cus_nm_ko', header: '고객명(한글)', width: '12%' },
+    { field: 'authkey', header: '인증키', width: '20%' },
+    { field: 'url', header: 'URL', width: '20%' },
+    { field: 'issue_dtm', header: '발급일', width: '10%' },
+    { field: 'expiration_dtm', header: '만료일', width: '10%' },
+    { field: 'cus_use_yn', header: '사용여부', width: '10%' },
+    { field: 'cus_upd_dtm', header: '최종 수정일시', width: '15%' },
+  ];
 
   /*total row/page info*/
   public totalCustomerList: number = 0;
@@ -70,7 +80,31 @@ export class ListContainerComponent implements OnInit {
       } else if (urlItem[1]['path'] == 'account') {
         this.pathName = 'CMS 계정관리';
         url = this.adminApi.loadUserList;
+      } else if (urlItem[1]['path'] == 'authkey') {
+        this.pathName = 'API 인증키관리';
+        this.filterCustomerLists = [];
+        this.filterCustomerLists.push({
+          cus_nm_ko: 'GXP고객',
+          authkey: 'AB12-C3D4-56EF-G7H8',
+          url: 'WWW.GOMCORP.COM',
+          issue_dtm: '2018-05-30',
+          expiration_dtm: '2019-05-29',
+          cus_use_yn: 'Y',
+          cus_upd_dtm: '2018-05-30 05:30:22',
+        });
+        this.filterCustomerLists.push({
+          cus_nm_ko: '고객2',
+          authkey: 'AB12-C3D4-56EF-G7H8',
+          url: 'WWW.GOMCORP.COM',
+          issue_dtm: '2018-05-30',
+          expiration_dtm: '2019-05-29',
+          cus_use_yn: 'Y',
+          cus_upd_dtm: '2018-05-30 05:30:22',
+        });
+        this.setTableIndex();
+        return 0;
       }
+
       this.http.get(url)
         .toPromise()
         .then((cont) => {

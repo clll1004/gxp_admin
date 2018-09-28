@@ -446,3 +446,18 @@ select, input[type="text"], input[type="password"], input[type="checkbox"], text
   box-sizing: border-box; font-size: 13px; color: #888;
   .path {color: #00a8ff;}
 }
+
+
+
+td {
+  padding: 10px !important;
+  font-size: 14px;
+  color: #666;
+  word-break: break-all;
+
+
+  &.emptyMessage {
+    padding: 30px !important;
+    text-align: center;
+  }
+}

@@ -63,10 +63,8 @@ export class AdminApis {
 
   constructor() {
     if (process.env.NODE_ENV === 'development') {
-      console.log(process.env.NODE_ENV);
       this.domain = 'http://183.110.11.49/';
     } else if (process.env.NODE_ENV === 'production') {
-      console.log(process.env.NODE_ENV);
       this.domain = 'http://183.110.11.49/';
     }
 
