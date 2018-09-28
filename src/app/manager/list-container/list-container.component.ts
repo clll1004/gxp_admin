@@ -57,6 +57,9 @@ export class ListContainerComponent implements OnInit {
   ngOnInit() {
     this.activatedRoute.url.subscribe((urlItem) => {
       this.customerLists = [];
+      this.totalCustomerList = 0;
+      this.searchKey = '';
+
       let url: string = '';
       if(urlItem[1]['path'] == 'customer') {
         this.pathName = '고객관리';
