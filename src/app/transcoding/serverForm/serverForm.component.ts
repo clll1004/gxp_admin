@@ -15,6 +15,7 @@ import { AdminApis } from '../../services/apis/apis';
 
 export class ServerFormComponent implements OnInit {
   @Input() params: object;
+  @Input() pathName: string;
 
   public serverform: FormGroup;
   public submitted: boolean;

@@ -23,14 +23,14 @@ export class TransCodingComponent implements OnInit {
     'fail': '변환 실패 모니터링',
     'temp-delete': '임시 삭제 목록'
   };
-  public pageName: string = '';
+  public pathName: string = '';
 
   constructor(private activatedRoute: ActivatedRoute) {
   }
   ngOnInit() {
     this.activatedRoute.params.subscribe( (params) => {
       this.params = params;
-      this.pageName = this.pagePath[this.params.id];
+      this.pathName = this.pagePath[this.params.id];
     });
 
     this.activatedRoute.url.subscribe((urlItem) => {

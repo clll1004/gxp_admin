@@ -101,6 +101,7 @@ export class ListContainerComponent implements OnInit {
           cus_use_yn: 'Y',
           cus_upd_dtm: '2018-05-30 05:30:22',
         });
+        this.totalCustomerList = this.filterCustomerLists.length;
         this.setTableIndex();
         return 0;
       }

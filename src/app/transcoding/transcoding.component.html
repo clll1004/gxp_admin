@@ -13,10 +13,6 @@
   </nav>
 </div>
 <div class="ui-g-10 ui-g-nopad content-sec">
-  <div class="ui-g-12 ui-g-nopad page-title-sec margin-bottom-40">
-    TRANSCODING / <span class="path"> {{ pageName }} </span>
-  </div>
-
-  <tcListContainer [params]="params" *ngIf="isShow"></tcListContainer>
-  <serverForm [params]="params" *ngIf="!isShow"></serverForm>
+  <tcListContainer [params]="params" [pathName]="pathName" *ngIf="isShow"></tcListContainer>
+  <serverForm [params]="params" [pathName]="pathName" *ngIf="!isShow"></serverForm>
 </div>

@@ -15,6 +15,7 @@ import { ConfirmationService } from 'primeng/components/common/api';
 
 export class TcListContainerComponent implements OnInit {
   @Input() params: object;
+  @Input() pathName: string;
   public url: string = '';
 
   /*for dropdown*/
