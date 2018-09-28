@@ -30,15 +30,6 @@ export class ManagerComponent {
   constructor(private activatedRoute: ActivatedRoute) {
     this.activatedRoute.params.subscribe( (params) => {
       this.params = params;
-      const pathNames = this.pathNames[this.params.listId];
-      
-      // 경로
-      this.pathName = pathNames.list;
-      if(this.params.subId == 'add') {
-        this.pathName =pathNames.add;
-      } else if(this.params.subId == 'modify') {
-        this.pathName = pathNames.modify;
-      }
     });
 
     this.activatedRoute.url.subscribe((urlItem) => {

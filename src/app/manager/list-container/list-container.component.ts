@@ -11,7 +11,8 @@ import { AdminApis } from '../../services/apis/apis';
 
 export class ListContainerComponent implements OnInit {
   @Input() params: object;
-  @Input() pathName: string = '';
+
+  public pathName:string = '';
 
   public customerLists: any[] = [];
   public filterCustomerLists: any[] = [];
@@ -58,10 +59,13 @@ export class ListContainerComponent implements OnInit {
       this.customerLists = [];
       let url: string = '';
       if(urlItem[1]['path'] == 'customer') {
+        this.pathName = '고객관리';
         url = this.adminApi.loadCustomerList;
       } else if (urlItem[1]['path'] == 'group') {
+        this.pathName = '서비스관리';
         url = this.adminApi.loadGroupList;
       } else if (urlItem[1]['path'] == 'account') {
+        this.pathName = 'CMS 계정관리';
         url = this.adminApi.loadUserList;
       }
       this.http.get(url)

@@ -11,11 +11,11 @@ const routes: Routes = [
   { path: 'manager', component: ManagerComponent },
   { path: 'manager/:listId', component: ManagerComponent },
   { path: 'manager/:listId/:subId', component: ManagerComponent },
-  { path: 'manager/:listId/:modify/:index', component: ManagerComponent },
+  { path: 'manager/:listId/:subId/:index', component: ManagerComponent },
   { path: 'transcoding', component: TransCodingComponent },
   { path: 'transcoding/:id', component: TransCodingComponent },
   { path: 'transcoding/:id/:subId', component: TransCodingComponent },
-  { path: 'transcoding/:id/:modify/:index', component: TransCodingComponent }
+  { path: 'transcoding/:id/:subId/:index', component: TransCodingComponent }
 ];
 @NgModule({
   imports: [ RouterModule.forRoot(routes) ],

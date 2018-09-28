@@ -9,6 +9,6 @@
   </nav>
 </div>
 <div class="ui-g-10 ui-g-nopad content-sec">
-  <list-container [params]="params" [pathName]="pathName" *ngIf="isShow"></list-container>
-  <form-container [params]="params" [pathName]="pathName" *ngIf="!isShow"></form-container>
+  <list-container [params]="params" *ngIf="isShow"></list-container>
+  <form-container [params]="params" *ngIf="!isShow"></form-container>
 </div>
