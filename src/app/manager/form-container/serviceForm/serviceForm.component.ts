@@ -510,9 +510,22 @@ export class ServiceFormComponent implements OnInit {
     document.getElementById('bookmark_label').setAttribute('class', label_value);
     document.getElementById('loopPortion_label').setAttribute('class', label_value);
     document.getElementById('playbackRate_label').setAttribute('class', label_value);
+    document.getElementById('setting_label').setAttribute('class', 'on');
+    document.getElementById('nextVideo_label').setAttribute('class', 'on');
+    document.getElementById('nextVideo_label').setAttribute('class', 'on');
+    document.getElementById('fullscreen_label').setAttribute('class', 'on');
+    document.getElementById('cinemaMode_label').setAttribute('class', 'on');
+    document.getElementById('quality_label').setAttribute('class', 'on');
+    document.getElementById('subtitle_label').setAttribute('class', 'on');
     preset.get('bookmark').setValue(form_value);
     preset.get('loopPortion').setValue(form_value);
     preset.get('playbackRate').setValue(form_value);
+    preset.get('setting').setValue(true);
+    preset.get('nextVideo').setValue(true);
+    preset.get('fullscreen').setValue(true);
+    preset.get('cinemaMode').setValue(true);
+    preset.get('quality').setValue(true);
+    preset.get('subtitle').setValue(true);
   }
 
   setPlayerPreset(e) {
