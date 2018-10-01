@@ -19,6 +19,7 @@ export class ServiceFormComponent implements OnInit {
   public submitted: boolean;
   public isShowMessage: boolean = false;
 
+  public isSetAuthKey: boolean = false;
   public yearRange: string = `${new Date().getFullYear()}:${new Date().getFullYear() + 10}`;
   public localeObject: object = {
     firstDayOfWeek: 0,
@@ -86,6 +87,18 @@ export class ServiceFormComponent implements OnInit {
         'url': new FormControl(null),
         'issue_dtm': new FormControl(new Date()),
         'expiration_dtm': new FormControl(new Date()),
+      }),
+      preset: this.formBuilder.group({
+        'service_type': new FormControl('LMS'),
+        'bookmark': new FormControl(true),
+        'setting': new FormControl(true),
+        'nextVideo': new FormControl(true),
+        'playbackRate': new FormControl(true),
+        'loopPortion': new FormControl(true),
+        'fullscreen': new FormControl(true),
+        'cinemaMode': new FormControl(true),
+        'quality': new FormControl(true),
+        'subtitle': new FormControl(true),
       }),
       grp: this.formBuilder.group({
         /*트랜스코딩 정보*/
@@ -473,6 +486,33 @@ export class ServiceFormComponent implements OnInit {
 
   changeDrmEncodeStatus(item) {
     item.get('opt').get('gto_drm').value === 'X' ? item.get('opt').get('gto_drm_encode').enable() : item.get('opt').get('gto_drm_encode').disable();
+  }
+
+  setAuthkey() {
+    this.isSetAuthKey = true;
+    this.serviceform.get('authkey').get('authkey_nm').setValue('AB12 -C3D4 C3D4C3D4-56EF -G7H8G7H8');
+    const btn = document.getElementById('authkey_btn');
+    btn.style.background = '#ddd';
+    btn.style.cursor = 'default';
+  }
+
+  changePreset() {
+    const preset = this.serviceform.get('preset');
+    let label_value = '';
+    let form_value = true;
+    if (preset.get('service_type').value === 'normal') {
+      label_value = '';
+      form_value = false;
+    } else {
+      label_value = 'on';
+      form_value = true;
+    }
+    document.getElementById('bookmark_label').setAttribute('class', label_value);
+    document.getElementById('loopPortion_label').setAttribute('class', label_value);
+    document.getElementById('playbackRate_label').setAttribute('class', label_value);
+    preset.get('bookmark').setValue(form_value);
+    preset.get('loopPortion').setValue(form_value);
+    preset.get('playbackRate').setValue(form_value);
   }
 
   setPlayerPreset(e) {

@@ -12,14 +12,14 @@
         <tr>
           <th><label for="authkey_nm">인증키</label></th>
           <td>
-            <input pInputText type="text" class="margin-right-10" formControlName="authkey_nm" id="authkey_nm" title="인증키 입력" autocomplete="off" maxlength="31" />
-            <button type="button" class="btn white-btn square-btn">인증키 발급</button>
+            <input pInputText type="text" class="margin-right-10" formControlName="authkey_nm" id="authkey_nm" title="인증키 입력" autocomplete="off" maxlength="31" disabled style="color: #000;" />
+            <button type="button" class="btn white-btn square-btn" [disabled]="isSetAuthKey" id="authkey_btn" (click)="setAuthkey()">인증키 발급</button>
           </td>
         </tr>
         <tr>
           <th><label for="url">URL</label></th>
           <td>
-            <input pInputText type="text" class="margin-right-10" formControlName="url" id="url" title="URL 입력" autocomplete="off" maxlength="31" />
+            <input pInputText type="text" class="margin-right-10" formControlName="url" id="url" title="URL 입력" autocomplete="off" maxlength="50" />
           </td>
         </tr>
         <tr>
@@ -36,7 +36,7 @@
         </tr>
       </table>
     </div>
-    <div class="ui-g-12 ui-g-nopad margin-bottom-40 form-container">
+    <div class="ui-g-12 ui-g-nopad margin-bottom-40 form-container" formGroupName="preset">
       <h3 class="form-title">플레이어 프리셋 설정 <span class="info-txt" style="float: right; font-weight: normal;">클릭하여 삭제/추가 하실 수 있습니다.</span></h3>
       <table class="form-list">
         <caption>기플레이어 프리셋 설정 테이블</caption>
@@ -47,43 +47,43 @@
         <tr>
           <th>서비스 타입</th>
           <td>
-            <p-radioButton name="service_type" value="normal" label="일반" class="margin-right-30"></p-radioButton>
-            <p-radioButton name="service_type" value="LMS" label="LMS"></p-radioButton>
+            <p-radioButton formControlName="service_type" name="service_type" value="normal" label="일반" class="margin-right-30" (click)="changePreset()"></p-radioButton>
+            <p-radioButton formControlName="service_type" name="service_type" value="LMS" label="LMS" (click)="changePreset()"></p-radioButton>
           </td>
         </tr>
         <tr>
-          <td colspan="2">
+          <td colspan="2" class="txt-center padding-bottom-30 padding-top-30">
             <div class="preset-button-area">
-              <label class="on" for="bookmark" (click)="setPlayerPreset($event)">북마크</label>
-              <label class="on" for="setting" (click)="setPlayerPreset($event)">설정버튼</label>
-              <label class="on" for="nextVideo" (click)="setPlayerPreset($event)">다음 영상</label>
-              <label class="on" for="playbackRate" (click)="setPlayerPreset($event)">배속버튼</label>
-              <label class="on" for="loopPortion" (click)="setPlayerPreset($event)">구간반복</label>
-              <label class="on" for="fullscreen" (click)="setPlayerPreset($event)">전체화면</label>
-              <label class="on" for="cinemaMode" (click)="setPlayerPreset($event)">영화관화면</label>
-              <label class="on" for="quality" (click)="setPlayerPreset($event)">화질선택</label>
-              <label class="on" for="subtitle" (click)="setPlayerPreset($event)">자막기능</label>
+              <label class="on" id="bookmark_label" for="bookmark" (click)="setPlayerPreset($event)">북마크</label>
+              <label class="on" id="setting_label" for="setting" (click)="setPlayerPreset($event)">설정버튼</label>
+              <label class="on" id="nextVideo_label" for="nextVideo" (click)="setPlayerPreset($event)">다음 영상</label>
+              <label class="on" id="playbackRate_label" for="playbackRate" (click)="setPlayerPreset($event)">배속버튼</label>
+              <label class="on" id="loopPortion_label" for="loopPortion" (click)="setPlayerPreset($event)">구간반복</label>
+              <label class="on" id="fullscreen_label" for="fullscreen" (click)="setPlayerPreset($event)">전체화면</label>
+              <label class="on" id="cinemaMode_label" for="cinemaMode" (click)="setPlayerPreset($event)">영화관화면</label>
+              <label class="on" id="quality_label" for="quality" (click)="setPlayerPreset($event)">화질선택</label>
+              <label class="on" id="subtitle_label" for="subtitle" (click)="setPlayerPreset($event)">자막기능</label>
             </div>
             <div class="player-view-area">
               <img src="../../../../assets/images/player-section.png" alt="default player view" id="defaultImg">
               <div class="overlay-area">
-                <input type="checkbox" class="presetCheckbox" id="bookmark" checked>
+                <input formControlName="bookmark" type="checkbox" class="presetCheckbox" id="bookmark" checked>
                 <img src="../../../../assets/images/bookmark.png" alt="북마크" id="bookmarkImg">
-                <input type="checkbox" class="presetCheckbox" id="setting" checked>
+                <input formControlName="setting" type="checkbox" class="presetCheckbox" id="setting" checked>
                 <img src="../../../../assets/images/setting.png" alt="설정버튼" id="settingImg">
-                <input type="checkbox" class="presetCheckbox" id="nextVideo" checked>
+                <input formControlName="nextVideo" type="checkbox" class="presetCheckbox" id="nextVideo" checked>
                 <img src="../../../../assets/images/nextVideo.png" alt="다음 영상" value="Y" id="nextVideoImg">
-                <input type="checkbox" class="presetCheckbox" id="playbackRate" checked>
+                <input formControlName="playbackRate" type="checkbox" class="presetCheckbox" id="playbackRate" checked>
                 <img src="../../../../assets/images/playbackRate.png" alt="배속버튼" id="playbackRateImg">
-                <input type="checkbox" class="presetCheckbox" id="loopPortion" checked>
+                <input formControlName="loopPortion" type="checkbox" class="presetCheckbox" id="loopPortion" checked>
                 <img src="../../../../assets/images/loopPortion.png" alt="구간반복" id="loopPortionImg">
-                <input type="checkbox" class="presetCheckbox" id="fullscreen" checked>
+                <input formControlName="fullscreen" type="checkbox" class="presetCheckbox" id="fullscreen" checked>
                 <img src="../../../../assets/images/fullscreen.png" alt="전체화면" id="fullscreenImg">
-                <input type="checkbox" class="presetCheckbox" id="cinemaMode" checked>
+                <input formControlName="cinemaMode" type="checkbox" class="presetCheckbox" id="cinemaMode" checked>
                 <img src="../../../../assets/images/cinemaMode.png" alt="영화관화면" id="cinemaModeImg">
-                <input type="checkbox" class="presetCheckbox" id="quality" checked>
+                <input formControlName="quality" type="checkbox" class="presetCheckbox" id="quality" checked>
                 <img src="../../../../assets/images/quality.png" alt="화질선택" id="qualityImg">
-                <input type="checkbox" class="presetCheckbox" id="subtitle" checked>
+                <input formControlName="subtitle" type="checkbox" class="presetCheckbox" id="subtitle" checked>
               </div>
             </div>
           </td>

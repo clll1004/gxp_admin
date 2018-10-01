@@ -32,7 +32,7 @@ export class ListContainerComponent implements OnInit {
     { field: 'grp_seq', header: 'No.', width: '5%' },
     { field: 'grp_nm', header: '서비스명', width: '25%' },
     { field: 'cus_nm_ko', header: '고객명(한글)', width: '15%' },
-    { field: 'grp_basic_yn', header: '기본서비스 사용여부', width: '10%' },
+    { field: 'grp_basic_yn', header: '기본서비스\n사용여부', width: '10%' },
     { field: 'grp_use_yn', header: '사용여부', width: '10%' },
     { field: 'grp_reg_dtm', header: '등록일', width: '8%' },
     { field: 'grp_upd_dtm', header: '수정일', width: '8%' },
@@ -50,6 +50,7 @@ export class ListContainerComponent implements OnInit {
   public authkeyCols: any[] = [
     { field: 'cus_seq', header: 'No.', width: '5%' },
     { field: 'cus_nm_ko', header: '고객명(한글)', width: '12%' },
+    { field: 'grp_nm', header: '서비스명', width: '12%' },
     { field: 'authkey', header: '인증키', width: '20%' },
     { field: 'url', header: 'URL', width: '20%' },
     { field: 'issue_dtm', header: '발급일', width: '10%' },
@@ -85,6 +86,7 @@ export class ListContainerComponent implements OnInit {
         this.filterCustomerLists = [];
         this.filterCustomerLists.push({
           cus_nm_ko: 'GXP고객',
+          grp_nm: 'GXP',
           authkey: 'AB12-C3D4-56EF-G7H8',
           url: 'WWW.GOMCORP.COM',
           issue_dtm: '2018-05-30',
@@ -94,6 +96,7 @@ export class ListContainerComponent implements OnInit {
         });
         this.filterCustomerLists.push({
           cus_nm_ko: '고객2',
+          grp_nm: 'GXP',
           authkey: 'AB12-C3D4-56EF-G7H8',
           url: 'WWW.GOMCORP.COM',
           issue_dtm: '2018-05-30',
