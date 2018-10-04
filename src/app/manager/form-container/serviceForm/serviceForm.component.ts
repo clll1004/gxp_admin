@@ -106,6 +106,7 @@ export class ServiceFormComponent implements OnInit {
         /*트랜스코딩 정보*/
         'grp_seq': new FormControl(null),
         'cus_seq': new FormControl(null),
+        'grp_cus_seq': new FormControl(null),
         'grp_tcd_desc': new FormControl(null, Validators.compose([Validators.required, Validators.maxLength(50)])),
         'grp_nm': new FormControl(null, Validators.compose([Validators.required, Validators.maxLength(20)])),
         'grp_use_yn': new FormControl('Y', Validators.required),
@@ -239,6 +240,7 @@ export class ServiceFormComponent implements OnInit {
           })
         }
       });
+      delete valueObject['grp'].grp_cus_seq;
       this.serviceService.updateService(valueObject)
         .toPromise()
         .then(() => {
