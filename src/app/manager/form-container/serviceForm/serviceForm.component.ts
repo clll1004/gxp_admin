@@ -89,6 +89,8 @@ export class ServiceFormComponent implements OnInit {
         'expiration_dtm': new FormControl(new Date()),
       }),
       preset: this.formBuilder.group({
+        'grp_seq': new FormControl(null),
+        'cus_seq': new FormControl(null),
         'service_type': new FormControl('LMS'),
         'bookmark': new FormControl(true),
         'setting': new FormControl(true),
@@ -103,7 +105,7 @@ export class ServiceFormComponent implements OnInit {
       grp: this.formBuilder.group({
         /*트랜스코딩 정보*/
         'grp_seq': new FormControl(null),
-        'grp_cus_seq': new FormControl(null),
+        'cus_seq': new FormControl(null),
         'grp_tcd_desc': new FormControl(null, Validators.compose([Validators.required, Validators.maxLength(50)])),
         'grp_nm': new FormControl(null, Validators.compose([Validators.required, Validators.maxLength(20)])),
         'grp_use_yn': new FormControl('Y', Validators.required),
@@ -216,6 +218,8 @@ export class ServiceFormComponent implements OnInit {
         });
 
     } else {
+      formObject.preset.grp_seq = this.serviceform.get('grp').get('grp_seq').value;
+      formObject.preset.cus_seq = this.serviceform.get('grp').get('cus_seq').value;
       Object.entries(formObject).forEach((item:any) => {
         if(item[0] === 'tcd') {
           item[1].forEach((optItem) => {
@@ -235,7 +239,6 @@ export class ServiceFormComponent implements OnInit {
           })
         }
       });
-      delete valueObject['grp'].grp_cus_seq;
       this.serviceService.updateService(valueObject)
         .toPromise()
         .then(() => {
@@ -278,11 +281,11 @@ export class ServiceFormComponent implements OnInit {
       .toPromise()
       .then((data) => {
         const getData = JSON.parse((<any>data)._body);
-
         /*load serviceform grp*/
         this.customerName = getData.grp['cus_nm_ko'];
         this.serviceform.get('grp').get('grp_nm').setValue(getData.grp['grp_nm']);
         this.serviceform.get('grp').get('grp_seq').setValue(getData.grp['grp_seq']);
+        this.serviceform.get('grp').get('cus_seq').setValue(getData.grp['cus_seq']);
         this.serviceform.get('grp').get('grp_tcd_desc').setValue(getData.grp['grp_tcd_desc']);
         this.serviceform.get('grp').get('grp_basic_yn').setValue(getData.grp['grp_basic_yn']);
         this.serviceform.get('grp').get('grp_use_yn').setValue(getData.grp['grp_use_yn']);
