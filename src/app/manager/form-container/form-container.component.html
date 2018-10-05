@@ -4,17 +4,13 @@
     매니저 > {{ pathName }} > <span class="path">{{ subPathName }}</span>
   </div>
 
-  <div class="ui-g-12 ui-g-nopad margin-bottom-40 form-info-container" *ngIf="params['listId'] !== 'account'">
+  <div class="ui-g-12 ui-g-nopad margin-bottom-40 form-info-container" *ngIf="params['listId'] === 'service'">
     ㆍ <span class="color-red">*</span> 는 필수입력 항목입니다. ini파일 자동생성을 위해 정확하게 입력해주시기 바랍니다.<br />
     ㆍ <span class="color-red">* ini파일은 업로드서버(FTP)의 FTP 서버 구성이 먼저 완료되어야 정상 생성이 됩니다.</span><br />
     ㆍ 그룹명은 트랜스코딩서버 구조상 한번 등록되면 수정이 불가능하므로 신중하게 입력바랍니다.
   </div>
   <div class="ui-g-12 ui-g-nopad margin-bottom-40 form-info-container" *ngIf="params['listId'] === 'account'">
     ㆍ <span class="color-red">*</span> 는 필수입력 항목입니다. <span *ngIf="params['subId'] === 'add'">ini파일 자동생성을 위해 정확하게 입력해주시기 바랍니다.</span>
-    <div *ngIf="params['subId'] === 'modify'">
-      ㆍ 아이디는 수정하실 수 없으며 수정을 원하실 경우 최고관리자(개발팀)에게 문의하시기 바랍니다.<br />
-      ㆍ 패스워드는 변경을 원하실 경우에만 입력바랍니다.
-    </div>
   </div>
 
   <customerForm *ngIf="params['listId'] === 'customer'" ></customerForm>
