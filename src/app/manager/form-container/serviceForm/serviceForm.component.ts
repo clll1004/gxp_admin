@@ -3,12 +3,13 @@ import { Validators, FormControl, FormGroup, FormBuilder, FormArray } from '@ang
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { ServiceService } from '../../../services/apis/adm/service/service.service';
 import { AdminApis } from '../../../services/apis/apis';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'serviceForm',
   templateUrl: './serviceForm.component.html',
   styleUrls: ['../form-container.component.scss'],
-  providers: [ServiceService, AdminApis]})
+  providers: [ServiceService, AdminApis, DatePipe]})
 
 export class ServiceFormComponent implements OnInit {
   params: Params;
@@ -68,7 +69,8 @@ export class ServiceFormComponent implements OnInit {
               private router: Router,
               private activatedRoute: ActivatedRoute,
               private serviceService: ServiceService,
-              private adminApi: AdminApis) {
+              private adminApi: AdminApis,
+              private datePipe: DatePipe) {
     this.activatedRoute.params.subscribe( (params) => {
       this.params = params;
     });
@@ -83,6 +85,7 @@ export class ServiceFormComponent implements OnInit {
 
     this.serviceform = this.formBuilder.group({
       authkey: this.formBuilder.group({
+        'grp_seq': new FormControl(null),
         'authkey': new FormControl(null),
         'url': new FormControl(null),
         'sdate': new FormControl(new Date()),
@@ -90,7 +93,6 @@ export class ServiceFormComponent implements OnInit {
       }),
       preset: this.formBuilder.group({
         'grp_seq': new FormControl(null),
-        'cus_seq': new FormControl(null),
         'service_type': new FormControl('LMS'),
         'bookmark': new FormControl(true),
         'setting': new FormControl(true),
@@ -182,6 +184,7 @@ export class ServiceFormComponent implements OnInit {
         })
       ])
     });
+    this.setPresetLabel();
   }
 
   onSubmit(formObject: any) {
@@ -219,8 +222,19 @@ export class ServiceFormComponent implements OnInit {
         });
 
     } else {
-      formObject.preset.grp_seq = this.serviceform.get('grp').get('grp_seq').value;
-      formObject.preset.cus_seq = this.serviceform.get('grp').get('cus_seq').value;
+      formObject.authkey.sdate = this.datePipe.transform(formObject.authkey.sdate, 'yyyy-MM-dd');
+      formObject.authkey.edate = this.datePipe.transform(formObject.authkey.edate, 'yyyy-MM-dd');
+      const preset = formObject.preset;
+      preset.bookmark = preset.bookmark === true || preset.bookmark === 'Y' ? 'Y' : 'N';
+      preset.setting = preset.setting === true || preset.setting === 'Y' ? 'Y' : 'N';
+      preset.nextVideo = preset.nextVideo === true || preset.nextVideo === 'Y' ? 'Y' : 'N';
+      preset.playbackRate = preset.playbackRate === true || preset.playbackRate === 'Y' ? 'Y' : 'N';
+      preset.loopPortion = preset.loopPortion === true || preset.loopPortion === 'Y' ? 'Y' : 'N';
+      preset.fullscreen = preset.fullscreen === true || preset.fullscreen === 'Y' ? 'Y' : 'N';
+      preset.cinemaMode = preset.cinemaMode === true || preset.cinemaMode === 'Y' ? 'Y' : 'N';
+      preset.quality = preset.quality === true || preset.quality === 'Y' ? 'Y' : 'N';
+      preset.subtitle = preset.subtitle === true || preset.subtitle === 'Y' ? 'Y' : 'N';
+
       Object.entries(formObject).forEach((item:any) => {
         if(item[0] === 'tcd') {
           item[1].forEach((optItem) => {
@@ -285,6 +299,23 @@ export class ServiceFormComponent implements OnInit {
         const getData = JSON.parse((<any>data)._body);
         /*load serviceform grp*/
         this.customerName = getData.grp['cus_nm_ko'];
+        this.serviceform.get('authkey').get('grp_seq').setValue(getData.authkey['grp_seq']);
+        this.serviceform.get('authkey').get('authkey').setValue(getData.authkey['authkey']);
+        this.serviceform.get('authkey').get('url').setValue(getData.authkey['url']);
+        this.serviceform.get('authkey').get('sdate').setValue(new Date(getData.authkey['sdate']));
+        this.serviceform.get('authkey').get('edate').setValue(new Date(getData.authkey['edate']));
+
+        this.serviceform.get('preset').get('grp_seq').setValue(getData.preset['grp_seq']);
+        this.serviceform.get('preset').get('service_type').setValue(getData.preset['service_type']);
+        this.serviceform.get('preset').get('bookmark').setValue(getData.preset['bookmark'] === 'Y');
+        this.serviceform.get('preset').get('playbackRate').setValue(getData.preset['playbackRate'] === 'Y');
+        this.serviceform.get('preset').get('loopPortion').setValue(getData.preset['loopPortion'] === 'Y');
+        this.serviceform.get('preset').get('nextVideo').setValue(getData.preset['nextVideo'] === 'Y');
+        this.serviceform.get('preset').get('setting').setValue(getData.preset['setting'] === 'Y');
+        this.serviceform.get('preset').get('fullscreen').setValue(getData.preset['fullscreen'] === 'Y');
+        this.serviceform.get('preset').get('cinemaMode').setValue(getData.preset['cinemaMode'] === 'Y');
+        this.serviceform.get('preset').get('quality').setValue(getData.preset['quality'] === 'Y');
+
         this.serviceform.get('grp').get('grp_nm').setValue(getData.grp['grp_nm']);
         this.serviceform.get('grp').get('grp_seq').setValue(getData.grp['grp_seq']);
         this.serviceform.get('grp').get('cus_seq').setValue(getData.grp['cus_seq']);
@@ -385,7 +416,163 @@ export class ServiceFormComponent implements OnInit {
           (<FormArray>this.serviceform.get('tcd')).push(item);
         });
         (<FormArray>this.serviceform.get('tcd')).removeAt(0);
+
+        this.setPresetLabel();
       });
+  }
+
+  setPresetLabel() {
+    if (this.serviceform.get('preset').get('bookmark').value) {
+      document.getElementById('bookmark_label').setAttribute('class', 'on');
+      document.getElementById('bookmarkImg').style.display = 'block';
+    } else {
+      document.getElementById('bookmark_label').setAttribute('class', '');
+      document.getElementById('bookmarkImg').style.display = 'none';
+    }
+    if (this.serviceform.get('preset').get('setting').value) {
+      document.getElementById('setting_label').setAttribute('class', 'on');
+      document.getElementById('settingImg').style.display = 'block';
+    } else {
+      document.getElementById('setting_label').setAttribute('class', '');
+      document.getElementById('settingImg').style.display = 'none';
+    }
+    if (this.serviceform.get('preset').get('nextVideo').value) {
+      document.getElementById('nextVideo_label').setAttribute('class', 'on');
+      document.getElementById('nextVideoImg').style.display = 'block';
+    } else {
+      document.getElementById('nextVideo_label').setAttribute('class', '');
+      document.getElementById('nextVideoImg').style.display = 'none';
+    }
+    if (this.serviceform.get('preset').get('playbackRate').value) {
+      document.getElementById('playbackRate_label').setAttribute('class', 'on');
+      document.getElementById('playbackRateImg').style.display = 'block';
+    } else {
+      document.getElementById('playbackRate_label').setAttribute('class', '');
+      document.getElementById('playbackRateImg').style.display = 'none';
+    }
+    if (this.serviceform.get('preset').get('loopPortion').value) {
+      document.getElementById('loopPortion_label').setAttribute('class', 'on');
+      document.getElementById('loopPortionImg').style.display = 'block';
+    } else {
+      document.getElementById('loopPortion_label').setAttribute('class', '');
+      document.getElementById('loopPortionImg').style.display = 'none';
+    }
+    if (this.serviceform.get('preset').get('fullscreen').value) {
+      document.getElementById('fullscreen_label').setAttribute('class', 'on');
+      document.getElementById('fullscreenImg').style.display = 'block';
+    } else {
+      document.getElementById('fullscreen_label').setAttribute('class', '');
+      document.getElementById('fullscreenImg').style.display = 'none';
+    }
+    if (this.serviceform.get('preset').get('cinemaMode').value) {
+      document.getElementById('cinemaMode_label').setAttribute('class', 'on');
+      document.getElementById('cinemaModeImg').style.display = 'block';
+    } else {
+      document.getElementById('cinemaMode_label').setAttribute('class', '');
+      document.getElementById('cinemaModeImg').style.display = 'none';
+    }
+    if (this.serviceform.get('preset').get('quality').value) {
+      document.getElementById('quality_label').setAttribute('class', 'on');
+      document.getElementById('qualityImg').style.display = 'block';
+    } else {
+      document.getElementById('quality_label').setAttribute('class', '');
+      document.getElementById('qualityImg').style.display = 'none';
+    }
+    if (this.serviceform.get('preset').get('subtitle').value) {
+      document.getElementById('subtitle_label').setAttribute('class', 'on');
+      // document.getElementById('subtitleImg').style.display = 'block';
+    } else {
+      document.getElementById('subtitle_label').setAttribute('class', '');
+      // document.getElementById('subtitleImg').style.display = 'none';
+    }
+  }
+
+  setPlayerPreset(e) {
+    const target = e.currentTarget;
+    target.getAttribute('class') === 'on' ? target.setAttribute('class', '') : target.setAttribute('class', 'on');
+    switch (target.id) {
+      case 'bookmark_label':
+        if (this.serviceform.get('preset').get('bookmark').value) {
+          this.serviceform.get('preset').get('bookmark').setValue(false);
+          document.getElementById('bookmarkImg').style.display = 'none';
+        } else {
+          this.serviceform.get('preset').get('bookmark').setValue(true);
+          document.getElementById('bookmarkImg').style.display = 'block';
+        }
+        break;
+      case 'setting_label':
+        if (this.serviceform.get('preset').get('setting').value) {
+          this.serviceform.get('preset').get('setting').setValue(false);
+          document.getElementById('settingImg').style.display = 'none';
+        } else {
+          this.serviceform.get('preset').get('setting').setValue(true);
+          document.getElementById('settingImg').style.display = 'block';
+        }
+        break;
+      case 'nextVideo_label':
+        if (this.serviceform.get('preset').get('nextVideo').value) {
+          this.serviceform.get('preset').get('nextVideo').setValue(false);
+          document.getElementById('nextVideoImg').style.display = 'none';
+        } else {
+          this.serviceform.get('preset').get('nextVideo').setValue(true);
+          document.getElementById('nextVideoImg').style.display = 'block';
+        }
+        break;
+      case 'playbackRate_label':
+        if (this.serviceform.get('preset').get('playbackRate').value) {
+          this.serviceform.get('preset').get('playbackRate').setValue(false);
+          document.getElementById('playbackRateImg').style.display = 'none';
+        } else {
+          this.serviceform.get('preset').get('playbackRate').setValue(true);
+          document.getElementById('playbackRateImg').style.display = 'block';
+        }
+        break;
+      case 'loopPortion_label':
+        if (this.serviceform.get('preset').get('loopPortion').value) {
+          this.serviceform.get('preset').get('loopPortion').setValue(false);
+          document.getElementById('loopPortionImg').style.display = 'none';
+        } else {
+          this.serviceform.get('preset').get('loopPortion').setValue(true);
+          document.getElementById('loopPortionImg').style.display = 'block';
+        }
+        break;
+      case 'fullscreen_label':
+        if (this.serviceform.get('preset').get('fullscreen').value) {
+          this.serviceform.get('preset').get('fullscreen').setValue(false);
+          document.getElementById('fullscreenImg').style.display = 'none';
+        } else {
+          this.serviceform.get('preset').get('fullscreen').setValue(true);
+          document.getElementById('fullscreenImg').style.display = 'block';
+        }
+        break;
+      case 'cinemaMode_label':
+        if (this.serviceform.get('preset').get('cinemaMode').value) {
+          this.serviceform.get('preset').get('cinemaMode').setValue(false);
+          document.getElementById('cinemaModeImg').style.display = 'none';
+        } else {
+          this.serviceform.get('preset').get('cinemaMode').setValue(true);
+          document.getElementById('cinemaModeImg').style.display = 'block';
+        }
+        break;
+      case 'quality_label':
+        if (this.serviceform.get('preset').get('quality').value) {
+          this.serviceform.get('preset').get('quality').setValue(false);
+          document.getElementById('qualityImg').style.display = 'none';
+        } else {
+          this.serviceform.get('preset').get('quality').setValue(true);
+          document.getElementById('qualityImg').style.display = 'block';
+        }
+        break;
+      case 'subtitle_label':
+        if (this.serviceform.get('preset').get('subtitle').value) {
+          this.serviceform.get('preset').get('subtitle').setValue(false);
+          // document.getElementById('subtitleImg').style.display = 'none';
+        } else {
+          this.serviceform.get('preset').get('subtitle').setValue(true);
+          // document.getElementById('subtitleImg').style.display = 'block';
+        }
+        break;
+    }
   }
 
   /*중복확인 - 그룹명*/
@@ -537,10 +724,5 @@ export class ServiceFormComponent implements OnInit {
     preset.get('cinemaMode').setValue(true);
     preset.get('quality').setValue(true);
     preset.get('subtitle').setValue(true);
-  }
-
-  setPlayerPreset(e) {
-    const target = e.currentTarget;
-    target.getAttribute('class') === 'on' ? target.setAttribute('class', '') : target.setAttribute('class', 'on');
   }
 }

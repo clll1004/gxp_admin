@@ -13,7 +13,7 @@
           <th><label for="authkey">인증키</label></th>
           <td>
             <input pInputText type="text" class="margin-right-10" formControlName="authkey" id="authkey" title="인증키 입력" autocomplete="off" maxlength="50" style="color: #000;" />
-            <button type="button" class="btn white-btn square-btn" [disabled]="isSetAuthKey" id="authkey_btn" (click)="setAuthkey()">인증키 발급</button>
+            <button *ngIf="isAddRow" type="button" class="btn white-btn square-btn" [disabled]="isSetAuthKey" id="authkey_btn" (click)="setAuthkey()">인증키 발급</button>
           </td>
         </tr>
         <tr>
@@ -47,43 +47,43 @@
         <tr>
           <th>서비스 타입</th>
           <td>
-            <p-radioButton formControlName="service_type" name="service_type" value="normal" label="일반" class="margin-right-30" (click)="changePreset()"></p-radioButton>
+            <p-radioButton formControlName="service_type" name="service_type" value="일반" label="일반" class="margin-right-30" (click)="changePreset()"></p-radioButton>
             <p-radioButton formControlName="service_type" name="service_type" value="LMS" label="LMS" (click)="changePreset()"></p-radioButton>
           </td>
         </tr>
         <tr>
           <td colspan="2" class="txt-center padding-bottom-30 padding-top-30">
             <div class="preset-button-area">
-              <label class="on" id="bookmark_label" for="bookmark" (click)="setPlayerPreset($event)">북마크</label>
-              <label class="on" id="setting_label" for="setting" (click)="setPlayerPreset($event)">설정버튼</label>
-              <label class="on" id="nextVideo_label" for="nextVideo" (click)="setPlayerPreset($event)">다음 영상</label>
-              <label class="on" id="playbackRate_label" for="playbackRate" (click)="setPlayerPreset($event)">배속버튼</label>
-              <label class="on" id="loopPortion_label" for="loopPortion" (click)="setPlayerPreset($event)">구간반복</label>
-              <label class="on" id="fullscreen_label" for="fullscreen" (click)="setPlayerPreset($event)">전체화면</label>
-              <label class="on" id="cinemaMode_label" for="cinemaMode" (click)="setPlayerPreset($event)">영화관화면</label>
-              <label class="on" id="quality_label" for="quality" (click)="setPlayerPreset($event)">화질선택</label>
-              <label class="on" id="subtitle_label" for="subtitle" (click)="setPlayerPreset($event)">자막기능</label>
+              <label id="bookmark_label" (click)="setPlayerPreset($event)">북마크</label>
+              <label id="setting_label"(click)="setPlayerPreset($event)">설정버튼</label>
+              <label id="nextVideo_label" (click)="setPlayerPreset($event)">다음 영상</label>
+              <label id="playbackRate_label" (click)="setPlayerPreset($event)">배속버튼</label>
+              <label id="loopPortion_label" (click)="setPlayerPreset($event)">구간반복</label>
+              <label id="fullscreen_label" (click)="setPlayerPreset($event)">전체화면</label>
+              <label id="cinemaMode_label" (click)="setPlayerPreset($event)">영화관화면</label>
+              <label id="quality_label" (click)="setPlayerPreset($event)">화질선택</label>
+              <label id="subtitle_label" (click)="setPlayerPreset($event)">자막기능</label>
             </div>
             <div class="player-view-area">
               <img src="../../../../assets/images/player-section.png" alt="default player view" id="defaultImg">
               <div class="overlay-area">
-                <input formControlName="bookmark" type="checkbox" class="presetCheckbox" id="bookmark" checked>
+                <p-checkbox formControlName="bookmark" name="bookmark" binary="true" label="북마크" *ngIf="false"></p-checkbox>
                 <img src="../../../../assets/images/bookmark.png" alt="북마크" id="bookmarkImg">
-                <input formControlName="setting" type="checkbox" class="presetCheckbox" id="setting" checked>
+                <p-checkbox formControlName="setting" name="setting" binary="true" label="설정" *ngIf="false"></p-checkbox>
                 <img src="../../../../assets/images/setting.png" alt="설정버튼" id="settingImg">
-                <input formControlName="nextVideo" type="checkbox" class="presetCheckbox" id="nextVideo" checked>
-                <img src="../../../../assets/images/nextVideo.png" alt="다음 영상" value="Y" id="nextVideoImg">
-                <input formControlName="playbackRate" type="checkbox" class="presetCheckbox" id="playbackRate" checked>
+                <p-checkbox formControlName="nextVideo" name="nextVideo" binary="true" label="다음 영상" *ngIf="false"></p-checkbox>
+                <img src="../../../../assets/images/nextVideo.png" alt="다음 영상" id="nextVideoImg">
+                <p-checkbox formControlName="playbackRate" name="playbackRate" binary="true" label="배속버튼" *ngIf="false"></p-checkbox>
                 <img src="../../../../assets/images/playbackRate.png" alt="배속버튼" id="playbackRateImg">
-                <input formControlName="loopPortion" type="checkbox" class="presetCheckbox" id="loopPortion" checked>
+                <p-checkbox formControlName="loopPortion" name="loopPortion" binary="true" label="구간반복" *ngIf="false"></p-checkbox>
                 <img src="../../../../assets/images/loopPortion.png" alt="구간반복" id="loopPortionImg">
-                <input formControlName="fullscreen" type="checkbox" class="presetCheckbox" id="fullscreen" checked>
+                <p-checkbox formControlName="fullscreen" name="fullscreen" binary="true" label="전체화면" *ngIf="false"></p-checkbox>
                 <img src="../../../../assets/images/fullscreen.png" alt="전체화면" id="fullscreenImg">
-                <input formControlName="cinemaMode" type="checkbox" class="presetCheckbox" id="cinemaMode" checked>
+                <p-checkbox formControlName="cinemaMode" name="cinemaMode" binary="true" label="영화관화면" *ngIf="false"></p-checkbox>
                 <img src="../../../../assets/images/cinemaMode.png" alt="영화관화면" id="cinemaModeImg">
-                <input formControlName="quality" type="checkbox" class="presetCheckbox" id="quality" checked>
+                <p-checkbox formControlName="quality" name="quality" binary="true" label="화질선택" *ngIf="false"></p-checkbox>
                 <img src="../../../../assets/images/quality.png" alt="화질선택" id="qualityImg">
-                <input formControlName="subtitle" type="checkbox" class="presetCheckbox" id="subtitle" checked>
+                <p-checkbox formControlName="subtitle" name="subtitle" binary="true" label="자막기능" *ngIf="false"></p-checkbox>
               </div>
             </div>
           </td>
