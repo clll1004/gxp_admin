@@ -27,6 +27,7 @@ export class AdminApis {
   public updateCustomer = this.domain + 'adm/customer';
 
   /* 서비스 관리 */
+  public loadToken = this.domain + 'adm/group/gettoken/';
   public loadServiceList = this.domain + 'adm/group/list?page=1&row=10000';
   public loadService = this.domain + 'adm/group/';
   // public postGroup = this.domain + 'adm/group';
@@ -90,7 +91,8 @@ export class AdminApis {
     this.postCustomer = this.domain + 'adm/customer';
     this.updateCustomer = this.domain + 'adm/customer';
 
-    /* 그룹 관리 */
+    /* 서비스 관리 */
+    this.loadToken = this.domain + 'adm/group/gettoken/';
     this.loadServiceList = this.domain + 'adm/group/list?page=1&row=10000';
     this.loadService = this.domain + 'adm/group/';
     // this.postGroup = this.domain + 'adm/group';

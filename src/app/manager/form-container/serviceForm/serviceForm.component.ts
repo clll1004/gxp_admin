@@ -83,10 +83,10 @@ export class ServiceFormComponent implements OnInit {
 
     this.serviceform = this.formBuilder.group({
       authkey: this.formBuilder.group({
-        'authkey_nm': new FormControl(null),
+        'authkey': new FormControl(null),
         'url': new FormControl(null),
-        'issue_dtm': new FormControl(new Date()),
-        'expiration_dtm': new FormControl(new Date()),
+        'sdate': new FormControl(new Date()),
+        'edate': new FormControl(new Date()),
       }),
       preset: this.formBuilder.group({
         'grp_seq': new FormControl(null),
@@ -399,6 +399,20 @@ export class ServiceFormComponent implements OnInit {
       });
   }
 
+  setAuthkey() {
+    this.isSetAuthKey = true;
+    const grp_seq = this.isAddRow ? 0 : this.serviceform.get('grp').get('grp_seq').value;
+    const authkey = this.serviceform.get('authkey').get('authkey');
+    const btn = document.getElementById('authkey_btn');
+    this.serviceService.getLists(this.adminApi.loadToken + grp_seq)
+      .toPromise()
+      .then((token) => {
+        authkey.setValue(JSON.parse(token._body).token);
+        btn.style.background = '#ddd';
+        btn.style.cursor = 'default';
+      });
+  }
+
   /*썸네일서버 - 추가, 삭제*/
   addThumbnailServer() {
     (<FormArray>this.serviceform.get('thm')).push(
@@ -491,14 +505,6 @@ export class ServiceFormComponent implements OnInit {
 
   changeDrmEncodeStatus(item) {
     item.get('opt').get('gto_drm').value === 'X' ? item.get('opt').get('gto_drm_encode').enable() : item.get('opt').get('gto_drm_encode').disable();
-  }
-
-  setAuthkey() {
-    this.isSetAuthKey = true;
-    this.serviceform.get('authkey').get('authkey_nm').setValue('AB12 -C3D4 C3D4C3D4-56EF -G7H8G7H8');
-    const btn = document.getElementById('authkey_btn');
-    btn.style.background = '#ddd';
-    btn.style.cursor = 'default';
   }
 
   changePreset() {

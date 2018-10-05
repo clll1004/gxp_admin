@@ -150,8 +150,8 @@
       <ng-template pTemplate="body" let-customerList>
         <tr>
           <td>{{ customerList.index }}</td>
-          <td><a routerLink="/manager/service/modify/1">{{ customerList.cus_nm_ko }}</a></td>
-          <td><a routerLink="/manager/service/modify/1">{{ customerList.grp_nm }}</a></td>
+          <td><a routerLink="/manager/service/modify/{{ customerList.grp_seq }}">{{ customerList.cus_nm_ko }}</a></td>
+          <td><a routerLink="/manager/service/modify/{{ customerList.grp_seq }}">{{ customerList.grp_nm }}</a></td>
           <td>{{ customerList.authkey }}</td>
           <td>{{ customerList.url }}</td>
           <td>{{ customerList.sdate }}</td>

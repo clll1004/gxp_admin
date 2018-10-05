@@ -10,10 +10,10 @@
           <col style="width: auto;" />
         </colgroup>
         <tr>
-          <th><label for="authkey_nm">인증키</label></th>
+          <th><label for="authkey">인증키</label></th>
           <td>
-            <input pInputText type="text" class="margin-right-10" formControlName="authkey_nm" id="authkey_nm" title="인증키 입력" autocomplete="off" maxlength="31" disabled style="color: #000;" />
-            <button type="button" class="btn white-btn square-btn" >인증키 발급</button><!--[disabled]="isSetAuthKey" id="authkey_btn" (click)="setAuthkey()"-->
+            <input pInputText type="text" class="margin-right-10" formControlName="authkey" id="authkey" title="인증키 입력" autocomplete="off" maxlength="50" style="color: #000;" />
+            <button type="button" class="btn white-btn square-btn" [disabled]="isSetAuthKey" id="authkey_btn" (click)="setAuthkey()">인증키 발급</button>
           </td>
         </tr>
         <tr>
@@ -25,13 +25,13 @@
         <tr>
           <th>발급일</th>
           <td>
-            <p-calendar formControlName="issue_dtm" [showIcon]="true" [minDate]="minDate" dateFormat="yy.mm.dd" [locale]="localeObject" [monthNavigator]="true" [yearNavigator]="true" [yearRange]="yearRange"></p-calendar>
+            <p-calendar formControlName="sdate" [showIcon]="true" [minDate]="minDate" dateFormat="yy.mm.dd" [locale]="localeObject" [monthNavigator]="true" [yearNavigator]="true" [yearRange]="yearRange"></p-calendar>
           </td>
         </tr>
         <tr>
           <th>만료일</th>
           <td>
-            <p-calendar formControlName="expiration_dtm" [showIcon]="true" [minDate]="minDate" dateFormat="yy.mm.dd" [locale]="localeObject" [monthNavigator]="true" [yearNavigator]="true" [yearRange]="yearRange"></p-calendar>
+            <p-calendar formControlName="edate" [showIcon]="true" [minDate]="minDate" dateFormat="yy.mm.dd" [locale]="localeObject" [monthNavigator]="true" [yearNavigator]="true" [yearRange]="yearRange"></p-calendar>
           </td>
         </tr>
       </table>
@@ -615,7 +615,7 @@
     </div>
 
     <div class="ui-g-12 ui-g-nopad txt-center">
-      <button pButton type="submit" label="등록" *ngIf="isAddRow" [disabled]="!serviceform.valid || !ableGroupName" class="margin-right-10"></button>
+      <button pButton type="submit" label="등록" *ngIf="isAddRow" [disabled]="!serviceform.valid || !ableGroupName || !isSetAuthKey" class="margin-right-10"></button>
       <button pButton type="submit" label="수정" *ngIf="!isAddRow" [disabled]="!serviceform.valid" class="margin-right-10"></button>
       <button pButton type="reset" (click)="goList()" *ngIf="isAddRow" label="취소"></button>
       <button pButton type="reset" (click)="goList()" *ngIf="!isAddRow" label="목록"></button>
