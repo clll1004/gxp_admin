@@ -15,14 +15,14 @@ export class CustomerService {
 
   postCustomer(data) {
     let headers:Headers = new Headers();
-    headers.append('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
+    headers.append('Content-Type', 'application/json; charset=UTF-8');
 
     return this.http.post('http://183.110.11.49/adm/customer', data, { headers: headers });
   }
 
   updateCustomer(newData) {
     let headers:Headers = new Headers();
-    headers.append('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
+    headers.append('Content-Type', 'application/json; charset=UTF-8');
 
     return this.http.put('http://183.110.11.49/adm/customer', newData, { headers: headers });
   }

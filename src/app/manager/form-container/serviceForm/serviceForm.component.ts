@@ -225,15 +225,15 @@ export class ServiceFormComponent implements OnInit {
       formObject.authkey.sdate = this.datePipe.transform(formObject.authkey.sdate, 'yyyy-MM-dd');
       formObject.authkey.edate = this.datePipe.transform(formObject.authkey.edate, 'yyyy-MM-dd');
       const preset = formObject.preset;
-      preset.bookmark = preset.bookmark === true || preset.bookmark === 'Y' ? 'Y' : 'N';
-      preset.setting = preset.setting === true || preset.setting === 'Y' ? 'Y' : 'N';
-      preset.nextVideo = preset.nextVideo === true || preset.nextVideo === 'Y' ? 'Y' : 'N';
-      preset.playbackRate = preset.playbackRate === true || preset.playbackRate === 'Y' ? 'Y' : 'N';
-      preset.loopPortion = preset.loopPortion === true || preset.loopPortion === 'Y' ? 'Y' : 'N';
-      preset.fullscreen = preset.fullscreen === true || preset.fullscreen === 'Y' ? 'Y' : 'N';
-      preset.cinemaMode = preset.cinemaMode === true || preset.cinemaMode === 'Y' ? 'Y' : 'N';
-      preset.quality = preset.quality === true || preset.quality === 'Y' ? 'Y' : 'N';
-      preset.subtitle = preset.subtitle === true || preset.subtitle === 'Y' ? 'Y' : 'N';
+      preset.bookmark = preset.bookmark || preset.bookmark === 'Y' ? 'Y' : 'N';
+      preset.setting = preset.setting || preset.setting === 'Y' ? 'Y' : 'N';
+      preset.nextVideo = preset.nextVideo || preset.nextVideo === 'Y' ? 'Y' : 'N';
+      preset.playbackRate = preset.playbackRate || preset.playbackRate === 'Y' ? 'Y' : 'N';
+      preset.loopPortion = preset.loopPortion || preset.loopPortion === 'Y' ? 'Y' : 'N';
+      preset.fullscreen = preset.fullscreen || preset.fullscreen === 'Y' ? 'Y' : 'N';
+      preset.cinemaMode = preset.cinemaMode || preset.cinemaMode === 'Y' ? 'Y' : 'N';
+      preset.quality = preset.quality || preset.quality === 'Y' ? 'Y' : 'N';
+      preset.subtitle = preset.subtitle || preset.subtitle === 'Y' ? 'Y' : 'N';
 
       Object.entries(formObject).forEach((item:any) => {
         if(item[0] === 'tcd') {
