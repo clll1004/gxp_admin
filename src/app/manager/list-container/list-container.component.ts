@@ -53,10 +53,10 @@ export class ListContainerComponent implements OnInit {
     { field: 'grp_nm', header: '서비스명', width: '12%' },
     { field: 'authkey', header: '인증키', width: '20%' },
     { field: 'url', header: 'URL', width: '20%' },
-    { field: 'issue_dtm', header: '발급일', width: '10%' },
-    { field: 'expiration_dtm', header: '만료일', width: '10%' },
-    { field: 'cus_use_yn', header: '사용여부', width: '10%' },
-    { field: 'cus_upd_dtm', header: '최종 수정일시', width: '15%' },
+    { field: 'sdate', header: '발급일', width: '10%' },
+    { field: 'edate', header: '만료일', width: '10%' },
+    { field: 'use_yn', header: '사용여부', width: '10%' },
+    { field: 'updated_at', header: '최종 수정일시', width: '15%' },
   ];
 
   /*total row/page info*/
@@ -83,41 +83,23 @@ export class ListContainerComponent implements OnInit {
         url = this.adminApi.loadUserList;
       } else if (urlItem[1]['path'] == 'authkey') {
         this.pathName = 'API 인증키관리';
-        this.filterCustomerLists = [];
-        this.filterCustomerLists.push({
-          cus_nm_ko: 'GXP고객',
-          grp_nm: 'GXP',
-          authkey: 'AB12-C3D4-56EF-G7H8',
-          url: 'WWW.GOMCORP.COM',
-          issue_dtm: '2018-05-30',
-          expiration_dtm: '2019-05-29',
-          cus_use_yn: 'Y',
-          cus_upd_dtm: '2018-05-30 05:30:22',
-        });
-        this.filterCustomerLists.push({
-          cus_nm_ko: '고객2',
-          grp_nm: 'GXP',
-          authkey: 'AB12-C3D4-56EF-G7H8',
-          url: 'WWW.GOMCORP.COM',
-          issue_dtm: '2018-05-30',
-          expiration_dtm: '2019-05-29',
-          cus_use_yn: 'Y',
-          cus_upd_dtm: '2018-05-30 05:30:22',
-        });
-        this.totalCustomerList = this.filterCustomerLists.length;
-        this.setTableIndex();
-        return 0;
+        url = this.adminApi.loadApiList;
       }
 
       this.http.get(url)
         .toPromise()
         .then((cont) => {
-          this.customerLists = JSON.parse(cont['_body']).list;
-          this.filterCustomerLists = this.customerLists;
-          this.totalCustomerList = this.filterCustomerLists.length;
+          if (JSON.parse(cont['_body']).list !== 0) {
+            this.customerLists = JSON.parse(cont['_body']).list;
+            this.filterCustomerLists = this.customerLists;
+            this.totalCustomerList = this.filterCustomerLists.length;
 
-          this.setTableIndex();
-        });
+            this.setTableIndex();
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        })
     });
   }
 
@@ -137,6 +119,8 @@ export class ListContainerComponent implements OnInit {
         return customerItem.grp_use_yn === data;
       } else if(this.params['listId'] === 'account') {
         return customerItem.usr_use_yn === data;
+      } else if(this.params['listId'] === 'authkey') {
+        return customerItem.use_yn === data;
       }
     });
     this.totalCustomerList = this.filterCustomerLists.length;

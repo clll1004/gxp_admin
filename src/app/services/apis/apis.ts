@@ -38,6 +38,9 @@ export class AdminApis {
   public postUser = this.domain + 'adm/user';
   public updateUser = this.domain + 'adm/user';
 
+  /*API 인증키*/
+  public loadApiList = this.domain + 'adm/group/token/list';
+
   /**** 트랜스코딩 ****/
   /* 실시간 서버 모니터링 */
   public loadServerIpList = this.domain + 'adm/transcoding/server/list/ip';
@@ -98,6 +101,9 @@ export class AdminApis {
     this.loadUser = this.domain + 'adm/user/';
     this.postUser = this.domain + 'adm/user';
     this.updateUser = this.domain + 'adm/user';
+
+    /*API 인증키*/
+    this.loadApiList = this.domain + 'adm/group/token/list';
 
     /**** 트랜스코딩 ****/
     /* 실시간 서버 모니터링 */

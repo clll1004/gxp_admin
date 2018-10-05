@@ -154,15 +154,15 @@
           <td><a routerLink="/manager/service/modify/1">{{ customerList.grp_nm }}</a></td>
           <td>{{ customerList.authkey }}</td>
           <td>{{ customerList.url }}</td>
-          <td>{{ customerList.issue_dtm }}</td>
-          <td>{{ customerList.expiration_dtm }}</td>
-          <td>{{ customerList.cus_use_yn }}</td>
-          <td>{{ customerList.cus_upd_dtm }}</td>
+          <td>{{ customerList.sdate }}</td>
+          <td>{{ customerList.edate }}</td>
+          <td>{{ customerList.use_yn }}</td>
+          <td>{{ customerList.updated_at }}</td>
         </tr>
       </ng-template>
       <ng-template pTemplate="emptymessage">
         <tr>
-          <td colspan="8" style="padding: 30px; text-align: center; font-size: 14px; color: #999;">표시할 데이터가 없습니다.</td>
+          <td colspan="9" style="padding: 30px; text-align: center; font-size: 14px; color: #999;">표시할 데이터가 없습니다.</td>
         </tr>
       </ng-template>
     </p-table>
