@@ -10,15 +10,15 @@
           <col style="width: auto;" />
         </colgroup>
         <tr *ngIf="!isAddRow">
-          <th>고객명</th>
+          <th>고객명 <span class="color-red">*</span></th>
           <td>{{ accountform.value['cus_nm_ko'] }}</td>
         </tr>
         <tr *ngIf="!isAddRow">
-          <th>서비스명</th>
+          <th>서비스명 <span class="color-red">*</span></th>
           <td>&nbsp;</td>
         </tr>
         <tr *ngIf="!isAddRow">
-          <th>아이디</th>
+          <th>아이디 <span class="color-red">*</span></th>
           <td>{{ accountform.value['usr_id'] }}</td>
         </tr>
         <tr *ngIf="isAddRow">

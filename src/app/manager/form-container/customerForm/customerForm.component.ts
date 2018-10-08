@@ -98,18 +98,19 @@ export class CustomerFormComponent implements OnInit {
   }
 
   loadCustomerList() {
-    this.customerService.getLists(this.adminApis.loadCustomer + this.params.index).subscribe((data) => {
-      const getData:any[] = JSON.parse((<any>data)._body);
-      this.customerform.controls.cus.get('cus_seq').setValue(getData['cus_seq']);
-      this.customerform.controls.cus.get('cus_nm_en').setValue(getData['cus_nm_en']);
-      this.customerform.controls.cus.get('cus_nm_ko').setValue(getData['cus_nm_ko']);
-      this.customerform.controls.cus.get('cus_inchg_nm').setValue(getData['cus_inchg_nm']);
-      this.customerform.controls.cus.get('cus_inchg_email').setValue(getData['cus_inchg_email']);
-      this.customerform.controls.cus.get('cus_inchg_tel').setValue(getData['cus_inchg_tel']);
-      this.customerform.controls.cus.get('cus_sngl_cvt_yn').setValue(getData['cus_sngl_cvt_yn']);
-      this.customerform.controls.cus.get('cus_use_yn').setValue(getData['cus_use_yn']);
-      this.customerform.controls.cus.get('cus_test_yn').setValue(getData['cus_test_yn']);
-      console.log(this.customerform);
-    });
+    this.customerService.getLists(this.adminApis.loadCustomer + this.params.index)
+      .toPromise()
+      .then((data) => {
+        const getData:any[] = JSON.parse((<any>data)._body);
+        this.customerform.controls.cus.get('cus_seq').setValue(getData['cus_seq']);
+        this.customerform.controls.cus.get('cus_nm_en').setValue(getData['cus_nm_en']);
+        this.customerform.controls.cus.get('cus_nm_ko').setValue(getData['cus_nm_ko']);
+        this.customerform.controls.cus.get('cus_inchg_nm').setValue(getData['cus_inchg_nm']);
+        this.customerform.controls.cus.get('cus_inchg_email').setValue(getData['cus_inchg_email']);
+        this.customerform.controls.cus.get('cus_inchg_tel').setValue(getData['cus_inchg_tel']);
+        this.customerform.controls.cus.get('cus_sngl_cvt_yn').setValue(getData['cus_sngl_cvt_yn']);
+        this.customerform.controls.cus.get('cus_use_yn').setValue(getData['cus_use_yn']);
+        this.customerform.controls.cus.get('cus_test_yn').setValue(getData['cus_test_yn']);
+      });
   }
 }
