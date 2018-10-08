@@ -107,7 +107,7 @@ export class ServiceFormComponent implements OnInit {
       grp: this.formBuilder.group({
         /*트랜스코딩 정보*/
         'grp_seq': new FormControl(null),
-        'cus_seq': new FormControl(null),
+        // 'cus_seq': new FormControl(null),
         'grp_cus_seq': new FormControl(null),
         'grp_tcd_desc': new FormControl(null, Validators.compose([Validators.required, Validators.maxLength(50)])),
         'grp_nm': new FormControl(null, Validators.compose([Validators.required, Validators.maxLength(20)])),
@@ -221,8 +221,6 @@ export class ServiceFormComponent implements OnInit {
           })
         }
       });
-      delete valueObject['authkey'].grp_seq;
-      delete valueObject['preset'].grp_seq;
       this.serviceService.postService(valueObject)
         .toPromise()
         .then(() => {
@@ -320,7 +318,7 @@ export class ServiceFormComponent implements OnInit {
 
         this.serviceform.get('grp').get('grp_nm').setValue(getData.grp['grp_nm']);
         this.serviceform.get('grp').get('grp_seq').setValue(getData.grp['grp_seq']);
-        this.serviceform.get('grp').get('cus_seq').setValue(getData.grp['cus_seq']);
+        this.serviceform.get('grp').get('grp_cus_seq').setValue(getData.grp['grp_cus_seq']);
         this.serviceform.get('grp').get('grp_tcd_desc').setValue(getData.grp['grp_tcd_desc']);
         this.serviceform.get('grp').get('grp_basic_yn').setValue(getData.grp['grp_basic_yn']);
         this.serviceform.get('grp').get('grp_use_yn').setValue(getData.grp['grp_use_yn']);
