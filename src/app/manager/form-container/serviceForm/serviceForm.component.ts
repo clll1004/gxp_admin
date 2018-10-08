@@ -190,6 +190,8 @@ export class ServiceFormComponent implements OnInit {
   onSubmit(formObject: any) {
     let valueObject = {};
     this.submitted = true;
+    formObject.authkey.sdate = this.datePipe.transform(formObject.authkey.sdate, 'yyyy-MM-dd');
+    formObject.authkey.edate = this.datePipe.transform(formObject.authkey.edate, 'yyyy-MM-dd');
     const preset = formObject['preset'];
     preset.bookmark = preset.bookmark || preset.bookmark === 'Y' ? 'Y' : 'N';
     preset.setting = preset.setting || preset.setting === 'Y' ? 'Y' : 'N';
@@ -225,16 +227,17 @@ export class ServiceFormComponent implements OnInit {
         .toPromise()
         .then(() => {
           this.isShowMessage = true;
-          this.router.navigate(['/manager', 'group'])
+        })
+        .then(() => {
+          if (!this.isShowMessage) {
+            this.router.navigate(['/manager', 'service']);
+          }
         })
         .catch((error) => {
           console.log(error);
         });
 
     } else {
-      formObject.authkey.sdate = this.datePipe.transform(formObject.authkey.sdate, 'yyyy-MM-dd');
-      formObject.authkey.edate = this.datePipe.transform(formObject.authkey.edate, 'yyyy-MM-dd');
-
       Object.entries(formObject).forEach((item:any) => {
         if(item[0] === 'tcd') {
           item[1].forEach((optItem) => {
