@@ -26,7 +26,7 @@ export class LoginService {
     this.loginInfo.usr_pw = password;
 
     let headers:Headers = new Headers();
-    headers.append('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
+    headers.append('Content-Type', 'application/json; charset=UTF-8');
 
     return this.http.post(url, this.loginInfo, { headers: headers });
   }

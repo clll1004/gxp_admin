@@ -15,14 +15,14 @@ export class ServiceService {
 
   postService(data) {
     let headers:Headers = new Headers();
-    headers.append('Content-Type', 'application/json;');
+    headers.append('Content-Type', 'application/json; charset=UTF-8');
 
     return this.http.post('http://183.110.11.49/adm/group', data, { headers: headers });
   }
 
   updateService(newData) {
     let headers:Headers = new Headers();
-    headers.append('Content-Type', 'application/json;');
+    headers.append('Content-Type', 'application/json; charset=UTF-8');
 
     return this.http.put('http://183.110.11.49/adm/group', newData, { headers: headers });
   }
