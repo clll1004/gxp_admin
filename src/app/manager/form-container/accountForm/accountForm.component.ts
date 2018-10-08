@@ -5,12 +5,13 @@ import { AccountFormValidator } from './passwordValidator';
 import { UserService } from '../../../services/apis/adm/user/user.service';
 import { Sha256 } from '../../../services/library/hash/sha256';
 import { AdminApis } from '../../../services/apis/apis';
+import { ConfirmationService } from 'primeng/components/common/api';
 
 @Component({
   selector: 'accountForm',
   templateUrl: './accountForm.component.html',
   styleUrls: ['../form-container.component.scss'],
-  providers: [UserService, Sha256, AdminApis]})
+  providers: [UserService, Sha256, AdminApis, ConfirmationService]})
 
 export class AccountFormComponent implements OnInit {
   params: Params;
@@ -33,7 +34,8 @@ export class AccountFormComponent implements OnInit {
               private activatedRoute: ActivatedRoute,
               private userService: UserService,
               private sha256: Sha256,
-              private adminApis: AdminApis) {
+              private adminApis: AdminApis,
+              private confirmationService: ConfirmationService) {
 
     this.activatedRoute.params.subscribe( (params) => {
       this.params = params;
@@ -91,8 +93,12 @@ export class AccountFormComponent implements OnInit {
       this.userService.postUser(this.adminApis.postUser, valueObject)
         .toPromise()
         .then(() => {
-          this.isShowMessage = true;
-          location.replace('/manager/account');
+          this.confirmationService.confirm({
+            message: '등록 완료되었습니다.',
+            accept: () => {
+              this.router.navigate(['/manager', 'account']);
+            }
+          });
         })
         .catch((error) => { console.log(error); });
     } else {

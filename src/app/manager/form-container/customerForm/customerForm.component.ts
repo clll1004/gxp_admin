@@ -4,12 +4,13 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { CustomerService } from '../../../services/apis/adm/customer/customer.service';
 import { AdminApis } from '../../../services/apis/apis';
+import { ConfirmationService } from 'primeng/components/common/api';
 
 @Component({
   selector: 'customerForm',
   templateUrl: './customerForm.component.html',
   styleUrls: ['../form-container.component.scss'],
-  providers: [CustomerService, AdminApis]})
+  providers: [CustomerService, AdminApis, ConfirmationService]})
 
 export class CustomerFormComponent implements OnInit {
   params: Params;
@@ -28,7 +29,8 @@ export class CustomerFormComponent implements OnInit {
                 private router: Router,
                 private activatedRoute: ActivatedRoute,
                 private customerService: CustomerService,
-                private adminApis: AdminApis) {
+                private adminApis: AdminApis,
+                private confirmationService: ConfirmationService) {
     this.activatedRoute.params.subscribe( (params) => {
       this.params = params;
     });
@@ -65,8 +67,12 @@ export class CustomerFormComponent implements OnInit {
       this.customerService.postCustomer(formObject.cus)
         .toPromise()
         .then(() => {
-          this.isShowMessage = true;
-          this.router.navigate(['/manager', 'customer']);
+          this.confirmationService.confirm({
+            message: '등록 완료되었습니다.',
+            accept: () => {
+              this.router.navigate(['/manager', 'customer']);
+            }
+          });
         })
         .catch((error) => {
           console.log(error);

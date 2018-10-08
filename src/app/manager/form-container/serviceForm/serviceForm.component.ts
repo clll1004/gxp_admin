@@ -4,12 +4,13 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 import { ServiceService } from '../../../services/apis/adm/service/service.service';
 import { AdminApis } from '../../../services/apis/apis';
 import { DatePipe } from '@angular/common';
+import { ConfirmationService } from 'primeng/components/common/api';
 
 @Component({
   selector: 'serviceForm',
   templateUrl: './serviceForm.component.html',
   styleUrls: ['../form-container.component.scss'],
-  providers: [ServiceService, AdminApis, DatePipe]})
+  providers: [ServiceService, AdminApis, DatePipe, ConfirmationService]})
 
 export class ServiceFormComponent implements OnInit {
   params: Params;
@@ -70,7 +71,8 @@ export class ServiceFormComponent implements OnInit {
               private activatedRoute: ActivatedRoute,
               private serviceService: ServiceService,
               private adminApi: AdminApis,
-              private datePipe: DatePipe) {
+              private datePipe: DatePipe,
+              private confirmationService: ConfirmationService) {
     this.activatedRoute.params.subscribe( (params) => {
       this.params = params;
     });
@@ -226,12 +228,12 @@ export class ServiceFormComponent implements OnInit {
       this.serviceService.postService(valueObject)
         .toPromise()
         .then(() => {
-          this.isShowMessage = true;
-        })
-        .then(() => {
-          if (!this.isShowMessage) {
-            this.router.navigate(['/manager', 'service']);
-          }
+          this.confirmationService.confirm({
+            message: '등록 완료되었습니다.',
+            accept: () => {
+              this.router.navigate(['/manager', 'service']);
+            }
+          });
         })
         .catch((error) => {
           console.log(error);

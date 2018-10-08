@@ -110,3 +110,10 @@
     <button type="button" class="btn white-btn" (click)="isShowMessage=false;" label="confirm"><i class="fas fa-check"></i> 확인</button>
   </div>
 </p-dialog>
+<p-confirmDialog width="500" #confirm>
+  <p-footer>
+    <div class="txt-center">
+      <button type="button" class="btn white-btn margin-right-10" (click)="confirm.accept()"><i class="fas fa-check"></i> 확인</button>
+    </div>
+  </p-footer>
+</p-confirmDialog>

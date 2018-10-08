@@ -474,3 +474,16 @@ td {
 .ui-datepicker select.ui-datepicker-month, .ui-datepicker select.ui-datepicker-year {
   width: auto;
 }
+
+p-confirmdialog .ui-dialog.ui-widget .ui-dialog-titlebar {
+ display: none !important;
+}
+p-confirmdialog .ui-widget-content {
+  padding: 30px 0px 20px; border: none !important;
+}
+.ui-confirmdialog.ui-dialog .ui-dialog-content {
+  text-align: center;
+}
+p-confirmdialog p-footer {
+  display: block; text-align: center;
+}
