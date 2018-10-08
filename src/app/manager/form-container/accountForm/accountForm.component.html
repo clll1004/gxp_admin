@@ -15,7 +15,7 @@
         </tr>
         <tr *ngIf="!isAddRow">
           <th>서비스명 <span class="color-red">*</span></th>
-          <td>&nbsp;</td>
+          <td>{{ accountform.value['grp_nm'] }}</td>
         </tr>
         <tr *ngIf="!isAddRow">
           <th>아이디 <span class="color-red">*</span></th>

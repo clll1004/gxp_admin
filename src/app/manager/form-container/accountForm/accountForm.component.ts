@@ -47,6 +47,7 @@ export class AccountFormComponent implements OnInit {
       /*CMS 계정*/
       'usr_seq': new FormControl(null),
       'cus_nm_ko': new FormControl(null),
+      'grp_nm': new FormControl(null),
       'usr_cus_seq': new FormControl(null,Validators.required),
       'usr_grp_seq': new FormControl(null,Validators.required),
       'usr_id': new FormControl(null, Validators.compose([Validators.required, Validators.maxLength(50)])),
@@ -168,6 +169,7 @@ export class AccountFormComponent implements OnInit {
           const getData:any[] = JSON.parse(data["_body"]);
           this.accountform.get('usr_seq').setValue(getData['usr_seq']);
           this.accountform.get('cus_nm_ko').setValue(getData['cus_nm_ko']);
+          this.accountform.get('grp_nm').setValue(getData['grp_nm']);
           this.accountform.get('usr_id').setValue(getData['usr_id']);
           this.accountform.get('usr_nm').setValue(getData['usr_nm']);
           this.accountform.get('usr_mobile').setValue(getData['usr_mobile']);
