@@ -64,7 +64,7 @@ export class CustomerFormComponent implements OnInit {
     this.submitted = true;
 
     if (this.isAddRow) {
-      this.customerService.postCustomer(formObject.cus)
+      this.customerService.postCustomer(formObject)
         .toPromise()
         .then(() => {
           this.confirmationService.confirm({
