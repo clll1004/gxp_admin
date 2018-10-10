@@ -104,11 +104,10 @@ export class AccountFormComponent implements OnInit {
         .catch((error) => { console.log(error); });
     } else {
       Object.entries(value).forEach((item) => {
-        if(item[0] !== 'cus_nm_ko' && item[1]) {
+        if(item[0] !== 'cus_nm_ko' && item[0] !== 'grp_nm' && item[1]) {
           valueObject[item[0]] = item[1];
         }
       });
-      delete valueObject.grp_nm;
       this.userService.updateUser(this.adminApis.updateUser, valueObject)
         .toPromise()
         .then(() => {
