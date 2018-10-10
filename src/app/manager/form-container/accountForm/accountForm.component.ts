@@ -108,6 +108,7 @@ export class AccountFormComponent implements OnInit {
           valueObject[item[0]] = item[1];
         }
       });
+      delete valueObject.grp_nm;
       this.userService.updateUser(this.adminApis.updateUser, valueObject)
         .toPromise()
         .then(() => {
