@@ -607,19 +607,16 @@ export class ServiceFormComponent implements OnInit {
 
   isInputDomain(e) {
     const btn = document.getElementById('authkey_btn');
-    if (this.isAddRow && !this.isSetAuthKey) {
-      btn.style.background = '#fff';
-      btn.style.cursor = 'pointer';
+    if (!e.value) {
+      btn.style.background = '#ddd';
+      btn.style.cursor = 'default';
+      btn.style.color = '#666';
+    } else {
+      if (this.isAddRow && !this.isSetAuthKey) {
+        btn.style.background = '#fff';
+        btn.style.cursor = 'pointer';
+      }
     }
-    // if (e.value === '' || e.value === null) {
-    //   this.isSetAuthKey = false;
-    //   this.serviceform.get('authkey').get('authkey').setValue(null);
-    //   btn.style.background = '#ddd';
-    //   btn.style.cursor = 'default';
-    //   btn.style.color = '#666';
-    // } else {
-    //
-    // }
   }
 
   /*썸네일서버 - 추가, 삭제*/
