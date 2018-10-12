@@ -24,6 +24,8 @@ export class AccountFormComponent implements OnInit {
   public isAddRow: boolean = true;
   public ableID: boolean = false;
   public showIdDupMsg: boolean = false;
+  public checkInput:boolean = false;
+  public checkPatternEn:boolean = false;
 
   /*for dropdown*/
   public cus_seq_options: any[] = [];
@@ -153,13 +155,22 @@ export class AccountFormComponent implements OnInit {
   }
 
   confirmID() {
-    this.showIdDupMsg = true;
-    const inputId:string = this.accountform.value['usr_id'];
-    this.userService.getLists(this.adminApis.checkDupUserId + inputId)
-      .toPromise()
-      .then((cont) => {
-        this.ableID = cont["_body"] === 'true';
-      });
+    if (!this.accountform.value['usr_id']) {
+      this.checkInput = true;
+    } else if (this.accountform.get('usr_id').valid) {
+      const inputId:string = this.accountform.value['usr_id'];
+      this.userService.getLists(this.adminApis.checkDupUserId + inputId)
+        .toPromise()
+        .then((cont) => {
+          this.showIdDupMsg = true;
+          this.ableID = cont["_body"] === 'true';
+        });
+    }
+  }
+  checkValue(e, field:string='') {
+    this.checkInput = false;
+    this.ableID = false;
+    this.checkPatternEn = !e.valid && e.errors.pattern;
   }
 
   loadAccountList() {

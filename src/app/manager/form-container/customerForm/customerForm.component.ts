@@ -25,6 +25,8 @@ export class CustomerFormComponent implements OnInit {
   public showNameDupMsg: boolean = false;
   public checkPatternEn:boolean = false;
   public checkPatternKo:boolean = false;
+  public checkInput:boolean = false;
+  public passDup:boolean = false;
 
   constructor(private formBuilder: FormBuilder,
                 private location: Location,
@@ -96,18 +98,32 @@ export class CustomerFormComponent implements OnInit {
   }
 
   confirmCustomerName() {
-    if (this.customerform.get('cus').get('cus_nm_en').valid) {
+    if (!this.customerform.get('cus').value['cus_nm_en']) {
+      this.checkInput = true;
+    } else if (this.customerform.get('cus').get('cus_nm_en').valid) {
       const inputName:string = this.customerform.get('cus').value['cus_nm_en'];
       this.customerService.getLists(this.adminApis.checkDupCustomerName + inputName)
         .toPromise()
         .then((cont) => {
           this.showNameDupMsg = true;
           this.ableCustomerName = cont._body === 'true';
-        });
+          this.passDup = true;
+        })
+        .then(() => {
+          if (this.ableCustomerName) {
+            document.getElementById('dup_btn').style.background = 'rgb(221, 221, 221)';
+            document.getElementById('dup_btn').style.cursor = 'auto';
+          }
+        })
     }
   }
 
   checkValue(e, field:string='') {
+    this.checkInput = false;
+    this.ableCustomerName = false;
+    this.passDup = false;
+    document.getElementById('dup_btn').style.background = 'white';
+    document.getElementById('dup_btn').style.cursor = 'pointer';
     field === 'cus_en' ? this.checkPatternEn = !e.valid && e.errors.pattern : this.checkPatternKo = !e.valid && e.errors.pattern;
   }
 
