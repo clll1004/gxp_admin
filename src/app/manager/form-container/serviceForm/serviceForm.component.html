@@ -2,7 +2,7 @@
   <fieldset>
     <legend class="padding-left-10 padding-right-10"> SERVICE </legend>
     <div class="ui-g-12 ui-g-nopad margin-bottom-40 form-container" formGroupName="authkey">
-      <h3 class="form-title">API 인증키 정보</h3>
+      <h3 class="form-title">API 인증키 정보 <span class="info-txt" style="float: right; font-weight: normal;">API 인증키 정보는 필수입니다.</span></h3>
       <table class="form-list">
         <caption>API 인증키 테이블</caption>
         <colgroup>
@@ -10,28 +10,29 @@
           <col style="width: auto;" />
         </colgroup>
         <tr>
-          <th><label for="authkey">인증키</label></th>
+          <th><label for="url">도메인 <span class="color-red">*</span></label></th>
           <td>
-            <input pInputText type="text" class="margin-right-10" formControlName="authkey" id="authkey" title="인증키 입력" autocomplete="off" maxlength="50" style="color: #000;" />
-            <button *ngIf="isAddRow" type="button" class="btn white-btn square-btn" [disabled]="isSetAuthKey" id="authkey_btn" (click)="setAuthkey()">인증키 발급</button>
+            <input pInputText type="text" class="margin-right-10" formControlName="url" id="url" title="URL 입력" autocomplete="off" maxlength="100" (input)="isInputDomain(serviceform.get('authkey').get('url'))" />
+            <p class="color-grey info-txt margin-top-10">* www를 뺀 도메인만 입력해주세요</p>
           </td>
         </tr>
         <tr>
-          <th><label for="url">URL</label></th>
-          <td>
-            <input pInputText type="text" class="margin-right-10" formControlName="url" id="url" title="URL 입력" autocomplete="off" maxlength="50" />
-          </td>
-        </tr>
-        <tr>
-          <th>발급일</th>
+          <th>발급일 <span class="color-red">*</span></th>
           <td>
             <p-calendar formControlName="sdate" [showIcon]="true" [minDate]="minDate" dateFormat="yy.mm.dd" [locale]="localeObject" [monthNavigator]="true" [yearNavigator]="true" [yearRange]="yearRange"></p-calendar>
           </td>
         </tr>
         <tr>
-          <th>만료일</th>
+          <th>만료일 <span class="color-red">*</span></th>
           <td>
             <p-calendar formControlName="edate" [showIcon]="true" [minDate]="minDate" dateFormat="yy.mm.dd" [locale]="localeObject" [monthNavigator]="true" [yearNavigator]="true" [yearRange]="yearRange"></p-calendar>
+          </td>
+        </tr>
+        <tr>
+          <th><label for="authkey">인증키</label> <span class="color-red">*</span></th>
+          <td>
+            <input pInputText type="text" class="margin-right-10" formControlName="authkey" id="authkey" title="인증키 입력" autocomplete="off" maxlength="50" style="color: #000;" disabled />
+            <button *ngIf="isAddRow" type="button" class="btn square-btn" style="background: #ddd; cursor: default; color: #666;" [disabled]="(serviceform['value']['authkey']['url'] === null || serviceform['value']['authkey']['url'] === '') || isSetAuthKey" id="authkey_btn" (click)="setAuthkey()">인증키 발급</button>
           </td>
         </tr>
       </table>
@@ -615,7 +616,7 @@
     </div>
 
     <div class="ui-g-12 ui-g-nopad txt-center">
-      <button pButton type="submit" label="등록" *ngIf="isAddRow" [disabled]="!serviceform.valid || !ableGroupName || !isSetAuthKey" class="margin-right-10"></button>
+      <button pButton type="submit" label="등록" *ngIf="isAddRow" [disabled]="!serviceform.valid || !ableGroupName" class="margin-right-10"></button>
       <button pButton type="submit" label="수정" *ngIf="!isAddRow" [disabled]="!serviceform.valid" class="margin-right-10"></button>
       <button pButton type="reset" (click)="goList()" *ngIf="isAddRow" label="취소"></button>
       <button pButton type="reset" (click)="goList()" *ngIf="!isAddRow" label="목록"></button>

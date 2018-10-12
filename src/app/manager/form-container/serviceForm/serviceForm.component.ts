@@ -88,8 +88,8 @@ export class ServiceFormComponent implements OnInit {
     this.serviceform = this.formBuilder.group({
       authkey: this.formBuilder.group({
         'grp_seq': new FormControl(null),
-        'authkey': new FormControl(null),
-        'url': new FormControl(null),
+        'authkey': new FormControl(null, Validators.required),
+        'url': new FormControl(null, Validators.required),
         'sdate': new FormControl(new Date()),
         'edate': new FormControl(new Date()),
       }),
@@ -290,7 +290,7 @@ export class ServiceFormComponent implements OnInit {
       .then((params)=>{
         list = JSON.parse(params._body);
         list.forEach((item) => {
-          item.label = item.cus_nm_ko;
+          item.label = item.cus_nm_en;
           item.value = item.cus_seq;
           this.cus_seq_options.push(item);
         });
@@ -421,7 +421,6 @@ export class ServiceFormComponent implements OnInit {
           (<FormArray>this.serviceform.get('tcd')).push(item);
         });
         (<FormArray>this.serviceform.get('tcd')).removeAt(0);
-
         this.setPresetLabel();
       });
   }
@@ -593,7 +592,7 @@ export class ServiceFormComponent implements OnInit {
 
   setAuthkey() {
     this.isSetAuthKey = true;
-    const grp_seq = this.isAddRow ? 0 : this.serviceform.get('grp').get('grp_seq').value;
+    const grp_seq = 0;
     const authkey = this.serviceform.get('authkey').get('authkey');
     const btn = document.getElementById('authkey_btn');
     this.serviceService.getLists(this.adminApi.loadToken + grp_seq)
@@ -602,7 +601,25 @@ export class ServiceFormComponent implements OnInit {
         authkey.setValue(JSON.parse(token._body).token);
         btn.style.background = '#ddd';
         btn.style.cursor = 'default';
+        btn.style.color = '#666';
       });
+  }
+
+  isInputDomain(e) {
+    const btn = document.getElementById('authkey_btn');
+    if (this.isAddRow && !this.isSetAuthKey) {
+      btn.style.background = '#fff';
+      btn.style.cursor = 'pointer';
+    }
+    // if (e.value === '' || e.value === null) {
+    //   this.isSetAuthKey = false;
+    //   this.serviceform.get('authkey').get('authkey').setValue(null);
+    //   btn.style.background = '#ddd';
+    //   btn.style.cursor = 'default';
+    //   btn.style.color = '#666';
+    // } else {
+    //
+    // }
   }
 
   /*썸네일서버 - 추가, 삭제*/
