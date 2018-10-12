@@ -26,6 +26,7 @@ export class AccountFormComponent implements OnInit {
   public showIdDupMsg: boolean = false;
   public checkInput:boolean = false;
   public checkPatternEn:boolean = false;
+  public passDup:boolean = false;
 
   /*for dropdown*/
   public cus_seq_options: any[] = [];
@@ -164,12 +165,22 @@ export class AccountFormComponent implements OnInit {
         .then((cont) => {
           this.showIdDupMsg = true;
           this.ableID = cont["_body"] === 'true';
-        });
+          this.passDup = true;
+        })
+        .then(() => {
+          if (this.ableID) {
+            document.getElementById('dup_btn').style.background = 'rgb(221, 221, 221)';
+            document.getElementById('dup_btn').style.cursor = 'auto';
+          }
+        })
     }
   }
   checkValue(e, field:string='') {
     this.checkInput = false;
     this.ableID = false;
+    this.passDup = false;
+    document.getElementById('dup_btn').style.background = 'white';
+    document.getElementById('dup_btn').style.cursor = 'pointer';
     this.checkPatternEn = !e.valid && e.errors.pattern;
   }
 
