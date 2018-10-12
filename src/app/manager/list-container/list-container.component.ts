@@ -112,6 +112,7 @@ export class ListContainerComponent implements OnInit {
   }
 
   filterListUse(data:string) {
+    this.searchKey = '';
     this.filterCustomerLists = this.customerLists.filter((customerItem) => {
       if(this.params['listId'] === 'customer') {
         return customerItem.cus_use_yn === data;
@@ -130,10 +131,11 @@ export class ListContainerComponent implements OnInit {
   /*고객명 검색*/
   filterCustomerName() {
     if(this.searchKey != '') {
-      this.filterCustomerLists = [];
       this.customerLists.filter((customerItem) => {
+        let arr = [];
         if(customerItem.cus_nm_ko && (customerItem.cus_nm_ko.indexOf(this.searchKey)>=0)) {
-          this.filterCustomerLists.push(customerItem);
+          arr.push(customerItem);
+          this.filterCustomerLists = arr;
         }
       });
       this.totalCustomerList = this.filterCustomerLists.length;

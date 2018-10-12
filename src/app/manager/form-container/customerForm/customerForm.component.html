@@ -14,15 +14,19 @@
         <tr *ngIf="isAddRow">
           <th><label for="cus_nm_en">고객명(영문) <span class="color-red">*</span></label></th>
           <td>
-            <input pInputText type="text" class="margin-right-10" id="cus_nm_en" formControlName="cus_nm_en" title="고객명(영문) 입력" pKeyFilter="alpha" autocomplete="off" maxlength="31" />
+            <input pInputText type="text" class="margin-right-10" id="cus_nm_en" formControlName="cus_nm_en" title="고객명(영문) 입력" pKeyFilter="alpha" autocomplete="off" maxlength="31" (input)="showNameDupMsg=false; checkValue(customerform.controls.cus.get('cus_nm_en'), 'cus_en')" pattern="[a-zA-Z ]*"/>
             <button type="button" class="btn white-btn square-btn" (click)="confirmCustomerName()">중복 확인</button>
             <div *ngIf="!customerform.controls.cus.get('cus_nm_en').valid && customerform.controls.cus.get('cus_nm_en').dirty">
               <p class="color-red info-txt margin-top-10" *ngIf="customerform.controls.cus.get('cus_nm_en').errors['required']">필수입력 사항 입니다</p>
               <p class="color-red info-txt margin-top-10" *ngIf="customerform.controls.cus.get('cus_nm_en').errors['maxlength']"> 30자 이내로 입력해주세요</p>
             </div>
-            <div *ngIf="showNameDupMsg">
+            <div *ngIf="showNameDupMsg && !checkPatternEn">
               <p class="color-blue info-txt margin-top-10" *ngIf="ableCustomerName">사용가능한 고객명입니다.</p>
               <p class="color-red info-txt margin-top-10" *ngIf="!ableCustomerName">사용중인 고객명입니다.</p>
+              <!--<p class="color-red info-txt margin-top-10" *ngIf="!ableCustomerName">영문만 입력해주세요.</p>-->
+            </div>
+            <div *ngIf="checkPatternEn">
+              <p class="color-red info-txt margin-top-10">영문만 입력해주세요.</p>
             </div>
           </td>
         </tr>
@@ -33,10 +37,13 @@
         <tr>
           <th><label for="cus_nm_ko">고객명(한글) </label> <span class="color-red">*</span></th>
           <td>
-            <input pInputText type="text" id="cus_nm_ko" formControlName="cus_nm_ko" title="고객명(한글) 입력" autocomplete="off" maxlength="31" />
+            <input pInputText type="text" id="cus_nm_ko" formControlName="cus_nm_ko" title="고객명(한글) 입력" autocomplete="off" maxlength="31" (input)="checkValue(customerform.controls.cus.get('cus_nm_ko'), 'cus_ko');" pattern="[ㄱ-ㅎ가-힣 ]*" />
             <div *ngIf="!customerform.controls.cus.get('cus_nm_ko').valid && customerform.controls.cus.get('cus_nm_ko').dirty">
               <p class="color-red info-txt margin-top-10" *ngIf="customerform.controls.cus.get('cus_nm_ko').errors['required']">필수입력 사항 입니다</p>
               <p class="color-red info-txt margin-top-10" *ngIf="customerform.controls.cus.get('cus_nm_ko').errors['maxlength']"> 30자 이내로 입력해주세요</p>
+            </div>
+            <div *ngIf="checkPatternKo">
+              <p class="color-red info-txt margin-top-10">한글만 입력해주세요.</p>
             </div>
           </td>
         </tr>

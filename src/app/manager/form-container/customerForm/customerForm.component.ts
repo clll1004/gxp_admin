@@ -21,8 +21,10 @@ export class CustomerFormComponent implements OnInit {
 
   /*for check addpagebb row*/
   public isAddRow: boolean = true;
-  public ableCustomerName: boolean = false;
+  public ableCustomerName:boolean = false;
   public showNameDupMsg: boolean = false;
+  public checkPatternEn:boolean = false;
+  public checkPatternKo:boolean = false;
 
   constructor(private formBuilder: FormBuilder,
                 private location: Location,
@@ -94,13 +96,19 @@ export class CustomerFormComponent implements OnInit {
   }
 
   confirmCustomerName() {
-    this.showNameDupMsg = true;
-    const inputName:string = this.customerform.get('cus').value['cus_nm_en'];
-    this.customerService.getLists(this.adminApis.checkDupCustomerName + inputName)
-      .toPromise()
-      .then((cont) => {
-        this.ableCustomerName = cont._body === 'true';
-      });
+    if (this.customerform.get('cus').get('cus_nm_en').valid) {
+      const inputName:string = this.customerform.get('cus').value['cus_nm_en'];
+      this.customerService.getLists(this.adminApis.checkDupCustomerName + inputName)
+        .toPromise()
+        .then((cont) => {
+          this.showNameDupMsg = true;
+          this.ableCustomerName = cont._body === 'true';
+        });
+    }
+  }
+
+  checkValue(e, field:string='') {
+    field === 'cus_en' ? this.checkPatternEn = !e.valid && e.errors.pattern : this.checkPatternKo = !e.valid && e.errors.pattern;
   }
 
   loadCustomerList() {
