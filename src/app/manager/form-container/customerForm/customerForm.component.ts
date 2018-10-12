@@ -119,12 +119,16 @@ export class CustomerFormComponent implements OnInit {
   }
 
   checkValue(e, field:string='') {
-    this.checkInput = false;
-    this.ableCustomerName = false;
-    this.passDup = false;
-    document.getElementById('dup_btn').style.background = 'white';
-    document.getElementById('dup_btn').style.cursor = 'pointer';
-    field === 'cus_en' ? this.checkPatternEn = !e.valid && e.errors.pattern : this.checkPatternKo = !e.valid && e.errors.pattern;
+    if (field === 'cus_en') {
+      this.checkInput = false;
+      this.ableCustomerName = false;
+      this.passDup = false;
+      document.getElementById('dup_btn').style.background = 'white';
+      document.getElementById('dup_btn').style.cursor = 'pointer';
+      this.checkPatternEn = !e.valid && e.errors.pattern;
+    } else {
+      this.checkPatternKo = !e.valid && e.errors.pattern;
+    }
   }
 
   loadCustomerList() {
