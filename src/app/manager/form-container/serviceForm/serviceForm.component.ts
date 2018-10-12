@@ -32,11 +32,11 @@ export class ServiceFormComponent implements OnInit {
   };
   public minDate: Date = new Date();
 
-
   /*for check addpagebb row*/
   public isAddRow: boolean = true;
   public ableGroupName: boolean = false;
   public showGroupDupMsg: boolean = false;
+  public checkInput:boolean = false;
 
   /*for dropdown*/
   public server_mode_options = [
@@ -581,13 +581,23 @@ export class ServiceFormComponent implements OnInit {
 
   /*중복확인 - 그룹명*/
   confirmGroupName() {
-    this.showGroupDupMsg = true;
-    const inputname:string = this.serviceform.get('grp').value['grp_nm'];
-    this.serviceService.getLists(this.adminApi.checkDupGroupName + inputname)
-      .toPromise()
-      .then((cont) => {
-        this.ableGroupName = cont._body === 'true';
-      });
+    if (!this.serviceform.get('grp').value['grp_nm']) {
+      this.checkInput = true;
+    } else if (this.serviceform.get('grp').get('grp_nm').valid) {
+      const inputname:string = this.serviceform.get('grp').value['grp_nm'];
+      this.serviceService.getLists(this.adminApi.checkDupGroupName + inputname)
+        .toPromise()
+        .then((cont) => {
+          this.showGroupDupMsg = true;
+          this.ableGroupName = cont._body === 'true';
+        });
+    }
+  }
+
+  checkValue() {
+    this.showGroupDupMsg=false;
+    this.showGroupDupMsg = false;
+    this.checkInput = false;
   }
 
   setAuthkey() {

@@ -147,15 +147,18 @@
         <tr *ngIf="isAddRow">
           <th><label for="grp_nm">서비스명 </label> <span class="color-red">*</span></th>
           <td>
-            <input pInputText type="text" id="grp_nm" formControlName="grp_nm" pKeyFilter="alpha" class="margin-right-10" title="서비스명/타입 입력" autocomplete="off" maxlength="21" />
+            <input pInputText type="text" id="grp_nm" formControlName="grp_nm" pKeyFilter="alpha" class="margin-right-10" title="서비스명/타입 입력" autocomplete="off" maxlength="21" (input)="checkValue()" />
             <button type="button" class="btn white-btn square-btn" (click)="confirmGroupName()">중복 확인</button>
             <div *ngIf="!serviceform.get('grp').get(['grp_nm']).valid && serviceform.get('grp').get(['grp_nm']).dirty">
-              <p class="color-red info-txt margin-top-10" *ngIf="serviceform.get('grp').get(['grp_nm']).errors['required']">필수입력 사항 입니다</p>
+              <!--<p class="color-red info-txt margin-top-10" *ngIf="serviceform.get('grp').get(['grp_nm']).errors['required']">필수입력 사항 입니다</p>-->
               <p class="color-red info-txt margin-top-10" *ngIf="serviceform.get('grp').get(['grp_nm']).errors['maxlength']"> 20자 이내로 입력해주세요</p>
             </div>
             <div *ngIf="showGroupDupMsg">
               <p class="color-blue info-txt margin-top-10" *ngIf="ableGroupName">사용가능한 서비스명입니다.</p>
               <p class="color-red info-txt margin-top-10" *ngIf="!ableGroupName">사용중인 서비스명입니다.</p>
+            </div>
+            <div *ngIf="checkInput">
+              <p class="color-red info-txt margin-top-10">서비스명을 입력해주세요.</p>
             </div>
           </td>
         </tr>
