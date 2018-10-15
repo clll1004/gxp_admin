@@ -727,7 +727,7 @@ export class ServiceFormComponent implements OnInit {
     const preset = this.serviceform.get('preset');
     let label_value = '';
     let form_value = true;
-    if (preset.get('service_type').value === 'normal') {
+    if (preset.get('service_type').value === '일반') {
       label_value = '';
       form_value = false;
     } else {
