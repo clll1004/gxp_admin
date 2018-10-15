@@ -753,5 +753,6 @@ export class ServiceFormComponent implements OnInit {
     preset.get('cinemaMode').setValue(true);
     preset.get('quality').setValue(true);
     preset.get('subtitle').setValue(true);
+    this.setPresetLabel();
   }
 }
