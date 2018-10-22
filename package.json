@@ -4,10 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "rimraf dist && webpack --config webpack.config.js --env.development --progress --profile --bail",
-    "build": "rimraf dist && webpack --config webpack.config.js --env.production --progress --profile --bail",
-    "dev-server": "webpack-dashboard -- webpack-dev-server --config webpack.config.js --env.development --content-base ./dist",
-    "prod-server": "webpack-dashboard -- webpack-dev-server --config webpack.config.js --env.production --content-base ./dist"
+    "build-dev": "rimraf dist && webpack --config webpack.config.js --env.development --progress --profile --bail",
+    "build-prod": "rimraf dist && webpack --config webpack.config.js --env.production --progress --profile --bail",
+    "server-dev": "webpack-dashboard -- webpack-dev-server --config webpack.config.js --env.development --content-base ./dist",
+    "server-prod": "webpack-dashboard -- webpack-dev-server --config webpack.config.js --env.production --content-base ./dist"
   },
   "author": "Yoosoo Won",
   "license": "ISC",
