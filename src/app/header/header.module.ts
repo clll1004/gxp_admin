@@ -6,6 +6,7 @@ import { RouterModule } from '@angular/router';
 
 import { HeaderComponent } from './components/header.component';
 
+import { CookieService } from '../services/library/cookie/cookie.service';
 import { LoginService } from '../services/apis/adm/login/login.service';
 
 @NgModule({
@@ -14,7 +15,7 @@ import { LoginService } from '../services/apis/adm/login/login.service';
   ],
   exports: [HeaderComponent],
   declarations: [HeaderComponent],
-  providers: [LoginService],
+  providers: [CookieService, LoginService],
 })
 
 export class HeaderModule { }

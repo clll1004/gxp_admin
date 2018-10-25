@@ -43,6 +43,7 @@ import { DialogModule } from "primeng/primeng";
 import { ConfirmDialogModule, CalendarModule } from 'primeng/primeng';
 import { CheckboxModule } from 'primeng/checkbox';
 
+import { CookieService } from './services/library/cookie/cookie.service';
 import { LoginService } from './services/apis/adm/login/login.service';
 
 @NgModule({
@@ -95,7 +96,7 @@ import { LoginService } from './services/apis/adm/login/login.service';
 
     AppRoutingModule
   ],
-  providers: [ LoginService ],
+  providers: [CookieService, LoginService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

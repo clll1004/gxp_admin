@@ -1,13 +1,14 @@
 import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
 import { Http, Headers } from '@angular/http';
+import { CookieService } from '../../../library/cookie/cookie.service';
 
 @Injectable()
 export class LoginService {
   public loginInfo:any = {};
   public loginStatus:boolean = false;
 
-  constructor(private http: Http, private router: Router) { }
+  constructor(private http: Http, private router: Router, private cookieService: CookieService) { }
 
   getLoginStatus() {
     return this.loginStatus;
@@ -32,28 +33,28 @@ export class LoginService {
   }
 
   setCookieData(userInfo, user_seq, user_name) {
-    this.setCookie('userInfo', userInfo, 7, true);
-    this.setCookie('usr_seq', user_seq, 7);
-    this.setCookie('usr_nm', user_name, 7);
+    this.cookieService.setCookie('userInfo', userInfo, 7, true);
+    this.cookieService.setCookie('usr_seq', user_seq, 7);
+    this.cookieService.setCookie('usr_nm', user_name, 7);
   }
 
   logout() {
-    if(this.getCookie('userInfo')) {
+    if(this.cookieService.getCookie('userInfo')) {
       this.clearUserInfo();
     }
   }
 
   checkUserInfo() {
-    if(!(this.getCookie('userInfo'))) {
+    if(!(this.cookieService.getCookie('userInfo'))) {
       this.clearUserInfo();
     }
   }
 
   clearUserInfo() {
     this.setLogout();
-    this.deleteCookie('userInfo');
-    this.deleteCookie('usr_seq');
-    this.deleteCookie('usr_nm');
+    this.cookieService.deleteCookie('userInfo');
+    this.cookieService.deleteCookie('usr_seq');
+    this.cookieService.deleteCookie('usr_nm');
     this.router.navigate(['/', 'login']);
   }
 
