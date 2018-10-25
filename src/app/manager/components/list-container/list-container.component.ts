@@ -130,8 +130,9 @@ export class ListContainerComponent implements OnInit {
   /*고객명 검색*/
   filterCustomerName() {
     if(this.searchKey != '') {
+      let arr = [];
+      this.filterCustomerLists = [];
       this.customerLists.filter((customerItem) => {
-        let arr = [];
         if(customerItem.cus_nm_ko && (customerItem.cus_nm_ko.indexOf(this.searchKey)>=0)) {
           arr.push(customerItem);
           this.filterCustomerLists = arr;

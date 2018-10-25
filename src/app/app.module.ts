@@ -13,24 +13,6 @@ import { FooterModule } from './footer/footer.module';
 import { ManagerModule } from './manager/manager.module';
 import { TranscodingModule } from './transcoding/transcoding.module';
 
-/*for primeNG*/
-import { ButtonModule } from 'primeng/button';
-import { TableModule } from 'primeng/table';
-import { TreeTableModule } from 'primeng/treetable';
-import { AccordionModule } from 'primeng/accordion';
-import { PasswordModule } from 'primeng/password';
-import { InputTextModule } from 'primeng/inputtext';
-import { InputTextareaModule } from 'primeng/inputtextarea';
-import { GrowlModule } from 'primeng/growl';
-import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { PanelModule } from 'primeng/panel';
-import { RadioButtonModule } from 'primeng/radiobutton';
-import { KeyFilterModule } from 'primeng/keyfilter';
-import { DropdownModule } from 'primeng/dropdown';
-import { DialogModule } from "primeng/primeng";
-import { ConfirmDialogModule, CalendarModule } from 'primeng/primeng';
-import { CheckboxModule } from 'primeng/checkbox';
-
 import { CookieService } from './services/library/cookie/cookie.service';
 import { LoginService } from './services/apis/adm/login/login.service';
 
@@ -53,26 +35,6 @@ import { LoginService } from './services/apis/adm/login/login.service';
     MatIconModule,
     MatListModule,
     HttpModule,
-
-    InputTextModule,
-    ButtonModule,
-    TableModule,
-    TreeTableModule,
-    AccordionModule,
-    PasswordModule,
-    InputTextareaModule,
-    GrowlModule,
-    FormsModule,
-    ReactiveFormsModule,
-    PanelModule,
-    RadioButtonModule,
-    KeyFilterModule,
-    DropdownModule,
-    DialogModule,
-    ConfirmDialogModule,
-    CalendarModule,
-    CheckboxModule,
-
     AppRoutingModule
   ],
   providers: [CookieService, LoginService],
