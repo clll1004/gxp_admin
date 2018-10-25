@@ -5,6 +5,7 @@ import { HttpModule } from "@angular/http";
 import { LoginModule } from './login/login.module';
 import { HeaderModule } from './header/header.module';
 import { FooterModule } from './footer/footer.module';
+import { TranscodingModule } from './transcoding/transcoding.module';
 
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -18,19 +19,16 @@ import { FormContainerComponent } from "./manager/form-container/form-container.
 import { CustomerFormComponent } from "./manager/form-container/customerForm/customerForm.component";
 import { ServiceFormComponent } from "./manager/form-container/serviceForm/serviceForm.component";
 import { AccountFormComponent } from "./manager/form-container/accountForm/accountForm.component";
-import { TransCodingComponent } from "./transcoding/transcoding.component";
-import { TcListContainerComponent } from "./transcoding/tcListContainer/tcListContainer.component";
-import { ServerFormComponent } from "./transcoding/serverForm/serverForm.component";
 
 import { AppRoutingModule } from "./app-routing.module";
 
 /*for primeNG*/
-import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
 import { TableModule } from 'primeng/table';
 import { TreeTableModule } from 'primeng/treetable';
 import { AccordionModule } from 'primeng/accordion';
 import { PasswordModule } from 'primeng/password';
+import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { GrowlModule } from 'primeng/growl';
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
@@ -54,14 +52,12 @@ import { LoginService } from './services/apis/adm/login/login.service';
     CustomerFormComponent,
     ServiceFormComponent,
     AccountFormComponent,
-    TransCodingComponent,
-    TcListContainerComponent,
-    ServerFormComponent
   ],
   imports: [
     LoginModule,
     HeaderModule,
     FooterModule,
+    TranscodingModule,
     BrowserModule,
     BrowserAnimationsModule,
     LayoutModule,

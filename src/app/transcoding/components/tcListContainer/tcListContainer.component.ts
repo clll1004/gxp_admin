@@ -3,15 +3,15 @@
  */
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { TranscodingService } from '../../services/apis/adm/transcoding/transcoding.service';
-import { AdminApis } from '../../services/apis/apis';
+import { TranscodingService } from '../../../services/apis/adm/transcoding/transcoding.service';
+import { AdminApis } from '../../../services/apis/apis';
 import { ConfirmationService } from 'primeng/components/common/api';
 
 @Component({
   selector: 'tcListContainer',
   templateUrl: './tcListContainer.component.html',
   styleUrls: ['../transcoding.component.scss'],
-  providers: [TranscodingService, AdminApis, ConfirmationService]})
+  providers: [ConfirmationService]})
 
 export class TcListContainerComponent implements OnInit {
   @Input() params: object;

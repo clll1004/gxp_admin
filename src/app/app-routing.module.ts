@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { LoginComponent } from "./login/components/login.component";
 import { ManagerComponent } from "./manager/manager.component";
-import { TransCodingComponent } from "./transcoding/transcoding.component";
+import { TransCodingComponent } from "./transcoding/components/transcoding.component";
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
