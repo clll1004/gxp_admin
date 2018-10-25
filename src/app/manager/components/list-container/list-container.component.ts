@@ -1,13 +1,12 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Http } from '@angular/http';
 import { ActivatedRoute } from '@angular/router';
-import { AdminApis } from '../../services/apis/apis';
+import { AdminApis } from '../../../services/apis/apis';
 
 @Component({
   selector: 'list-container',
   templateUrl: './list-container.component.html',
-  styleUrls: ['./list-container.component.scss'],
-  providers: [AdminApis]})
+  styleUrls: ['./list-container.component.scss']})
 
 export class ListContainerComponent implements OnInit {
   @Input() params: object;

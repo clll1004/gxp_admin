@@ -2,15 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import { Validators,FormControl,FormGroup,FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Location } from '@angular/common';
-import { CustomerService } from '../../../services/apis/adm/customer/customer.service';
-import { AdminApis } from '../../../services/apis/apis';
+import { CustomerService } from '../../../../services/apis/adm/customer/customer.service';
+import { AdminApis } from '../../../../services/apis/apis';
 import { ConfirmationService } from 'primeng/components/common/api';
 
 @Component({
   selector: 'customerForm',
   templateUrl: './customerForm.component.html',
   styleUrls: ['../form-container.component.scss'],
-  providers: [CustomerService, AdminApis, ConfirmationService]})
+  providers: [ConfirmationService]})
 
 export class CustomerFormComponent implements OnInit {
   params: Params;

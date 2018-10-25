@@ -1,26 +1,17 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpModule } from "@angular/http";
+import { AppComponent } from './app.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { LayoutModule } from '@angular/cdk/layout';
+import { MatToolbarModule, MatButtonModule, MatSidenavModule, MatIconModule, MatListModule } from '@angular/material';
+import { AppRoutingModule } from "./app-routing.module";
 
 import { LoginModule } from './login/login.module';
 import { HeaderModule } from './header/header.module';
 import { FooterModule } from './footer/footer.module';
+import { ManagerModule } from './manager/manager.module';
 import { TranscodingModule } from './transcoding/transcoding.module';
-
-import { AppComponent } from './app.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
-import { LayoutModule } from '@angular/cdk/layout';
-import { MatToolbarModule, MatButtonModule, MatSidenavModule, MatIconModule, MatListModule } from '@angular/material';
-
-import { ManagerComponent } from "./manager/manager.component";
-import { ListContainerComponent } from "./manager/list-container/list-container.component";
-import { FormContainerComponent } from "./manager/form-container/form-container.component";
-import { CustomerFormComponent } from "./manager/form-container/customerForm/customerForm.component";
-import { ServiceFormComponent } from "./manager/form-container/serviceForm/serviceForm.component";
-import { AccountFormComponent } from "./manager/form-container/accountForm/accountForm.component";
-
-import { AppRoutingModule } from "./app-routing.module";
 
 /*for primeNG*/
 import { ButtonModule } from 'primeng/button';
@@ -46,17 +37,12 @@ import { LoginService } from './services/apis/adm/login/login.service';
 @NgModule({
   declarations: [
     AppComponent,
-    ManagerComponent,
-    ListContainerComponent,
-    FormContainerComponent,
-    CustomerFormComponent,
-    ServiceFormComponent,
-    AccountFormComponent,
   ],
   imports: [
     LoginModule,
     HeaderModule,
     FooterModule,
+    ManagerModule,
     TranscodingModule,
     BrowserModule,
     BrowserAnimationsModule,

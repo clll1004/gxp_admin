@@ -2,7 +2,7 @@ import { NgModule }             from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { LoginComponent } from "./login/components/login.component";
-import { ManagerComponent } from "./manager/manager.component";
+import { ManagerComponent } from "./manager/components/manager.component";
 import { TransCodingComponent } from "./transcoding/components/transcoding.component";
 
 const routes: Routes = [

@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Validators, FormControl, FormGroup, FormBuilder, FormArray } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { ServiceService } from '../../../services/apis/adm/service/service.service';
-import { AdminApis } from '../../../services/apis/apis';
+import { ServiceService } from '../../../../services/apis/adm/service/service.service';
+import { AdminApis } from '../../../../services/apis/apis';
 import { DatePipe } from '@angular/common';
 import { ConfirmationService } from 'primeng/components/common/api';
 
@@ -10,7 +10,7 @@ import { ConfirmationService } from 'primeng/components/common/api';
   selector: 'serviceForm',
   templateUrl: './serviceForm.component.html',
   styleUrls: ['../form-container.component.scss'],
-  providers: [ServiceService, AdminApis, DatePipe, ConfirmationService]})
+  providers: [DatePipe, ConfirmationService]})
 
 export class ServiceFormComponent implements OnInit {
   params: Params;
