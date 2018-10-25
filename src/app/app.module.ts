@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { HttpModule } from "@angular/http";
 
 import { HeaderModule } from './header/header.module';
+import { FooterModule } from './footer/footer.module';
 
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -10,8 +11,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LayoutModule } from '@angular/cdk/layout';
 import { MatToolbarModule, MatButtonModule, MatSidenavModule, MatIconModule, MatListModule } from '@angular/material';
 
-// import { HeaderComponent } from "./header/components/header.component";
-import { FooterComponent } from "./footer/footer.component";
 import { LoginComponent } from "./login/login.component";
 import { ManagerComponent } from "./manager/manager.component";
 import { ListContainerComponent } from "./manager/list-container/list-container.component";
@@ -49,9 +48,6 @@ import { LoginService } from './services/apis/adm/login/login.service';
 @NgModule({
   declarations: [
     AppComponent,
-
-    // HeaderComponent,
-    FooterComponent,
     LoginComponent,
     ManagerComponent,
     ListContainerComponent,
@@ -65,6 +61,7 @@ import { LoginService } from './services/apis/adm/login/login.service';
   ],
   imports: [
     HeaderModule,
+    FooterModule,
     BrowserModule,
     BrowserAnimationsModule,
     LayoutModule,
