@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpModule } from "@angular/http";
 
+import { LoginModule } from './login/login.module';
 import { HeaderModule } from './header/header.module';
 import { FooterModule } from './footer/footer.module';
 
@@ -11,7 +12,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LayoutModule } from '@angular/cdk/layout';
 import { MatToolbarModule, MatButtonModule, MatSidenavModule, MatIconModule, MatListModule } from '@angular/material';
 
-import { LoginComponent } from "./login/login.component";
 import { ManagerComponent } from "./manager/manager.component";
 import { ListContainerComponent } from "./manager/list-container/list-container.component";
 import { FormContainerComponent } from "./manager/form-container/form-container.component";
@@ -48,7 +48,6 @@ import { LoginService } from './services/apis/adm/login/login.service';
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent,
     ManagerComponent,
     ListContainerComponent,
     FormContainerComponent,
@@ -60,6 +59,7 @@ import { LoginService } from './services/apis/adm/login/login.service';
     ServerFormComponent
   ],
   imports: [
+    LoginModule,
     HeaderModule,
     FooterModule,
     BrowserModule,

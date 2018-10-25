@@ -1,9 +1,9 @@
 .login-container {
-
-  width: 450px;
-  margin: 250px auto 0;
+  width: 500px;
+  margin: 280px auto 0;
   border: 1px solid #ddd;
   border-radius: 10px;
+  box-sizing: border-box;
   text-align: center;
 
   .info-container {
@@ -15,12 +15,14 @@
 
   .btn {
     padding-top: 13px;
-    border: none;
+    border: none !important;
+    border-radius: 10px;
+    background: #ff6400 !important;
     &:hover, &:focus {
-      background: #ea5c00;
+      background: #ea5c00 !important;
     }
     &:active {
-      background: #cf5100;
+      background: #cf5100 !important;
     }
   }
 }
