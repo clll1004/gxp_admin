@@ -2,13 +2,15 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpModule } from "@angular/http";
 
+import { HeaderModule } from './header/header.module';
+
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { LayoutModule } from '@angular/cdk/layout';
 import { MatToolbarModule, MatButtonModule, MatSidenavModule, MatIconModule, MatListModule } from '@angular/material';
 
-import { HeaderComponent } from "./header/header.component";
+// import { HeaderComponent } from "./header/components/header.component";
 import { FooterComponent } from "./footer/footer.component";
 import { LoginComponent } from "./login/login.component";
 import { ManagerComponent } from "./manager/manager.component";
@@ -41,13 +43,13 @@ import { DialogModule } from "primeng/primeng";
 import { ConfirmDialogModule, CalendarModule } from 'primeng/primeng';
 import { CheckboxModule } from 'primeng/checkbox';
 
-import { LoginService } from './login/login.service';
+import { LoginService } from './services/apis/adm/login/login.service';
 
 @NgModule({
   declarations: [
     AppComponent,
 
-    HeaderComponent,
+    // HeaderComponent,
     FooterComponent,
     LoginComponent,
     ManagerComponent,
@@ -61,6 +63,7 @@ import { LoginService } from './login/login.service';
     ServerFormComponent
   ],
   imports: [
+    HeaderModule,
     BrowserModule,
     BrowserAnimationsModule,
     LayoutModule,

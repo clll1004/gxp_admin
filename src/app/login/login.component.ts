@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { LoginService } from './login.service';
+import { LoginService } from '../services/apis/adm/login/login.service';
 import { Validators, FormControl, FormGroup, FormBuilder } from '@angular/forms';
 import { Sha256 } from '../services/library/hash/sha256';
 import { AdminApis } from '../services/apis/apis';
