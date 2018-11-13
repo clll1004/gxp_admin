@@ -46,7 +46,6 @@ export class AdminApis {
   /* 실시간 서버 모니터링 */
   public loadServerIpList = this.domain + 'adm/transcoding/server/list/ip';
   public loadServerList = this.domain + 'adm/transcoding/server/list?page=1&row=10000';
-  // public refreshServerIp = this.domain + 'adm/transcoding/server/refresh';
   public loadServer = this.domain + 'adm/transcoding/server/';
   public postServer = this.domain + 'adm/transcoding/server';
   public updateServer = this.domain + 'adm/transcoding/server';
