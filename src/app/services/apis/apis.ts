@@ -62,8 +62,6 @@ export class AdminApis {
   /* 변환 상태 변경 */
   public reStartTranscoding = this.domain + 'adm/transcoding/updateretry';
   public tempDeleteItem = this.domain + 'adm/transcoding/updatedeltemp';
-  /* INI 조회 */
-  // public loadINI = this.domain + 'adm/transcoding/ini';
 
   constructor() {
     if (process.env.NODE_ENV === 'development') {
