@@ -27,7 +27,7 @@
     "@angular/router": "^6.0.0",
     "hammerjs": "^2.0.8",
     "primeicons": "^1.0.0-beta.8",
-    "primeng": "^6.0.0-rc.1",
+    "primeng": "^6.0.2",
     "rxjs": "^6.0.0",
     "webpack-dashboard": "2.0.0",
     "zone.js": "^0.8.26"
