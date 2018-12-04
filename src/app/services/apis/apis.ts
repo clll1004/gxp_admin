@@ -46,7 +46,6 @@ export class AdminApis {
   /* 실시간 서버 모니터링 */
   public loadServerIpList = this.domain + 'adm/transcoding/server/list/ip';
   public loadServerList = this.domain + 'adm/transcoding/server/list?page=1&row=10000';
-  // public refreshServerIp = this.domain + 'adm/transcoding/server/refresh';
   public loadServer = this.domain + 'adm/transcoding/server/';
   public postServer = this.domain + 'adm/transcoding/server';
   public updateServer = this.domain + 'adm/transcoding/server';
@@ -62,8 +61,6 @@ export class AdminApis {
   /* 변환 상태 변경 */
   public reStartTranscoding = this.domain + 'adm/transcoding/updateretry';
   public tempDeleteItem = this.domain + 'adm/transcoding/updatedeltemp';
-  /* INI 조회 */
-  // public loadINI = this.domain + 'adm/transcoding/ini';
 
   constructor() {
     if (process.env.NODE_ENV === 'development') {
